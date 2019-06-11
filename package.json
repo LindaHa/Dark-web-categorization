@@ -9,7 +9,7 @@
     "test": "jest --config=jest.config.js --no-cache"
   },
   "dependencies": {
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^3.4.1",
     "d3": "^5.5.0",
     "immutable": "^4.0.0-rc.12",
     "react": "^16.8.6",
@@ -17,6 +17,7 @@
     "react-d3-graph": "^2.0.2"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.9.0",
     "@types/jest": "^23.1.5",
     "@types/prop-types": "^15.7.1",
     "@types/react": "^16.4.6",

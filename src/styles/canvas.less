@@ -15,8 +15,8 @@
   display: flex;
   min-width: 0;
   background-color: @blue-50;
-  flex: 2 1 auto;
-  flex-direction: column;
+  flex: 2 2 auto;
+  flex-flow: column wrap;
 
   @media print {
     overflow: auto;
@@ -24,15 +24,17 @@
 }
 
 .canvas__sidebar {
-  flex: 1 2 auto;
+  flex: 1 1 auto;
   display: flex;
-  flex-flow: column;
+  flex-flow: column wrap;
   //width: @sidebar-width-500;
   max-height: 100%;
+  max-width: 30%;
   overflow-x: hidden;
   overflow-y: auto;
   background-color: @blue-300;
   border-left: solid 1px @blue-500;
+  padding: @grid-unit * 2;
 
   @media print {
     display: none;
