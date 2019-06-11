@@ -1,0 +1,286 @@
+/*----------------------------------------------------------------------------*\
+		Disabled rules for stylelint
+\*----------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------*\
+		Colors
+
+		The color pallete adapted from Material Design pallete
+		— https://material.google.com/style/color.html
+\*----------------------------------------------------------------------------*/
+
+@white: #ffffff;
+@black: #000000;
+
+@grey-50: #fafafa;
+@grey-100: #f5f5f5;
+@grey-150: #f9f9f9;
+@grey-200: #eeeeee;
+@grey-300: #e0e0e0;
+@grey-400: #bdbdbd;
+@grey-500: #9e9e9e;
+@grey-600: #757575;
+@grey-700: #616161;
+@grey-800: #424242;
+@grey-900: #212121;
+
+@yellow-50: #fffde7;
+@yellow-100: #fff9c4;
+@yellow-200: #fff59d;
+@yellow-300: #fff176;
+@yellow-400: #ffee58;
+@yellow-500: #ffeb3b;
+@yellow-600: #fdd835;
+@yellow-700: #fbc02d;
+@yellow-800: #f9a825;
+
+@amber-100: #ffecb3;
+@amber-200: #ffe082;
+@amber-400: #ffca28;
+@amber-800: #ff8f00;
+
+@orange-50: #fff1cc;
+@orange-100: #fbecc8;
+@orange-500: #ff9800;
+@orange-600: #fb8c00;
+@orange-900: #e65100;
+
+@deep-orange-500: #ff5722;
+@deep-orange-900: #bf360c;
+
+@red-50: #ffebee;
+@red-100: #ffcdd2;
+@red-400: #ef5350;
+@red-500: #f44336;
+@red-700: #d32f2f;
+@red-900: #b71c1c;
+
+@red-a200: #ff5252;
+
+@pink-500: #e91e63;
+
+@purple-100: #e1bee7;
+@purple-200: #ce93d8;
+@purple-500: #9c27b0;
+
+@deep-purple-500: #673ab7;
+
+@indigo-500: #3f51b5;
+
+@cyan-500: #00bcd4;
+
+@blue-50: #e2e4eb;
+@blue-100: #b6bbce;
+@blue-200: #8790ac;
+@blue-300: #5b668c;
+@blue-400: #3b4977;
+@blue-500: #172e64;
+@blue-600: #11285c;
+@blue-700: #082052;
+@blue-800: #011847;
+@blue-900: #000331;
+
+@teal-50: #ddedee;
+@teal-100: #abd3d5;
+@teal-200: #74b7ba;
+@teal-300: #3d9c9e;
+@teal-400: #0e8889;
+@teal-500: #007574;
+@teal-600: #006968;
+@teal-700: #005b59;
+@teal-800: #004b49;
+@teal-900: #00312e;
+
+@green-50: #e8f5e9;
+@green-100: #c8e6c9;
+@green-500: #44c28c;
+@green-600: #3caf57;
+
+@light-green-500: #4caf50;
+@light-green-900: #33691e;
+
+@lime-500: #cddc39;
+
+@brown-500: #795548;
+
+@color--error: @red-400;
+@color--warning: @yellow-700;
+@color--success: @light-green-500;
+
+@color--diff-added: #d8fdc2;
+@color--diff-removed: #fbd0c2;
+@color--diff-changed: #cee3fb;
+
+@color--placeholder: @grey-500;
+@color--placeholder-item-edit-form: @grey-300;
+@color--incomplete: @color--error;
+
+/*----------------------------------------------------------------------------*\
+		Z-indexes
+
+		When you use z-index, include the component in comment so we keep info
+    about hierarchy
+\*----------------------------------------------------------------------------*/
+
+// Local z-indexes where more components may interfere
+@z-n1: -1;
+@z-1: 1;
+@z-2: 2;
+
+// Global z-indexes
+@z-100: 100;
+@z-200: 200;
+@z-500: 500;
+@z-600: 600;
+@z-700: 700;
+@z-800: 800;
+@z-900: 900;
+@z-2400: 2400;
+
+/*----------------------------------------------------------------------------*\
+		Scaffolding
+
+		Settings for some of the most global styles.
+\*----------------------------------------------------------------------------*/
+// Background color for `<body>`.
+@body-bg: @grey-200;
+// Global text color on `<body>`.
+@text-color: @grey-800;
+// Background color for selection highlight
+@selection-background: @blue-100;
+
+/*----------------------------------------------------------------------------*\
+		Grid System
+
+    [1] So media queries don't overlap when required, provide a maximum
+    [2] Containers for different screen sizes
+    [3] Vertical rhythm — vertical spacing between components
+\*----------------------------------------------------------------------------*/
+
+@grid-unit: 4px; // Units related to grid
+@grid-columns: 24; // Number of columns in the grid.
+@grid-gutter-width: (@grid-unit * 4); // Padding between columns
+@grid-gutter-height: (@grid-unit * 4); // Margin between rows
+
+// These values should match constants in uriConstants.ts
+@screen-sm-min: 768px; // Small screen / tablet
+@screen-md-min: 992px; // Medium screen / desktop
+@screen-lg-min: 1281px; // Large screen / wide desktop
+
+@screen-xs-max: (@screen-sm-min - 1); // [1]
+@screen-sm-max: (@screen-md-min - 1); // [1]
+@screen-md-max: (@screen-lg-min - 1); // [1]
+
+@container-sm: 719px; // [2]
+@container-md: 943px; // [2]
+@container-lg: 1232px; // [2]
+
+@vertical-rhythm-200: (@grid-unit * 2); // [3]
+@vertical-rhythm-300: (@grid-unit * 3); // [3]
+@vertical-rhythm-400: (@grid-unit * 4); // [3]
+@vertical-rhythm-800: (@grid-unit * 8); // [3]
+
+/*----------------------------------------------------------------------------*\
+		Typography
+
+    Font family, Line height, Font size and default link styling
+\*----------------------------------------------------------------------------*/
+@import (css) url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,400italic,700italic);
+@font-family-sans-serif: "Source Sans Pro", sans-serif;
+
+@font-family-base: @font-family-sans-serif;
+
+@line-height-110: 1.1;
+@line-height-200: 1.2;
+@line-height-250: 1.25;
+@line-height-500: 1.5;
+@typography-scale-factor: 1.25;
+
+@font-size-300: 12px;
+@font-size-400: 14px;
+@font-size-500: 16px;
+@font-size-600: @font-size-500 * @typography-scale-factor; // 20px
+@font-size-700: @font-size-500 * @typography-scale-factor * @typography-scale-factor; // 25px
+@font-size-800: @font-size-500 * @typography-scale-factor * @typography-scale-factor * @typography-scale-factor; // 31,25px
+@font-size-900: @font-size-500 * @typography-scale-factor * @typography-scale-factor * @typography-scale-factor * @typography-scale-factor; // 39,0625px
+
+@link-color: @blue-500;
+@link-hover-color: darken(@link-color, 15%);
+@link-hover-decoration: underline;
+
+/*----------------------------------------------------------------------------*\
+		Iconography
+
+    Icon sizes, when use icons from icon-variables.less,
+    alias them in icon-classes.less
+\*----------------------------------------------------------------------------*/
+@icon-size-200: 12px;
+@icon-size-300: 16px;
+@icon-size-400: 20px;
+@icon-size-500: 24px;
+@icon-size-600: 32px;
+@icon-size-1200: 80px;
+@icon-size-1600: 100px;
+@icon-size-2000: 120px;
+@icon-size-3000: 160px;
+@icon-size-4000: 200px;
+
+/*----------------------------------------------------------------------------*\
+		Border radius
+\*----------------------------------------------------------------------------*/
+@border-radius-500: 2px; // default, used in the most cases
+@border-radius-600: 4px; // placeholders
+@border-radius-650: 5px; // loader
+
+/*----------------------------------------------------------------------------*\
+		Box shadow for components
+\*----------------------------------------------------------------------------*/
+@box-shadow-200: 0 1px 3px 1px rgba(0, 0, 0, 0.2); // default for cards
+@box-shadow-800: 0 1px 8px 2px rgba(0, 0, 0, 0.2);
+@box-shadow-1000: 0 2px 5px 0 rgba(160, 160, 160, 0.5);
+@box-shadow-1200: 0 1px 12px 3px rgba(0, 0, 0, 0.2);
+@box-shadow-2400: 0 0 12px 1px rgba(0, 0, 0, 0.2);
+
+/*----------------------------------------------------------------------------*\
+		Transitions
+\*----------------------------------------------------------------------------*/
+@transition-easing: cubic-bezier(0.23, 1, 0.32, 1);
+@transition-150: 150ms @transition-easing 0ms;
+@transition-250: 250ms @transition-easing 50ms;
+@transition-350: 350ms @transition-easing 0ms;
+
+/*----------------------------------------------------------------------------*\
+		Cursors
+\*----------------------------------------------------------------------------*/
+@cursor-disabled: not-allowed;
+
+/*----------------------------------------------------------------------------*\
+		Sidebar width
+\*----------------------------------------------------------------------------*/
+@sidebar-width-300: (@grid-unit * 8 * 6);
+@sidebar-width-400: (@grid-unit * 8 * 7);
+@sidebar-width-500: (@grid-unit * 8 * 8);
+@sidebar-width-600: (@grid-unit * 8 * 9);
+@sidebar-width-700: (@grid-unit * 8 * 10);
+
+/*----------------------------------------------------------------------------*\
+		Forms
+\*----------------------------------------------------------------------------*/
+@form--input-height: (@grid-unit *  9);
+
+/*----------------------------------------------------------------------------*\
+		Loader
+\*----------------------------------------------------------------------------*/
+@loader-wrapper-height: 42vh;
+@loader-width: 150px;
+@loader-height: 5px;
+
+/*----------------------------------------------------------------------------*\
+		Dialog
+\*----------------------------------------------------------------------------*/
+@dialog-wrapper-height: 80vh;
+
+/*----------------------------------------------------------------------------*\
+		Element
+\*----------------------------------------------------------------------------*/
+@element-width-480: 480px;
