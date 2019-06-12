@@ -41,7 +41,7 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
       <div className="canvas__sidebar">
         <div className="sidebar sidebar__content">
           <div>
-            <InputGroup className="mb-3">
+            <InputGroup>
               <FormControl
                 placeholder={groupBy}
                 aria-label="Group by"
@@ -50,21 +50,14 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
               />
               <InputGroup.Append>
                 <DropdownButton id="group-by-dropdown" title="Group By">
-                  <Dropdown.Item
-                    onSelect={this._updateGroup(GroupBy.Category)}
-                    href="#/action-1">
-                    Category
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onSelect={this._updateGroup(GroupBy.Links)}
-                    href="#/action-2">
-                    Links
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onSelect={this._updateGroup(GroupBy.Language)}
-                    href="#/action-3">
-                    Language
-                  </Dropdown.Item>
+                  {Object.keys(GroupBy).map((key: keyof typeof GroupBy) => (
+                    <Dropdown.Item
+                      key={key}
+                      onSelect={this._updateGroup(GroupBy[key])}
+                      href={'#/' + key}>
+                      {key}
+                    </Dropdown.Item>
+                  ))}
                 </DropdownButton>
               </InputGroup.Append>
             </InputGroup>
