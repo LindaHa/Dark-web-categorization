@@ -7,9 +7,6 @@ import './styles/index.less';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { App } from './App.tsx';
+import { AppWrappper } from "./AppWrapper.tsx";
 
-ReactDOM.render(
-  <App/>,
-  document.getElementById('app-root')
-);
+ReactDOM.render(<AppWrappper/>, document.getElementById('app-root'));

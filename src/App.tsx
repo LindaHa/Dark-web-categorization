@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Header } from './Header';
-import { Sidebar } from './Sidebar';
+import { Sidebar } from './sidebar/containers/Sidebar';
 import { Content } from './Content';
 
 export class App extends React.PureComponent<any> {
