@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { Provider } from 'react-redux';
 import { App } from './App';
-import { rootReducer } from './_shared/reducers/rootReducer';
+import { rootReducer } from '../reducers/rootReducer';
 
 
 const initialState = {};
