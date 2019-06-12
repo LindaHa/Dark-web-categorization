@@ -1,23 +1,27 @@
 {
   "compilerOptions": {
-    "outDir": "./build/",
-    "sourceMap": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "forceConsistentCasingInFileNames": true,
+    "jsx": "react",
     "module": "commonjs",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "./build/",
+    "sourceMap": true,
+    "strictNullChecks": true,
     "target": "es6",
-    "jsx": "react"
+    "typeRoots": [ "./src/@types", "./node_modules/@types"]
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
     "test/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }

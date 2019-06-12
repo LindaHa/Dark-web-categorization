@@ -8,7 +8,7 @@ const data = {
     {source: 'Alice', target: 'Maiev'},
     {source: 'Alice', target: 'Sally'},
     {source: 'Ben', target: 'Maiev'},
-    {source: 'Harry', targnpmet: 'Ben'},
+    {source: 'Harry', target: 'Ben'},
     {source: 'Harry', target: 'Maiev'},
     {source: 'Harry', target: 'Sally'},
   ]
@@ -33,19 +33,19 @@ const onClickGraph = function () {
   window.alert(`Clicked the graph background`);
 };
 
-const onClickNode = function (nodeId) {
+const onClickNode = function (nodeId: string) {
   window.alert(`Clicked node ${nodeId}`);
 };
 
-const onRightClickNode = function (_event, nodeId) {
+const onRightClickNode = function (_event: object, nodeId: string) {
   window.alert(`Right clicked node ${nodeId}`);
 };
 
-const onClickLink = function (source, target) {
+const onClickLink = function (source: string, target: string) {
   window.alert(`Clicked link between ${source} and ${target}`);
 };
 
-const onRightClickLink = function (_event, source, target) {
+const onRightClickLink = function (_event: object, source: string, target: string) {
   window.alert(`Right clicked link between ${source} and ${target}`);
 };
 

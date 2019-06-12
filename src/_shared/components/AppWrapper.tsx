@@ -9,7 +9,6 @@ import { Provider } from 'react-redux';
 import { App } from './App';
 import { rootReducer } from '../reducers/rootReducer';
 
-
 const initialState = {};
 const store = createStore(
   rootReducer,
