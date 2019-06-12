@@ -11,36 +11,60 @@ export interface ISidebarDataProps {
   readonly groupBy: GroupBy;
 }
 
-export enum GroupBy {
-  Category = 'category',
-  Language = 'language',
-  Links = 'links',
+export interface ISidebarCallbackProps {
+  readonly onGroupUpdate: (value: GroupBy) => void;
 }
 
-export class Sidebar extends React.PureComponent<ISidebarDataProps> {
+type SidebarProps = ISidebarCallbackProps & ISidebarDataProps;
+
+export enum GroupBy {
+  Category = 'Category',
+  Language = 'Language',
+  Links = 'Links',
+}
+
+export class Sidebar extends React.PureComponent<SidebarProps> {
   static displayName = 'Sidebar';
-  static propTypes: PropTypesShape<ISidebarDataProps> = {
+  static propTypes: PropTypesShape<SidebarProps> = {
     groupBy: PropTypes.string.isRequired,
+
+    onGroupUpdate: PropTypes.func.isRequired,
+  };
+
+  _updateGroup = (value: GroupBy) => () => {
+    this.props.onGroupUpdate(value);
   };
 
   render() {
-    const { groupBy } = this.props;
+    const {groupBy} = this.props;
     return (
       <div className="canvas__sidebar">
         <div className="sidebar sidebar__content">
           <div>
             <InputGroup className="mb-3">
               <FormControl
-                placeholder="Links"
+                placeholder={groupBy}
                 aria-label="Group by"
                 aria-describedby="group-by-dropdown"
                 readOnly
               />
               <InputGroup.Append>
-                <DropdownButton id="group-by-dropdown" title={groupBy}>
-                  <Dropdown.Item href="#/action-1">Category</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">Links</Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">Language</Dropdown.Item>
+                <DropdownButton id="group-by-dropdown" title="Group By">
+                  <Dropdown.Item
+                    onSelect={this._updateGroup(GroupBy.Category)}
+                    href="#/action-1">
+                    Category
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onSelect={this._updateGroup(GroupBy.Links)}
+                    href="#/action-2">
+                    Links
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onSelect={this._updateGroup(GroupBy.Language)}
+                    href="#/action-3">
+                    Language
+                  </Dropdown.Item>
                 </DropdownButton>
               </InputGroup.Append>
             </InputGroup>

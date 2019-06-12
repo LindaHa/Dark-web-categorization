@@ -7,10 +7,10 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { Provider } from 'react-redux';
 import { App } from './App';
+import { rootReducer } from './_shared/reducers/rootReducer';
 
 
 const initialState = {};
-const rootReducer = () => initialState;
 const store = createStore(
   rootReducer,
   initialState,

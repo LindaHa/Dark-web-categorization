@@ -162,7 +162,7 @@
 @grid-gutter-width: (@grid-unit * 4); // Padding between columns
 @grid-gutter-height: (@grid-unit * 4); // Margin between rows
 
-// These values should match constants in uriConstants.ts
+// These values should match actionTypes in uriConstants.ts
 @screen-sm-min: 768px; // Small screen / tablet
 @screen-md-min: 992px; // Medium screen / desktop
 @screen-lg-min: 1281px; // Large screen / wide desktop
@@ -208,6 +208,10 @@
 @link-hover-color: darken(@link-color, 15%);
 @link-hover-decoration: underline;
 
+@font-color-teal-primary: @teal-900;
+@font-color-teal-inverted: @teal-50;
+@font-color-blue-primary: @blue-900;
+
 /*----------------------------------------------------------------------------*\
 		Iconography
 
@@ -228,8 +232,7 @@
 /*----------------------------------------------------------------------------*\
 		Border radius
 \*----------------------------------------------------------------------------*/
-@border-radius-450: 2px; // default, used in the most cases
-@border-radius-500: 2px; //
+@border-radius-450: 2px; // default
 @border-radius-600: 4px; // placeholders
 @border-radius-650: 5px; // loader
 
