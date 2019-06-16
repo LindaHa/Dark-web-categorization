@@ -24,7 +24,7 @@ type GraphProps = IGraphCallbackProps & IGraphDataProps;
 export class ContentWithGraph extends React.PureComponent<GraphProps> {
   static displayName = 'ContentWithGraph';
   static propTypes = {
-    nodeIds: ImmutablePropTypes.set.isRequired,
+    nodes: ImmutablePropTypes.map.isRequired,
     links: ImmutablePropTypes.set.isRequired,
 
     onSelectNode: PropTypes.func.isRequired,
@@ -53,9 +53,7 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
   render() {
     const {nodes, links} = this.props;
     const data = {
-      nodes: (!nodes || nodes.size === 0) ?
-        [{id: 'empty'}] :
-        nodes.keySeq().toArray().map((nodeId: Uuid) => ({id: nodeId})),
+      nodes: nodes.keySeq().toArray().map((nodeId: Uuid) => ({id: nodeId})),
       links: links.map((link: ILink) => link.toObject()),
     };
 

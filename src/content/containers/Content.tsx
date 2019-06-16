@@ -9,7 +9,7 @@ import {
 import { IState } from '../../_shared/models/IState';
 
 const mapStateToProps = (state: IState): IContentDataProps => ({
-  isFetching: state.isFetchingNodes,
+  areNodesReady: state.nodes && !state.nodes.isEmpty(),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): IContentCallbackProps => ({

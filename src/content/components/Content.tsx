@@ -7,7 +7,7 @@ export interface IContentCallbackProps {
 }
 
 export interface IContentDataProps {
-  isFetching: boolean;
+  areNodesReady: boolean;
 }
 
 type ContentProps = IContentCallbackProps & IContentDataProps;
@@ -17,7 +17,7 @@ export class Content extends React.PureComponent<ContentProps> {
   static propTypes = {
     getNodes: PropTypes.func.isRequired,
 
-    isFetching: PropTypes.bool.isRequired,
+    areNodesReady: PropTypes.bool.isRequired,
   };
 
   componentDidMount(): void {
@@ -25,10 +25,10 @@ export class Content extends React.PureComponent<ContentProps> {
   }
 
   render() {
-    const {isFetching} = this.props;
+    const {areNodesReady} = this.props;
     return (
       <section className="canvas__content">
-        {isFetching ? 'I am fetching' : <Graph/>}
+        {areNodesReady ? <Graph/> : 'I am fetching'}
       </section>
     );
   }
