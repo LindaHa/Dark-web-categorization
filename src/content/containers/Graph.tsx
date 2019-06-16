@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import {
   IGraphDataProps,
-  Playground
-} from '../components/playground';
+  ContentWithGraph
+} from '../components/ContentWithGraph';
 import { IState } from '../../_shared/models/IState';
 
 const mapStateToProps = (state: IState): IGraphDataProps => ({
@@ -10,4 +10,4 @@ const mapStateToProps = (state: IState): IGraphDataProps => ({
   links: state.links,
 });
 
-export const Graph = connect(mapStateToProps)(Playground);
+export const Graph = connect(mapStateToProps)(ContentWithGraph);

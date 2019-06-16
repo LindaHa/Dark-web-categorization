@@ -8,28 +8,6 @@ import {
 import { ILink } from '../../models/link';
 import { IPage } from '../../models/page';
 
-// graph payload (with minimalist structure)
-// const data = {
-//   nodes: [
-//     {id: 'Harry'},
-//     {id: 'Sally'},
-//     {id: 'Alice'},
-//     {id: 'Ben'},
-//     {id: 'Maiev'},
-//   ],
-//   links: [
-//     {source: 'Alice', target: 'Maiev'},
-//     {source: 'Alice', target: 'Sally'},
-//     {source: 'Ben', target: 'Maiev'},
-//     {source: 'Harry', target: 'Ben'},
-//     {source: 'Harry', target: 'Maiev'},
-//     {source: 'Harry', target: 'Sally'},
-//   ]
-// };
-//
-// export interface IGraphCallbackProps {
-//   readonly getNodes: () => Promise<Action>;
-// }
 export interface IGraphDataProps {
   readonly links: Immutable.Set<ILink>;
   readonly nodes: Immutable.Map<Uuid, IPage>;
@@ -51,8 +29,8 @@ const baseConfig = {
   }
 };
 
-export class Playground extends React.PureComponent<GraphProps> {
-  static displayName = 'Playground';
+export class ContentWithGraph extends React.PureComponent<GraphProps> {
+  static displayName = 'ContentWithGraph';
   static propTypes = {
     nodeIds: ImmutablePropTypes.set,
     links: ImmutablePropTypes.set,
@@ -96,7 +74,7 @@ export class Playground extends React.PureComponent<GraphProps> {
 
     return (
       <Graph
-        id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
+        id="dark-web-graph" // id is mandatory, if no id is defined rd3g will throw an error
         data={data}
         config={myConfig}
         onClickNode={this._onClickNode}
