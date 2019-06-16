@@ -4,10 +4,12 @@ import { IState } from '../models/IState';
 import { nodesReducer } from '../../content/reducers/nodesReducer';
 import { linksReducer } from '../../content/reducers/linksReducer';
 import { isFetchingNodesReducer } from '../../content/reducers/isFetchingNodesReducer';
+import { selectedNodeReducer } from './selectedNodeReducer';
 
 export const rootReducer = combineReducers<IState>({
   groupBy: groupByReducer,
   links: linksReducer,
   nodes: nodesReducer,
-  isFetchingNodes: isFetchingNodesReducer
+  isFetchingNodes: isFetchingNodesReducer,
+  selectedNode: selectedNodeReducer,
 });

@@ -8,4 +8,5 @@ export interface IState {
   readonly isFetchingNodes: boolean;
   readonly links: Immutable.Set<ILink>;
   readonly nodes: Immutable.Map<Uuid, IPage>;
+  readonly selectedNode: Uuid;
 }

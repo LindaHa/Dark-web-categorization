@@ -1,6 +1,7 @@
-import * as React from 'react';
-import * as ImmutablePropTypes from 'immutable-prop-types';
 import * as Immutable from 'immutable';
+import * as ImmutablePropTypes from 'immutable-prop-types';
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import {
   Graph,
   IGraphNode
@@ -14,13 +15,19 @@ export interface IGraphDataProps {
   readonly nodes: Immutable.Map<Uuid, IPage>;
 }
 
-type GraphProps = IGraphDataProps;
+export interface IGraphCallbackProps {
+  readonly onSelectNode: (nodeId: Uuid) => Action;
+}
+
+type GraphProps = IGraphCallbackProps & IGraphDataProps;
 
 export class ContentWithGraph extends React.PureComponent<GraphProps> {
   static displayName = 'ContentWithGraph';
   static propTypes = {
-    nodeIds: ImmutablePropTypes.set,
-    links: ImmutablePropTypes.set,
+    nodeIds: ImmutablePropTypes.set.isRequired,
+    links: ImmutablePropTypes.set.isRequired,
+
+    onSelectNode: PropTypes.func.isRequired,
   };
 
   _onClickGraph = () => {
@@ -28,7 +35,7 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
   };
 
   _onClickNode = (nodeId: string) => {
-    window.alert(`Clicked node ${nodeId}`);
+    this.props.onSelectNode(nodeId);
   };
 
   _onRightClickNode = (_event: object, nodeId: string) => {
