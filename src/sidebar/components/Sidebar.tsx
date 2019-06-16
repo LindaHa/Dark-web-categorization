@@ -1,14 +1,12 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import {
-  DropdownButton,
-  FormControl,
-  InputGroup,
-  Dropdown,
-} from 'react-bootstrap';
+import { SearchBar } from './SearchBar';
+import { GroupBySelector } from './GroupBySelector';
+import { NodeInfo } from '../containers/NodeInfo';
 
 export interface ISidebarDataProps {
   readonly groupBy: GroupBy;
+  readonly selectedNodeId: Uuid;
 }
 
 export interface ISidebarCallbackProps {
@@ -27,6 +25,7 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
   static displayName = 'Sidebar';
   static propTypes: PropTypesShape<SidebarProps> = {
     groupBy: PropTypes.string.isRequired,
+    selectedNodeId: PropTypes.string.isRequired,
 
     onGroupUpdate: PropTypes.func.isRequired,
   };
@@ -36,44 +35,18 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
   };
 
   render() {
-    const {groupBy} = this.props;
+    const {groupBy, selectedNodeId} = this.props;
     return (
       <div className="canvas__sidebar">
         <div className="sidebar sidebar__content">
           <div>
-            <InputGroup>
-              <FormControl
-                placeholder={groupBy}
-                aria-label="Group by"
-                aria-describedby="group-by-dropdown"
-                readOnly
-              />
-              <InputGroup.Append>
-                <DropdownButton id="group-by-dropdown" title="Group By">
-                  {Object.keys(GroupBy).map((key: keyof typeof GroupBy) => (
-                    <Dropdown.Item
-                      key={key}
-                      onSelect={this._updateGroup(GroupBy[key])}
-                      href={'#/' + key}>
-                      {key}
-                    </Dropdown.Item>
-                  ))}
-                </DropdownButton>
-              </InputGroup.Append>
-            </InputGroup>
+            <GroupBySelector
+              groupBy={groupBy}
+              onGroupByUpdate={this._updateGroup}
+            />
 
-            <InputGroup className="mb-3">
-              <FormControl
-                placeholder="e.g. kitten.onion"
-                aria-label="Search"
-                aria-describedby="search-icon"
-              />
-              <InputGroup.Append>
-                <InputGroup.Text id="search-icon">
-                  <i className="fas fa-search"/>
-                </InputGroup.Text>
-              </InputGroup.Append>
-            </InputGroup>
+            <SearchBar/>
+            {selectedNodeId && <NodeInfo/>}
           </div>
         </div>
       </div>

@@ -11,6 +11,7 @@ import { IState } from '../../_shared/models/IState';
 
 const mapStateToProps = (state: IState): ISidebarDataProps => ({
   groupBy: state.groupBy,
+  selectedNodeId: state.selectedNode,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): ISidebarCallbackProps => ({

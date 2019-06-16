@@ -58,7 +58,6 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
         nodes.keySeq().toArray().map((nodeId: Uuid) => ({id: nodeId})),
       links: links.map((link: ILink) => link.toObject()),
     };
-    console.log(JSON.stringify(data));
 
     const myConfig = JSON.parse(JSON.stringify(graphConfig));
     myConfig.node.labelProperty = (node: IGraphNode): string => {
