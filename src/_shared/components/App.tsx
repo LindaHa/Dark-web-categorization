@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Header } from './Header';
 import { Sidebar } from '../../sidebar/containers/Sidebar';
-import { Content } from '../../content/Content';
+import { Content } from '../../content/containers/Content';
 
-export class App extends React.PureComponent<any> {
+export class App extends React.PureComponent {
   static displayName = 'App';
 
   render() {

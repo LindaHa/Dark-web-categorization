@@ -1,7 +1,7 @@
 import * as Immutable from 'immutable';
 
 export interface IPageData {
-  readonly category: string;
+  readonly categories: Immutable.Set<Uuid>;
   readonly description: string;
   readonly id: Uuid;
   readonly language: string;
@@ -13,7 +13,7 @@ export interface IPage extends IPageData, IRecordFunctions<IPageData, IPage> {
 }
 
 const recordData: IPageData = {
-  category: '',
+  categories: Immutable.Set<Uuid>(),
   description: '',
   id: '',
   language: '',
@@ -22,7 +22,7 @@ const recordData: IPageData = {
 };
 
 export class Page extends Immutable.Record(recordData) implements IPage {
-  readonly category: string;
+  readonly categories: Immutable.Set<Uuid>;
   readonly description: string;
   readonly id: Uuid;
   readonly language: string;
@@ -39,28 +39,28 @@ export class Page extends Immutable.Record(recordData) implements IPage {
 }
 
 export interface IPageServerModel {
-  readonly category: string;
+  readonly categories: string;
   readonly description: string;
   readonly id: Uuid;
   readonly language: string;
-  readonly links: Immutable.Set<Uuid>;
+  readonly linksTo: string;
   readonly url: string;
 }
 
 const userServerModelData: IPageServerModel = {
-  category: '',
+  categories: '',
   description: '',
   id: '',
   language: '',
-  links: Immutable.Set<Uuid>(),
+  linksTo: '',
   url: '',
 };
 
 export class PageServerModel extends Immutable.Record(userServerModelData) implements IPageServerModel {
-  readonly category: string;
+  readonly categories: string;
   readonly description: string;
   readonly id: Uuid;
   readonly language: string;
-  readonly links: Immutable.Set<Uuid>;
+  readonly linksTo: '';
   readonly url: string;
 }

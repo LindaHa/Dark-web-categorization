@@ -1,9 +1,8 @@
 import * as Immutable from 'immutable';
 
 export interface ILinkData {
-  readonly dest: Uuid;
-  readonly directional: boolean;
-  readonly id: Uuid;
+  readonly target: Uuid;
+  // readonly id: Uuid;
   readonly source: Uuid;
 }
 
@@ -11,16 +10,14 @@ export interface ILink extends ILinkData, IRecordFunctions<ILinkData, ILink> {
 }
 
 const recordData: ILinkData = {
-  dest: '',
-  directional: true,
-  id: '',
+  target: '',
+  // id: '',
   source: '',
 };
 
 export class Link extends Immutable.Record(recordData) implements ILink {
-  readonly dest: Uuid;
-  readonly directional: boolean;
-  readonly id: Uuid;
+  readonly target: Uuid;
+  // readonly id: Uuid;
   readonly source: Uuid;
 
   toObject(): ILinkData {
@@ -33,22 +30,19 @@ export class Link extends Immutable.Record(recordData) implements ILink {
 }
 
 export interface ILinkServerModel {
-  readonly dest: Uuid;
-  readonly directional: boolean;
+  readonly target: Uuid;
   readonly id: Uuid;
   readonly source: Uuid;
 }
 
 const userServerModelData: ILinkServerModel = {
-  dest: '',
-  directional: true,
+  target: '',
   id: '',
   source: '',
 };
 
 export class LinkServerModel extends Immutable.Record(userServerModelData) implements ILinkServerModel {
-  readonly dest: Uuid;
-  readonly directional: boolean;
+  readonly target: Uuid;
   readonly id: Uuid;
   readonly source: Uuid;
 }

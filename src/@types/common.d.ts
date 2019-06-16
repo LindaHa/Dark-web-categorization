@@ -20,6 +20,9 @@ interface IRecordFunctions<TRecordData, TRecordFunctions> {
   with: (data: Partial<TRecordData>) => TRecordFunctions & TRecordData;
 }
 
+
+declare module 'immutable-prop-types';
+
 /**
  * Type that ensures you do not forget to add a property to React.propTypes
  * when it is defined in IProps of the component.
