@@ -7,6 +7,7 @@ import {
 } from 'react-d3-graph';
 import { ILink } from '../../models/link';
 import { IPage } from '../../models/page';
+import { graphConfig } from '../utils/graphConfig';
 
 export interface IGraphDataProps {
   readonly links: Immutable.Set<ILink>;
@@ -14,20 +15,6 @@ export interface IGraphDataProps {
 }
 
 type GraphProps = IGraphDataProps;
-
-// the graph configuration, you only need to pass down properties
-// that you want to override, otherwise default ones will be used
-const baseConfig = {
-  nodeHighlightBehavior: true,
-  node: {
-    color: 'lightgreen',
-    size: 120,
-    highlightStrokeColor: 'blue'
-  },
-  link: {
-    highlightColor: 'lightblue'
-  }
-};
 
 export class ContentWithGraph extends React.PureComponent<GraphProps> {
   static displayName = 'ContentWithGraph';
@@ -61,32 +48,34 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
     const data = {
       nodes: (!nodes || nodes.size === 0) ?
         [{id: 'empty'}] :
-        nodes.keySeq().toArray().map((nodeId: Uuid) => ({ id: nodeId })),
+        nodes.keySeq().toArray().map((nodeId: Uuid) => ({id: nodeId})),
       links: links.map((link: ILink) => link.toObject()),
     };
     console.log(JSON.stringify(data));
 
-    const myConfig = JSON.parse(JSON.stringify(baseConfig));
+    const myConfig = JSON.parse(JSON.stringify(graphConfig));
     myConfig.node.labelProperty = (node: IGraphNode): string => {
       const clientNode = nodes.get(node.id);
       return clientNode ? clientNode.url : node.id;
     };
 
     return (
-      <Graph
-        id="dark-web-graph" // id is mandatory, if no id is defined rd3g will throw an error
-        data={data}
-        config={myConfig}
-        onClickNode={this._onClickNode}
-        onRightClickNode={this._onRightClickNode}
-        onClickGraph={this._onClickGraph}
-        onClickLink={this._onClickLink}
-        onRightClickLink={this._onRightClickLink}
-        // onMouseOverNode={onMouseOverNode}
-        // onMouseOutNode={onMouseOutNode}
-        // onMouseOverLink={onMouseOverLink}
-        // onMouseOutLink={onMouseOutLink}
-      />
+      <div>
+        <Graph
+          id="dark-web-graph" // id is mandatory, if no id is defined rd3g will throw an error
+          data={data}
+          config={myConfig}
+          onClickNode={this._onClickNode}
+          onRightClickNode={this._onRightClickNode}
+          onClickGraph={this._onClickGraph}
+          onClickLink={this._onClickLink}
+          onRightClickLink={this._onRightClickLink}
+          // onMouseOverNode={onMouseOverNode}
+          // onMouseOutNode={onMouseOutNode}
+          // onMouseOverLink={onMouseOverLink}
+          // onMouseOutLink={onMouseOutLink}
+        />
+      </div>
     );
   }
 }

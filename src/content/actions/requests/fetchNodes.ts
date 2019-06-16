@@ -6,7 +6,7 @@ import {
   requestNodes,
   succeedToFetchNodes
 } from '../nodesActionCreators';
-import { PagesRoute } from '../../../_shared/containers/routes';
+import { PagesRoute } from '../../../_shared/constants/routes';
 import { checkStatus } from '../../../_shared/utils/checkStatus';
 
 const fetchNodesFactoryDependencies = {
