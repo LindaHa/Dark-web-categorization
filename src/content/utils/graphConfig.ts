@@ -28,5 +28,5 @@ export const graphConfig = {
   },
 
   height: 700,
-  width: 400,
+  width: 700,
 };

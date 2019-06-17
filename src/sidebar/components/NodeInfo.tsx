@@ -22,7 +22,10 @@ export class NodeInfo extends React.PureComponent<NodeInfoProps> {
   };
 
   render() {
-    const {selectedNode, nodeLinks} = this.props;
+    const {selectedNode: {url, categories}, nodeLinks} = this.props;
+    const areCategoriesNotEmpty = categories && !categories.isEmpty();
+    const areLinkNotEmpty = nodeLinks && !nodeLinks.isEmpty();
+
     return (
       <div>
         <div className="sidebar__info-group">
@@ -30,33 +33,39 @@ export class NodeInfo extends React.PureComponent<NodeInfoProps> {
             Url
           </div>
           <div className="sidebar__info-group-value-item">
-            {selectedNode.url}
+            {url}
           </div>
 
         </div>
-        <div className="sidebar__info-group">
-          <div className="sidebar__info-group-label-item">Categories</div>
-          {selectedNode.categories.map((category: string, index: string) =>
-            <div
-              key={index}
-              className="sidebar__info-group-value-item"
-            >
-              {category}
-            </div>
-          )}
-        </div>
+        {
+          areCategoriesNotEmpty &&
+          <div className="sidebar__info-group">
+            <div className="sidebar__info-group-label-item">Categories</div>
+            {categories.map((category: string, index: string) =>
+              <div
+                key={index}
+                className="sidebar__info-group-value-item"
+              >
+                {category}
+              </div>
+            )}
+          </div>
+        }
 
-        <div className="sidebar__info-group">
-          <div className="sidebar__info-group-label-item">Linked pages</div>
-          {nodeLinks.map((link: string) =>
-            <div
-              key={link}
-              className="sidebar__info-group-value-item"
-            >
-              {link}
-            </div>
-          )}
-        </div>
+        {
+          areLinkNotEmpty &&
+          <div className="sidebar__info-group">
+            <div className="sidebar__info-group-label-item">Linked pages</div>
+            {nodeLinks.map((link: string) =>
+              <div
+                key={link}
+                className="sidebar__info-group-value-item"
+              >
+                {link}
+              </div>
+            )}
+          </div>
+        }
       </div>
     );
   }
