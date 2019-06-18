@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Graph } from '../containers/Graph';
 import * as PropTypes from 'prop-types';
+import { Spinner } from '../../_shared/components/Spinner';
 
 export interface IContentCallbackProps {
   getNodes: () => Promise<Action>;
@@ -28,7 +29,7 @@ export class Content extends React.PureComponent<ContentProps> {
     const {areNodesReady} = this.props;
     return (
       <section className="canvas__content">
-        {areNodesReady ? <Graph/> : 'I am fetching'}
+        {areNodesReady ? <Graph/> : <Spinner/>}
       </section>
     );
   }

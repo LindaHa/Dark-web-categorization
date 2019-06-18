@@ -1,0 +1,26 @@
+.spinner {
+  border: solid @grid-unit @blue-500;
+  border-radius: 50%;
+  height: @grid-unit * 15;
+  width: @grid-unit * 15;
+
+  transition: border-top 0.5s ease;
+  animation: spinWithColor 2s linear infinite;
+}
+
+@keyframes spinWithColor {
+  0% {
+    border-bottom: solid @grid-unit;
+    border-color: @teal-600;
+    transform: rotate(0deg);
+  }
+  50% {
+    border-bottom: solid @grid-unit * 4;
+    border-color: @blue-400;
+  }
+  100% {
+    border-bottom: solid @grid-unit;
+    border-color: @teal-600;
+    transform: rotate(360deg);
+  }
+}
