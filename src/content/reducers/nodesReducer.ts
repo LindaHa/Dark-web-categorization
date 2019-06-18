@@ -1,5 +1,8 @@
 import * as Immutable from 'immutable';
-import { Nodes_GetAll_Success } from '../actionTypes/nodesActionTypes';
+import {
+  Nodes_GetAll_Success,
+  Nodes_GetFiltered_Request
+} from '../actionTypes/nodesActionTypes';
 import {
   IPage,
   IPageServerModel
@@ -16,6 +19,14 @@ export const nodesReducer = (prevState: Immutable.Map<Uuid, IPage> = Immutable.M
       );
 
       return Immutable.Map<Uuid, IPage>(clientNodes);
+    }
+
+    case Nodes_GetFiltered_Request: {
+      const { searchPhrase } = action.payload;
+      const serverNode = prevState.filter((value: IPage) =>
+        value.url.includes(searchPhrase));
+
+      return serverNode;
     }
 
     default:

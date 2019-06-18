@@ -10,6 +10,7 @@ export interface ISidebarDataProps {
 }
 
 export interface ISidebarCallbackProps {
+  readonly onFilterSearch: (searchPhrase: string) => void;
   readonly onGroupUpdate: (value: GroupBy) => void;
 }
 
@@ -27,11 +28,16 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
     groupBy: PropTypes.string.isRequired,
     selectedNodeId: PropTypes.string.isRequired,
 
+    onFilterSearch: PropTypes.func.isRequired,
     onGroupUpdate: PropTypes.func.isRequired,
   };
 
   _updateGroup = (value: GroupBy) => () => {
     this.props.onGroupUpdate(value);
+  };
+
+  _filterNodes = (searchPhrase: string) => {
+    this.props.onFilterSearch(searchPhrase);
   };
 
   render() {
@@ -45,7 +51,7 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
               onGroupByUpdate={this._updateGroup}
             />
 
-            <SearchBar/>
+            <SearchBar onSearch={this._filterNodes}/>
             {selectedNodeId && <NodeInfo/>}
           </div>
         </div>

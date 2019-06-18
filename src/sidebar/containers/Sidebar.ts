@@ -8,6 +8,7 @@ import {
 } from '../components/Sidebar';
 import { updateGroupBy } from '../../_shared/actions/groupByActionCreators';
 import { IState } from '../../_shared/models/IState';
+import { requestFilteredNodes } from '../../content/actions/nodesActionCreators';
 
 const mapStateToProps = (state: IState): ISidebarDataProps => ({
   groupBy: state.groupBy,
@@ -15,6 +16,7 @@ const mapStateToProps = (state: IState): ISidebarDataProps => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): ISidebarCallbackProps => ({
+  onFilterSearch: (searchPhrase: string) => dispatch(requestFilteredNodes(searchPhrase)),
   onGroupUpdate: (value: GroupBy) => dispatch(updateGroupBy(value)),
 });
 
