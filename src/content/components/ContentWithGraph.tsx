@@ -30,10 +30,6 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
     onSelectNode: PropTypes.func.isRequired,
   };
 
-  _onClickGraph = () => {
-    window.alert(`Clicked the graph background`);
-  };
-
   _onClickNode = (nodeId: string) => {
     this.props.onSelectNode(nodeId);
   };
@@ -42,19 +38,11 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
     window.alert(`Right clicked node ${nodeId}`);
   };
 
-  _onClickLink = (source: string, target: string) => {
-    window.alert(`Clicked link between ${source} and ${target}`);
-  };
-
-  _onRightClickLink = (_event: object, source: string, target: string) => {
-    window.alert(`Right clicked link between ${source} and ${target}`);
-  };
-
   render() {
     const {nodes, links} = this.props;
     const data = {
       nodes: nodes.keySeq().toArray().map((nodeId: Uuid) => ({id: nodeId})),
-      links: links.map((link: ILink) => link.toObject()),
+      links: links.map((link: ILink) => link.toObject()).toArray(),
     };
 
     const myConfig = JSON.parse(JSON.stringify(graphConfig));
@@ -71,13 +59,6 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
           config={myConfig}
           onClickNode={this._onClickNode}
           onRightClickNode={this._onRightClickNode}
-          onClickGraph={this._onClickGraph}
-          onClickLink={this._onClickLink}
-          onRightClickLink={this._onRightClickLink}
-          // onMouseOverNode={onMouseOverNode}
-          // onMouseOutNode={onMouseOutNode}
-          // onMouseOverLink={onMouseOverLink}
-          // onMouseOutLink={onMouseOutLink}
         />
       </div>
     );

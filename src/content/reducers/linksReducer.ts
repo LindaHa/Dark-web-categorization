@@ -25,7 +25,7 @@ export const linksReducer = (prevState: Immutable.Set<ILink> = Immutable.Set(), 
     case Nodes_GetFiltered_Request: {
       const { searchPhrase } = action.payload;
       const nodes = mockPages
-        .filter((value: IPage) => value.url.startsWith(searchPhrase));
+        .filter((value: IPage) => value.url.includes(searchPhrase));
       const links = getLinksForNodes(nodes);
 
       return links;

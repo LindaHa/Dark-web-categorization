@@ -8,6 +8,7 @@ import {
   IPageServerModel
 } from '../../models/page';
 import { convertServerToViewPageModel } from '../utils/convertNodeModel';
+import { mockPages } from './mockData';
 
 export const nodesReducer = (prevState: Immutable.Map<Uuid, IPage> = Immutable.Map<Uuid, IPage>(), action: Action)
   : Immutable.Map<Uuid, IPage> => {
@@ -22,11 +23,16 @@ export const nodesReducer = (prevState: Immutable.Map<Uuid, IPage> = Immutable.M
     }
 
     case Nodes_GetFiltered_Request: {
-      const { searchPhrase } = action.payload;
-      const serverNode = prevState.filter((value: IPage) =>
-        value.url.includes(searchPhrase));
+      const {searchPhrase} = action.payload;
+      let realNodes = Immutable.Map<Uuid, IPage>();
+      const nodes = mockPages
+        .filter((value: IPage) => value.url.includes(searchPhrase));
 
-      return serverNode;
+      nodes.forEach((value: IPage) => {
+        realNodes = realNodes.set(value.id, value);
+      });
+
+      return realNodes;
     }
 
     default:

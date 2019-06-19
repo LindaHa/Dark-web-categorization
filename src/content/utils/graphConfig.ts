@@ -18,7 +18,8 @@ export const graphConfig = {
     highlightColor: highlightNodeColor,
 
     fontColor: primaryFontColor,
-    highlightFontSize: 10,
+    highlightFontSize: 16,
+    fontSize: 13,
   },
 
   link: {
@@ -28,5 +29,5 @@ export const graphConfig = {
   },
 
   height: 700,
-  width: 700,
+  width: 1000,
 };
