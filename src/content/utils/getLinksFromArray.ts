@@ -6,6 +6,14 @@ import {
 } from '../../models/link';
 import { IPage } from '../../models/page';
 import { IComponent } from '../../models/component';
+import { fakeNodeId } from './graphConfig';
+
+// This link will link nodes without any links to a Fake node
+// React-3d-graph doesn't support proper rendering of orphaned nodes
+const fakeLink = (nodeUrl: Url) => new Link({
+  source: fakeNodeId,
+  target: nodeUrl,
+});
 
 const getLinksFromArray = (_idGenerator: () => Uuid) =>
   (nodeId: Uuid, links: Immutable.Set<Url>): Immutable.Set<ILink> => {
@@ -21,7 +29,8 @@ const getLinksFromArray = (_idGenerator: () => Uuid) =>
       }
     });
 
-    return wholeLinks;
+    // If the node has no children insert a link to the Fake node
+    return wholeLinks.isEmpty() ? wholeLinks.add(fakeLink(nodeId)) : wholeLinks;
   };
 
 export const getLinksForNodes = (nodes: Immutable.Set<IPage | IComponent>): Immutable.Set<ILink> => {

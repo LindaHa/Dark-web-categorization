@@ -43,6 +43,10 @@ export const graphConfig = {
 };
 
 export const getLabelConfigForComponents = (nodes: Immutable.Map<string, IComponent>) => (node: IGraphNode): string => {
+  // The fake node will have a no label
+  if (node.id === fakeNodeId) {
+    return '';
+  }
   const clientNode = nodes.get(node.id);
   if (!clientNode) {
     return node.id;
@@ -61,3 +65,19 @@ export const getLabelConfigForPages = (nodes: Immutable.Map<string, IPage>) => (
   const clientNode = nodes.get(node.id);
   return clientNode ? clientNode.url : node.id;
 };
+
+// The fake node and links to that node will not be visible.
+// This is because react-d3-graph doesn't support orphaned nodes - nodes without any links
+// Now orphaned nodes are displayed properly and not in the upper left corner all in the same spot
+const Min_Value = Number.MIN_VALUE;
+export const fakeNodeId = '00000000-0000-0000-0000-000000000000';
+export const fakeNode = {
+  id: fakeNodeId,
+  size: Min_Value,
+};
+export const getFakeLink = (target: Url) => ({
+  source: fakeNodeId,
+  target,
+  opacity: Min_Value,
+  strokeWidth: Min_Value,
+});

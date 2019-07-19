@@ -5,6 +5,9 @@ import * as React from 'react';
 import { Graph } from 'react-d3-graph';
 import { ILink } from '../../models/link';
 import {
+  fakeNode,
+  fakeNodeId,
+  getFakeLink,
   getLabelConfigForComponents,
   getLabelConfigForPages,
   graphConfig
@@ -45,9 +48,13 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
 
   render() {
     const {nodes, links, nodeMode} = this.props;
+    const adjustedNodes = nodes.keySeq().toArray().map((nodeUrl: Uuid) => ({id: nodeUrl}));
+    adjustedNodes.push(fakeNode);
     const data = {
-      nodes: nodes.keySeq().toArray().map((nodeId: Uuid) => ({id: nodeId})),
-      links: links.map((link: ILink) => link.toObject()).toArray(),
+      nodes: adjustedNodes,
+      links: links.map((link: ILink) => {
+        return link.source === fakeNodeId ? getFakeLink(link.target) : link.toObject();
+      }).toArray(),
     };
 
     const myConfig = JSON.parse(JSON.stringify(graphConfig));

@@ -8,13 +8,16 @@ import {
 import { IState } from '../../_shared/models/IState';
 import { selectNode } from '../../_shared/actions/selectedNodeActionCreators';
 import { getLinksForNodes } from '../utils/getLinksFromArray';
+import { Component } from '../../models/component';
+import { fakeNodeId } from '../utils/graphConfig';
 
 const mapStateToProps = (state: IState): IGraphDataProps => {
   const { components, mode } = state.nodes;
   const links = getLinksForNodes(components.toSet());
 
   return {
-    nodes: components,
+    // Add a fake node which will not be visible so orphaned nodes are displayed properly
+    nodes: components.set(fakeNodeId, new Component({id: fakeNodeId})),
     links,
     nodeMode: mode,
   };
