@@ -1,6 +1,6 @@
 declare module 'react-d3-graph' {
   class Graph extends React.Component<{
-    readonly id: string; // id is mandatory, if no id is defined rd3g will throw an error
+    readonly id: string; // name is mandatory, if no name is defined rd3g will throw an error
     data: any;
     config: any;
     onClickNode?: Function;

@@ -11,7 +11,7 @@
 //
 // const fetchNodesFactoryDependencies = {
 //   fetchBegin: requestFilteredNodes,
-//   success: succeedToFetchFilteredNodes,
+//   nodesSuccess: succeedToFetchFilteredNodes,
 //   error: failToFetchFilteredNodes,
 //   fetch: () => isoFetch(PagesRoute, {
 //     method: 'GET',
@@ -25,8 +25,8 @@
 //
 // interface IFetchNodesFactoryDependencies {
 //   readonly fetchBegin: () => Action;
-//   readonly success: (json: object) => Action;
-//   readonly error: (id: string, error: Error) => Action;
+//   readonly nodesSuccess: (json: object) => Action;
+//   readonly error: (name: string, error: Error) => Action;
 //   readonly fetch: () => Promise<Response>;
 //   readonly idGenerator: () => string;
 // }
@@ -38,7 +38,7 @@
 //
 //     return dependencies.fetch()
 //       .then(response => response.json())
-//       .then(nodes => dispatch(dependencies.success(nodes)))
+//       .then(nodes => dispatch(dependencies.nodesSuccess(nodes)))
 //       .catch((error: Error) => dispatch(dependencies.error(errorId, error)));
 //   };
 //

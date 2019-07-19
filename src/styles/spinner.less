@@ -1,3 +1,5 @@
+@spinner-teal: @teal-600;
+
 .spinner {
   border: solid @grid-unit @blue-500;
   border-radius: 50%;
@@ -11,7 +13,7 @@
 @keyframes spinWithColor {
   0% {
     border-bottom: solid @grid-unit;
-    border-color: @teal-600;
+    border-color: @spinner-teal;
     transform: rotate(0deg);
   }
   50% {
@@ -20,7 +22,7 @@
   }
   100% {
     border-bottom: solid @grid-unit;
-    border-color: @teal-600;
+    border-color: @spinner-teal;
     transform: rotate(360deg);
   }
 }

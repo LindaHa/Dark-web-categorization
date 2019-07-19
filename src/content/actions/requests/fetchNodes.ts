@@ -4,6 +4,7 @@ import { Dispatch } from 'redux';
 import {
   failToFetchNodes,
   requestNodes,
+  succeedToFetchComponents,
   succeedToFetchNodes
 } from '../nodesActionCreators';
 import { PagesRoute } from '../../../_shared/constants/routes';
@@ -11,7 +12,8 @@ import { checkStatus } from '../../../_shared/utils/checkStatus';
 
 const fetchNodesFactoryDependencies = {
   fetchBegin: requestNodes,
-  success: succeedToFetchNodes,
+  nodesSuccess: succeedToFetchNodes,
+  componentsSuccess: succeedToFetchComponents,
   error: failToFetchNodes,
   fetch: () => isoFetch(PagesRoute, {
     method: 'GET',
@@ -25,7 +27,8 @@ const fetchNodesFactoryDependencies = {
 
 interface IFetchNodesFactoryDependencies {
   readonly fetchBegin: () => Action;
-  readonly success: (json: object) => Action;
+  readonly nodesSuccess: (json: object) => Action;
+  readonly componentsSuccess: (json: object) => Action;
   readonly error: (id: string, error: Error) => Action;
   readonly fetch: () => Promise<Response>;
   readonly idGenerator: () => string;
@@ -37,8 +40,13 @@ export const fetchNodesFactory = (dependencies: IFetchNodesFactoryDependencies) 
     const errorId = dependencies.idGenerator();
 
     return dependencies.fetch()
-      .then(response => response.json())
-      .then(nodes => dispatch(dependencies.success(nodes)))
+      .then(response => {
+        return response.json();
+      })
+      // .then(nodes => nodes.lowestLevel ? dispatch(dependencies.nodesSuccess(nodes)) : dispatch(dependencies.componentsSuccess(nodes)))
+      .then(nodes => {
+        return dispatch(dependencies.componentsSuccess(nodes));
+      })
       .catch((error: Error) => dispatch(dependencies.error(errorId, error)));
   };
 

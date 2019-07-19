@@ -3,9 +3,10 @@ import * as Immutable from 'immutable';
 import * as PropTypes from 'prop-types';
 import * as ImmutablePropTypes from 'immutable-prop-types';
 import { IPage } from '../../models/page';
+import { IComponent } from '../../models/component';
 
 export interface INodeInfoDataProps {
-  readonly selectedNode: IPage;
+  readonly selectedNode: IPage | IComponent;
   readonly nodeLinks: Immutable.Set<string>;
 }
 

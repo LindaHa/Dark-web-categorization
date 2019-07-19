@@ -2,7 +2,7 @@ import * as Immutable from 'immutable';
 
 export interface ILinkData {
   readonly target: Uuid;
-  // readonly id: Uuid;
+  // readonly name: Uuid;
   readonly source: Uuid;
 }
 
@@ -11,13 +11,13 @@ export interface ILink extends ILinkData, IRecordFunctions<ILinkData, ILink> {
 
 const recordData: ILinkData = {
   target: '',
-  // id: '',
+  // name: '',
   source: '',
 };
 
 export class Link extends Immutable.Record(recordData) implements ILink {
   readonly target: Uuid;
-  // readonly id: Uuid;
+  // readonly name: Uuid;
   readonly source: Uuid;
 
   toObject(): ILinkData {
@@ -30,19 +30,16 @@ export class Link extends Immutable.Record(recordData) implements ILink {
 }
 
 export interface ILinkServerModel {
-  readonly target: Uuid;
-  readonly id: Uuid;
-  readonly source: Uuid;
+  readonly link: Uuid;
+  readonly name: Uuid;
 }
 
-const userServerModelData: ILinkServerModel = {
-  target: '',
-  id: '',
-  source: '',
+const linkServerModelData: ILinkServerModel = {
+  link: '',
+  name: '',
 };
 
-export class LinkServerModel extends Immutable.Record(userServerModelData) implements ILinkServerModel {
-  readonly target: Uuid;
-  readonly id: Uuid;
-  readonly source: Uuid;
+export class LinkServerModel extends Immutable.Record(linkServerModelData) implements ILinkServerModel {
+  readonly link: Uuid;
+  readonly name: Uuid;
 }

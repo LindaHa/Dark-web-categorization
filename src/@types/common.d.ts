@@ -3,10 +3,11 @@
  */
 
 /*
- * Universally unique identifier usually used in id fields.
+ * Universally unique identifier usually used in name fields.
  * (e.g.: 0a82ea92-5857-45d7-842d-115f437b5cb8)
  */
 type Uuid = string;
+type Url = string;
 
 type Action = {
   type: string;

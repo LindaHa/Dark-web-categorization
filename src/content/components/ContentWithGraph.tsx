@@ -7,12 +7,12 @@ import {
   IGraphNode
 } from 'react-d3-graph';
 import { ILink } from '../../models/link';
-import { IPage } from '../../models/page';
 import { graphConfig } from '../utils/graphConfig';
+import { IComponent } from '../../models/component';
 
 export interface IGraphDataProps {
   readonly links: Immutable.Set<ILink>;
-  readonly nodes: Immutable.Map<Uuid, IPage>;
+  readonly nodes: Immutable.Map<Uuid, IComponent>;
 }
 
 export interface IGraphCallbackProps {
@@ -48,7 +48,17 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
     const myConfig = JSON.parse(JSON.stringify(graphConfig));
     myConfig.node.labelProperty = (node: IGraphNode): string => {
       const clientNode = nodes.get(node.id);
-      return clientNode ? clientNode.url : node.id;
+      if (!clientNode) {
+        return node.id;
+      }
+      const members = clientNode.members;
+      const numberOfMembers: number = members.count();
+      if (numberOfMembers === 1) {
+        const member = members.first(null);
+        return member ? member.url : 'url not set';
+      }
+
+      return numberOfMembers.toString();
     };
 
     return (

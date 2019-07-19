@@ -5,6 +5,7 @@ import {
   Nodes_GetFiltered_Success,
   Nodes_GetFiltered_Request,
   Nodes_GetFiltered_Failure,
+  Nodes_GetComponents_Success,
 } from '../actionTypes/nodesActionTypes';
 
 export const requestNodes = (): Action => ({
@@ -14,6 +15,11 @@ export const requestNodes = (): Action => ({
 
 export const succeedToFetchNodes = (json: object): Action => ({
   type: Nodes_GetAll_Success,
+  payload: { nodes: json },
+});
+
+export const succeedToFetchComponents = (json: object): Action => ({
+  type: Nodes_GetComponents_Success,
   payload: { nodes: json },
 });
 

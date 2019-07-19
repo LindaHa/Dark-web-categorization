@@ -7,15 +7,23 @@ import {
 } from '../components/NodeInfo';
 
 const mapStateToProps = (state: IState): INodeInfoDataProps => {
-  const nodes = state.nodes;
+  const nodes = state.components;
   const selectedNode = nodes.get(state.selectedNode)!;
   // @ts-ignore
   const nodeLinks: Immutable.Set<string> = selectedNode.links
-    .map((linkId: Uuid) => {
-      const linkedNode = nodes.get(linkId);
-      return linkedNode && linkedNode.url;
+    .map((linkUrl: Url) => {
+      const linkedNode = nodes.get(linkUrl);
+      if (linkedNode) {
+        const numberOfMembers = linkedNode.members.size;
+        if (numberOfMembers === 1) {
+          const node = linkedNode.members.first(null);
+          return node && node.url;
+        }
+        return linkedNode.id;
+      }
+      return false;
     })
-    .filter((url: string | undefined) => !!url);
+    .filter((url: string | null) => !!url);
 
   return {
     selectedNode,
