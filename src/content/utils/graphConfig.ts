@@ -14,16 +14,18 @@ export const graphConfig = {
   collapsible: false,
   nodeHighlightBehavior: true,
   directed: true,
+  staticGraph: false,
 
   node: {
     color: primaryNodeColor,
-    size: 120,
+    size: 100,
     highlightStrokeColor: primaryNodeColor,
     highlightColor: highlightNodeColor,
+    highlightDegree: 0,
 
     fontColor: primaryFontColor,
     highlightFontSize: 16,
-    fontSize: 13,
+    fontSize: 11,
   },
 
   link: {
@@ -32,8 +34,12 @@ export const graphConfig = {
     strokeWidth: 1,
   },
 
-  height: 700,
-  width: 1000,
+  d3: {
+    gravity: -200,
+  },
+
+  height: window.innerHeight,
+  width: window.innerWidth / 3 * 2,
 };
 
 export const getLabelConfigForComponents = (nodes: Immutable.Map<string, IComponent>) => (node: IGraphNode): string => {
