@@ -10,7 +10,7 @@ import {
 import { convertServerToViewPageModel } from '../utils/convertNodeModel';
 import { mockPages } from './mockData';
 
-export const nodesReducer = (prevState: Immutable.Map<Uuid, IPage> = Immutable.Map<Uuid, IPage>(), action: Action)
+export const pagesReducer = (prevState: Immutable.Map<Uuid, IPage> = Immutable.Map<Uuid, IPage>(), action: Action)
   : Immutable.Map<Uuid, IPage> => {
   switch (action.type) {
     case Nodes_GetAll_Success: {

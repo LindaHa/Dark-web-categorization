@@ -5,14 +5,15 @@ import {
   failToFetchNodes,
   requestNodes,
   succeedToFetchComponents,
-  succeedToFetchNodes
+  succeedToFetchNodes,
+  updateNodesMode
 } from '../nodesActionCreators';
 import { PagesRoute } from '../../../_shared/constants/routes';
 import { checkStatus } from '../../../_shared/utils/checkStatus';
+import { NodeMode } from '../../../models/stateModels';
 
 const fetchNodesFactoryDependencies = {
   fetchBegin: requestNodes,
-  nodesSuccess: succeedToFetchNodes,
   componentsSuccess: succeedToFetchComponents,
   error: failToFetchNodes,
   fetch: () => isoFetch(PagesRoute, {
@@ -23,15 +24,18 @@ const fetchNodesFactoryDependencies = {
   })
     .then(response => checkStatus(response)),
   idGenerator: createUuid,
+  nodesSuccess: succeedToFetchNodes,
+  updateNodeMode: updateNodesMode,
 };
 
 interface IFetchNodesFactoryDependencies {
-  readonly fetchBegin: () => Action;
-  readonly nodesSuccess: (json: object) => Action;
   readonly componentsSuccess: (json: object) => Action;
   readonly error: (id: string, error: Error) => Action;
   readonly fetch: () => Promise<Response>;
+  readonly fetchBegin: () => Action;
   readonly idGenerator: () => string;
+  readonly nodesSuccess: (json: object) => Action;
+  readonly updateNodeMode: (mode: NodeMode) => Action;
 }
 
 export const fetchNodesFactory = (dependencies: IFetchNodesFactoryDependencies) =>
@@ -43,9 +47,14 @@ export const fetchNodesFactory = (dependencies: IFetchNodesFactoryDependencies) 
       .then(response => {
         return response.json();
       })
-      // .then(nodes => nodes.lowestLevel ? dispatch(dependencies.nodesSuccess(nodes)) : dispatch(dependencies.componentsSuccess(nodes)))
       .then(nodes => {
-        return dispatch(dependencies.componentsSuccess(nodes));
+        if (nodes.lowestLevel) {
+          dispatch(dependencies.updateNodeMode(NodeMode.Pages));
+          return dispatch(dependencies.nodesSuccess(nodes));
+        } else {
+          dispatch(dependencies.updateNodeMode(NodeMode.Components));
+          return dispatch(dependencies.componentsSuccess(nodes));
+        }
       })
       .catch((error: Error) => dispatch(dependencies.error(errorId, error)));
   };

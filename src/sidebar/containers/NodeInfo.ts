@@ -7,7 +7,7 @@ import {
 } from '../components/NodeInfo';
 
 const mapStateToProps = (state: IState): INodeInfoDataProps => {
-  const nodes = state.components;
+  const nodes = state.nodes.components;
   const selectedNode = nodes.get(state.selectedNode)!;
   // @ts-ignore
   const nodeLinks: Immutable.Set<string> = selectedNode.links

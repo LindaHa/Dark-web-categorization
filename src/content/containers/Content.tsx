@@ -7,10 +7,12 @@ import {
   IContentDataProps
 } from '../components/Content';
 import { IState } from '../../_shared/models/IState';
+import { NodeMode } from '../../models/stateModels';
 
 const mapStateToProps = (state: IState): IContentDataProps => {
-  const arePagesReady = state.nodes && !state.nodes.isEmpty();
-  const areComponentsReady = state.components && !state.components.isEmpty();
+  const { nodes: {mode, pages, components}} = state;
+  const arePagesReady = mode === NodeMode.Pages && !pages.isEmpty();
+  const areComponentsReady = mode === NodeMode.Components && !components.isEmpty();
 
   return {
     areNodesReady: arePagesReady || areComponentsReady,

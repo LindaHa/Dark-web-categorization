@@ -6,7 +6,9 @@ import {
   Nodes_GetFiltered_Request,
   Nodes_GetFiltered_Failure,
   Nodes_GetComponents_Success,
+  Nodes_Mode_Updated,
 } from '../actionTypes/nodesActionTypes';
+import { NodeMode } from '../../models/stateModels';
 
 export const requestNodes = (): Action => ({
   type: Nodes_GetAll_Request,
@@ -41,4 +43,9 @@ export const succeedToFetchFilteredNodes = (json: object): Action => ({
 export const failToFetchFilteredNodes = (id: string, error: Error): Action => ({
   type: Nodes_GetFiltered_Failure,
   payload: { id, errorMessage: error.message || 'Nodes were not fetched' },
+});
+
+export const updateNodesMode = (mode: NodeMode): Action => ({
+  type: Nodes_Mode_Updated,
+  payload: mode
 });

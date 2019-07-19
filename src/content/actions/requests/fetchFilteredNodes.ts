@@ -38,7 +38,7 @@
 //
 //     return dependencies.fetch()
 //       .then(response => response.json())
-//       .then(nodes => dispatch(dependencies.nodesSuccess(nodes)))
+//       .then(pages => dispatch(dependencies.nodesSuccess(pages)))
 //       .catch((error: Error) => dispatch(dependencies.error(errorId, error)));
 //   };
 //
