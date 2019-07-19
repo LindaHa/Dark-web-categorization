@@ -2,17 +2,21 @@ import * as Immutable from 'immutable';
 import * as ImmutablePropTypes from 'immutable-prop-types';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
-import {
-  Graph,
-  IGraphNode
-} from 'react-d3-graph';
+import { Graph } from 'react-d3-graph';
 import { ILink } from '../../models/link';
-import { graphConfig } from '../utils/graphConfig';
+import {
+  getLabelConfigForComponents,
+  getLabelConfigForPages,
+  graphConfig
+} from '../utils/graphConfig';
 import { IComponent } from '../../models/component';
+import { IPage } from '../../models/page';
+import { NodeMode } from '../../models/stateModels';
 
 export interface IGraphDataProps {
   readonly links: Immutable.Set<ILink>;
-  readonly nodes: Immutable.Map<Uuid, IComponent>;
+  readonly nodes: Immutable.Map<Uuid, IComponent | IPage>;
+  readonly nodeMode: NodeMode;
 }
 
 export interface IGraphCallbackProps {
@@ -26,6 +30,7 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
   static propTypes = {
     nodes: ImmutablePropTypes.map.isRequired,
     links: ImmutablePropTypes.set.isRequired,
+    nodeMode: PropTypes.string.isRequired,
 
     onSelectNode: PropTypes.func.isRequired,
   };
@@ -39,27 +44,16 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
   };
 
   render() {
-    const {nodes, links} = this.props;
+    const {nodes, links, nodeMode} = this.props;
     const data = {
       nodes: nodes.keySeq().toArray().map((nodeId: Uuid) => ({id: nodeId})),
       links: links.map((link: ILink) => link.toObject()).toArray(),
     };
 
     const myConfig = JSON.parse(JSON.stringify(graphConfig));
-    myConfig.node.labelProperty = (node: IGraphNode): string => {
-      const clientNode = nodes.get(node.id);
-      if (!clientNode) {
-        return node.id;
-      }
-      const members = clientNode.members;
-      const numberOfMembers: number = members.count();
-      if (numberOfMembers === 1) {
-        const member = members.first(null);
-        return member ? member.url : 'url not set';
-      }
-
-      return numberOfMembers.toString();
-    };
+    myConfig.node.labelProperty = nodeMode === NodeMode.Pages ?
+      getLabelConfigForPages(nodes as Immutable.Map<Uuid, IPage>) :
+      getLabelConfigForComponents(nodes as Immutable.Map<Uuid, IComponent>);
 
     return (
       <div>

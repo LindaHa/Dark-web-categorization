@@ -10,12 +10,13 @@ import { selectNode } from '../../_shared/actions/selectedNodeActionCreators';
 import { getLinksForNodes } from '../utils/getLinksFromArray';
 
 const mapStateToProps = (state: IState): IGraphDataProps => {
-  const { components } = state.nodes;
+  const { components, mode } = state.nodes;
   const links = getLinksForNodes(components.toSet());
 
   return {
     nodes: components,
     links,
+    nodeMode: mode,
   };
 };
 

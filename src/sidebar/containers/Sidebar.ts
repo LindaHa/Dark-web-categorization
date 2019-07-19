@@ -10,10 +10,14 @@ import { updateGroupBy } from '../../_shared/actions/groupByActionCreators';
 import { IState } from '../../_shared/models/IState';
 import { requestFilteredNodes } from '../../content/actions/nodesActionCreators';
 
-const mapStateToProps = (state: IState): ISidebarDataProps => ({
-  groupBy: state.groupBy,
-  selectedNodeId: state.selectedNode,
-});
+const mapStateToProps = (state: IState): ISidebarDataProps => {
+  const {groupBy, nodes: {mode}, selectedNode} = state;
+  return {
+    groupBy,
+    selectedNodeId: selectedNode,
+    nodeMode: mode,
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch): ISidebarCallbackProps => ({
   onFilterSearch: (searchPhrase: string) => dispatch(requestFilteredNodes(searchPhrase)),

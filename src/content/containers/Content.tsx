@@ -10,12 +10,23 @@ import { IState } from '../../_shared/models/IState';
 import { NodeMode } from '../../models/stateModels';
 
 const mapStateToProps = (state: IState): IContentDataProps => {
-  const { nodes: {mode, pages, components}} = state;
-  const arePagesReady = mode === NodeMode.Pages && !pages.isEmpty();
-  const areComponentsReady = mode === NodeMode.Components && !components.isEmpty();
+  const {nodes: {mode, pages, components}} = state;
+  const areNodesReady = () => {
+    switch (mode) {
+      case NodeMode.Components:
+        return !components.isEmpty();
+
+      case NodeMode.Pages:
+        return !pages.isEmpty();
+
+      case NodeMode.Empty:
+      default:
+        return false;
+    }
+  };
 
   return {
-    areNodesReady: arePagesReady || areComponentsReady,
+    areNodesReady: areNodesReady(),
   };
 };
 

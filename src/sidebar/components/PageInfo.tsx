@@ -3,29 +3,28 @@ import * as Immutable from 'immutable';
 import * as PropTypes from 'prop-types';
 import * as ImmutablePropTypes from 'immutable-prop-types';
 import { IPage } from '../../models/page';
-import { IComponent } from '../../models/component';
 
-export interface INodeInfoDataProps {
-  readonly selectedNode: IPage | IComponent;
-  readonly nodeLinks: Immutable.Set<string>;
+export interface IPageInfoDataProps {
+  readonly selectedPage: IPage;
+  readonly pageLinks: Immutable.Set<string>;
 }
 
-export interface INodeInfoCallbackProps {
+interface IPageInfoCallbackProps {
 }
 
-type NodeInfoProps = INodeInfoCallbackProps & INodeInfoDataProps;
+type PageInfoProps = IPageInfoCallbackProps & IPageInfoDataProps;
 
-export class NodeInfo extends React.PureComponent<NodeInfoProps> {
-  static displayName = 'NodeInfo';
-  static propTypes: PropTypesShape<NodeInfoProps> = {
-    selectedNode: PropTypes.object.isRequired,
-    nodeLinks: ImmutablePropTypes.set,
+export class PageInfo extends React.PureComponent<PageInfoProps> {
+  static displayName = 'PageInfo';
+  static propTypes: PropTypesShape<PageInfoProps> = {
+    selectedPage: PropTypes.object.isRequired,
+    pageLinks: ImmutablePropTypes.set,
   };
 
   render() {
-    const {selectedNode: {url, categories}, nodeLinks} = this.props;
+    const {selectedPage: {url, categories}, pageLinks} = this.props;
     const areCategoriesNotEmpty = categories && !categories.isEmpty();
-    const areLinkNotEmpty = nodeLinks && !nodeLinks.isEmpty();
+    const areLinkNotEmpty = pageLinks && !pageLinks.isEmpty();
 
     return (
       <div>
@@ -57,7 +56,7 @@ export class NodeInfo extends React.PureComponent<NodeInfoProps> {
           areLinkNotEmpty &&
           <div className="sidebar__info-group">
             <div className="sidebar__info-group-label-item">Linked pages</div>
-            {nodeLinks.map((link: string) =>
+            {pageLinks.map((link: string) =>
               <div
                 key={link}
                 className="sidebar__info-group-value-item"
