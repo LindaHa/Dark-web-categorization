@@ -16,5 +16,7 @@ declare module 'react-d3-graph' {
 
   export interface IGraphNode {
     readonly id: Uuid;
+    readonly x?: number;
+    readonly y?: number;
   }
 }

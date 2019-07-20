@@ -2,14 +2,13 @@ import * as Immutable from 'immutable';
 import * as ImmutablePropTypes from 'immutable-prop-types';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
-import { Graph } from 'react-d3-graph';
+import {
+  Graph,
+  IGraphNode
+} from 'react-d3-graph';
 import { ILink } from '../../models/link';
 import {
-  fakeNode,
-  fakeNodeId,
-  getFakeLink,
   getLabelConfigForComponents,
-  getLabelConfigForPages,
   graphConfig
 } from '../utils/graphConfig';
 import { IComponent } from '../../models/component';
@@ -46,20 +45,34 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
     window.alert(`Right clicked node ${nodeId}`);
   };
 
+  /**
+   * This function decorates nodes and links with positions. The motivation
+   * for this function its to set `config.staticGraph` to true on the first render
+   * call, and to get nodes and links statically set to their initial positions.
+   * @param  {Object} nodes nodes and links with minimalist structure.
+   * @return {Object} the graph where now nodes containing (x,y) coords.
+   */
+  _decorateGraphNodesWithInitialPositioning = (nodes:  IGraphNode[]) => {
+    return nodes.map((node: IGraphNode) =>
+      Object.assign({}, node, {
+        x: node.x || Math.floor(Math.random() * 500 + 10),
+        y: node.y || Math.floor(Math.random() * 500 + 6),
+      })
+    );
+  };
+
   render() {
     const {nodes, links, nodeMode} = this.props;
     const adjustedNodes = nodes.keySeq().toArray().map((nodeUrl: Uuid) => ({id: nodeUrl}));
-    adjustedNodes.push(fakeNode);
+
     const data = {
-      nodes: adjustedNodes,
-      links: links.map((link: ILink) => {
-        return link.source === fakeNodeId ? getFakeLink(link.target) : link.toObject();
-      }).toArray(),
+      nodes: this._decorateGraphNodesWithInitialPositioning(adjustedNodes),
+      links: links.map((link: ILink) => link.toObject()).toArray(),
     };
 
     const myConfig = JSON.parse(JSON.stringify(graphConfig));
     myConfig.node.labelProperty = nodeMode === NodeMode.Pages ?
-      getLabelConfigForPages(nodes as Immutable.Map<Uuid, IPage>) :
+      '' :
       getLabelConfigForComponents(nodes as Immutable.Map<Uuid, IComponent>);
 
     return (
