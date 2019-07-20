@@ -14,11 +14,13 @@ import {
 import { IComponent } from '../../models/component';
 import { IPage } from '../../models/page';
 import { NodeMode } from '../../models/stateModels';
+import { ISize } from './Content';
 
 export interface IGraphDataProps {
   readonly links: Immutable.Set<ILink>;
   readonly nodes: Immutable.Map<Uuid, IComponent | IPage>;
   readonly nodeMode: NodeMode;
+  readonly size: ISize;
 }
 
 export interface IGraphCallbackProps {
@@ -33,6 +35,7 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
     nodes: ImmutablePropTypes.map.isRequired,
     links: ImmutablePropTypes.set.isRequired,
     nodeMode: PropTypes.string.isRequired,
+    size: PropTypes.object.isRequired,
 
     onSelectNode: PropTypes.func.isRequired,
   };
@@ -52,17 +55,18 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
    * @param  {Object} nodes nodes and links with minimalist structure.
    * @return {Object} the graph where now nodes containing (x,y) coords.
    */
-  _decorateGraphNodesWithInitialPositioning = (nodes:  IGraphNode[]) => {
+  _decorateGraphNodesWithInitialPositioning = (nodes: IGraphNode[]) => {
+    const {size: {width, height}} = this.props;
     return nodes.map((node: IGraphNode) =>
       Object.assign({}, node, {
-        x: node.x || Math.floor(Math.random() * 500 + 10),
-        y: node.y || Math.floor(Math.random() * 500 + 6),
+        x: node.x || Math.floor(Math.random() * (width - 20) + 10),
+        y: node.y || Math.floor(Math.random() * (height - 30) + 10),
       })
     );
   };
 
   render() {
-    const {nodes, links, nodeMode} = this.props;
+    const {nodes, links, nodeMode, size: {height, width}} = this.props;
     const adjustedNodes = nodes.keySeq().toArray().map((nodeUrl: Uuid) => ({id: nodeUrl}));
 
     const data = {
@@ -74,6 +78,8 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
     myConfig.node.labelProperty = nodeMode === NodeMode.Pages ?
       '' :
       getLabelConfigForComponents(nodes as Immutable.Map<Uuid, IComponent>);
+    myConfig.height = height;
+    myConfig.width = width;
 
     return (
       <div>
