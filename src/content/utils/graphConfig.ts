@@ -17,7 +17,7 @@ export const graphConfig = {
 
   node: {
     color: primaryNodeColor,
-    size: 100,
+    size: 10,
     highlightStrokeColor: primaryNodeColor,
     highlightColor: highlightNodeColor,
     highlightDegree: 0,

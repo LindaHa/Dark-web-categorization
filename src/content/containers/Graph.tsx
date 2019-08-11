@@ -9,17 +9,19 @@ import { IState } from '../../_shared/models/IState';
 import { selectNode } from '../../_shared/actions/selectedNodeActionCreators';
 import { getLinksForNodes } from '../utils/getLinksFromArray';
 import { ISize } from '../components/Content';
+import { NodeMode } from '../../models/stateModels';
 
 interface IGraphOwnProps {
   readonly size: ISize;
 }
 
 const mapStateToProps = (state: IState, ownProps: IGraphOwnProps): IGraphDataProps => {
-  const {components, mode} = state.nodes;
-  const links = getLinksForNodes(components.toSet());
+  const {components, mode, pages} = state.nodes;
+  const nodes = mode === NodeMode.Pages ? pages : components;
+  const links = getLinksForNodes(nodes.toSet());
 
   return {
-    nodes: components,
+    nodes,
     links,
     nodeMode: mode,
     size: ownProps.size,

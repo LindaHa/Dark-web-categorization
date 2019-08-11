@@ -16,7 +16,7 @@ export const componentsReducer = (prevState: Immutable.Map<Uuid, IComponent> = I
   switch (action.type) {
     case Nodes_GetFiltered_Request:
     case Nodes_GetComponents_Success: {
-      const serverNodes = action.payload.nodes.data;
+      const serverNodes = action.payload.nodes;
       const clientNodes = serverNodes.map((component: IComponentServerModel) =>
         [component.id, convertServerToViewComponentModel(component)]
       );

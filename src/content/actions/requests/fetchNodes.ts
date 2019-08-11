@@ -47,13 +47,13 @@ export const fetchNodesFactory = (dependencies: IFetchNodesFactoryDependencies) 
       .then(response => {
         return response.json();
       })
-      .then(nodes => {
-        if (nodes.lowestLevel) {
+      .then(json => {
+        if (json.lowestLevel) {
           dispatch(dependencies.updateNodeMode(NodeMode.Pages));
-          return dispatch(dependencies.nodesSuccess(nodes));
+          return dispatch(dependencies.nodesSuccess(json.data));
         } else {
           dispatch(dependencies.updateNodeMode(NodeMode.Components));
-          return dispatch(dependencies.componentsSuccess(nodes));
+          return dispatch(dependencies.componentsSuccess(json.data));
         }
       })
       .catch((error: Error) => dispatch(dependencies.error(errorId, error)));
