@@ -46,8 +46,7 @@ export const getLabelConfigForComponents = (nodes: Immutable.Map<string, ICompon
   if (!clientNode) {
     return node.id;
   }
-  const members = clientNode.members;
-  const numberOfMembers: number = members.count();
+  const numberOfMembers: number = clientNode.members_count;
   if (numberOfMembers === 1) {
     return '';
   }

@@ -9,18 +9,19 @@ import {
   IComponent,
   IComponentServerModel
 } from '../../models/component';
-import { ILinkServerModel } from '../../models/link';
 
-const getRawLinks = (links: Immutable.List<ILinkServerModel>): Immutable.Set<Url> => {
+const getRawLinks = (links: Url[]): Immutable.Set<Url> => {
   let clientLinks = Immutable.Set<Url>();
-  links.forEach((link: ILinkServerModel) => clientLinks = clientLinks.add(link.link));
+  if (links) {
+    links.map((link: string) => clientLinks = clientLinks.add(link));
+  }
 
   return clientLinks;
 };
 
 export const convertServerToViewPageModel = (serverModel: IPageServerModel): IPage => {
   const {url, description, id, categories, language, links} = serverModel;
-  const clientLinks = getRawLinks(Immutable.List(links));
+  const clientLinks = getRawLinks(links);
 
   const separateCategories = categories && categories.split(', ');
   const clientCategories = Immutable.Set<string>(separateCategories);
@@ -35,17 +36,20 @@ export const convertServerToViewPageModel = (serverModel: IPageServerModel): IPa
 };
 
 export const convertServerToViewComponentModel = (serverModel: IComponentServerModel): IComponent => {
-  const {id, links, members} = serverModel;
+  const {id, links, members, members_count} = serverModel;
   let clientMembers = Immutable.List<IPage>();
-  members.forEach((member: IPageServerModel) => {
-    const clientMember = convertServerToViewPageModel(member);
-    clientMembers = clientMembers.push(clientMember);
-  });
-  const clientLinks = getRawLinks(Immutable.List(links));
+  if (members) {
+    members.forEach((member: IPageServerModel) => {
+      const clientMember = convertServerToViewPageModel(member);
+      clientMembers = clientMembers.push(clientMember);
+    });
+  }
+  const clientLinks = getRawLinks(links);
   return (new Component({
     id,
     links: clientLinks,
     members: clientMembers,
+    members_count,
   }));
 };
 
