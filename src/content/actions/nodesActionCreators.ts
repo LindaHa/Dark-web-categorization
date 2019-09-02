@@ -2,10 +2,11 @@ import {
   Nodes_GetAll_Failure,
   Nodes_GetAll_Request,
   Nodes_GetAll_Success,
-  Nodes_GetFiltered_Success,
-  Nodes_GetFiltered_Request,
-  Nodes_GetFiltered_Failure,
   Nodes_GetComponents_Success,
+  Nodes_GetFiltered_Failure,
+  Nodes_GetFiltered_Request,
+  Nodes_GetFiltered_Success,
+  Nodes_GetSubComponents_Request,
   Nodes_Mode_Updated,
 } from '../actionTypes/nodesActionTypes';
 import { NodeMode } from '../../models/stateModels';
@@ -23,6 +24,11 @@ export const succeedToFetchNodes = (json: object): Action => ({
 export const succeedToFetchComponents = (json: object): Action => ({
   type: Nodes_GetComponents_Success,
   payload: { nodes: json },
+});
+
+export const requestSubComponents = (componentId: Uuid): Action => ({
+  type: Nodes_GetSubComponents_Request,
+  payload: { componentId },
 });
 
 export const failToFetchNodes = (id: string, error: Error): Action => ({

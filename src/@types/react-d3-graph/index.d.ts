@@ -4,6 +4,7 @@ declare module 'react-d3-graph' {
     data: any;
     config: any;
     onClickNode?: Function;
+    onDoubleClickNode?: Function;
     onRightClickNode?: Function;
     onClickGraph?: Function;
     onClickLink?: Function;

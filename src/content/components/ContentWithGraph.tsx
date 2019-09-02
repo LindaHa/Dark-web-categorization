@@ -24,7 +24,8 @@ export interface IGraphDataProps {
 }
 
 export interface IGraphCallbackProps {
-  readonly onSelectNode: (nodeId: Uuid) => Action;
+  readonly selectNode: (nodeId: Uuid) => Action;
+  readonly zoomNode: (nodeId: Uuid) => Action;
 }
 
 type GraphProps = IGraphCallbackProps & IGraphDataProps;
@@ -37,11 +38,16 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
     nodeMode: PropTypes.string.isRequired,
     size: PropTypes.object.isRequired,
 
-    onSelectNode: PropTypes.func.isRequired,
+    selectNode: PropTypes.func.isRequired,
+    zoomNode: PropTypes.func.isRequired,
   };
 
   _onClickNode = (nodeId: string) => {
-    this.props.onSelectNode(nodeId);
+    this.props.selectNode(nodeId);
+  };
+
+  _onDoubleClickNode = (nodeId: string) => {
+    this.props.zoomNode(nodeId);
   };
 
   _onRightClickNode = (_event: object, nodeId: string) => {
@@ -89,6 +95,7 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
           config={myConfig}
           onClickNode={this._onClickNode}
           onRightClickNode={this._onRightClickNode}
+          onDoubleClickNode={this._onDoubleClickNode}
         />
       </div>
     );

@@ -10,6 +10,7 @@ import { selectNode } from '../../_shared/actions/selectedNodeActionCreators';
 import { getLinksForNodes } from '../utils/getLinksFromArray';
 import { ISize } from '../components/Content';
 import { NodeMode } from '../../models/stateModels';
+import { fetchNodes } from '../actions/requests/fetchNodes';
 
 interface IGraphOwnProps {
   readonly size: ISize;
@@ -29,7 +30,8 @@ const mapStateToProps = (state: IState, ownProps: IGraphOwnProps): IGraphDataPro
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): IGraphCallbackProps => ({
-  onSelectNode: (nodeId: Uuid) => dispatch(selectNode(nodeId)),
+  selectNode: (nodeId: Uuid) => dispatch(selectNode(nodeId)),
+  zoomNode: (nodeId: Uuid) => dispatch(fetchNodes(nodeId)),
 });
 
 export const Graph = connect(mapStateToProps, mapDispatchToProps)(ContentWithGraph);

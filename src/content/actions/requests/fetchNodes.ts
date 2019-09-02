@@ -4,19 +4,20 @@ import { Dispatch } from 'redux';
 import {
   failToFetchNodes,
   requestNodes,
+  requestSubComponents,
   succeedToFetchComponents,
   succeedToFetchNodes,
   updateNodesMode
 } from '../nodesActionCreators';
-import { PagesRoute } from '../../../_shared/constants/routes';
+import { NodesRoute } from '../../../_shared/constants/routes';
 import { checkStatus } from '../../../_shared/utils/checkStatus';
 import { NodeMode } from '../../../models/stateModels';
 
-const fetchNodesFactoryDependencies = {
-  fetchBegin: requestNodes,
+const fetchNodesFactoryDependencies = (componentId?: Uuid) => ({
+  fetchBegin: componentId ? () => requestSubComponents(componentId) : requestNodes,
   componentsSuccess: succeedToFetchComponents,
   error: failToFetchNodes,
-  fetch: () => isoFetch(PagesRoute, {
+  fetch: () => isoFetch(NodesRoute(componentId), {
     method: 'GET',
     headers: {
       accept: 'application/json',
@@ -26,7 +27,7 @@ const fetchNodesFactoryDependencies = {
   idGenerator: createUuid,
   nodesSuccess: succeedToFetchNodes,
   updateNodeMode: updateNodesMode,
-};
+});
 
 interface IFetchNodesFactoryDependencies {
   readonly componentsSuccess: (json: object) => Action;
@@ -59,4 +60,4 @@ export const fetchNodesFactory = (dependencies: IFetchNodesFactoryDependencies) 
       .catch((error: Error) => dispatch(dependencies.error(errorId, error)));
   };
 
-export const fetchNodes = fetchNodesFactory(fetchNodesFactoryDependencies);
+export const fetchNodes = (componentId?: Uuid) => fetchNodesFactory(fetchNodesFactoryDependencies(componentId))();
