@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Graph } from '../containers/Graph';
 import * as PropTypes from 'prop-types';
-import { Spinner } from '../../_shared/components/Spinner';
+import { ContentPlaceholder } from '../../_shared/components/ContentPlaceholder';
 
 export interface IContentCallbackProps {
   getNodes: () => Promise<Action>;
@@ -9,6 +9,7 @@ export interface IContentCallbackProps {
 
 export interface IContentDataProps {
   areNodesReady: boolean;
+  isError: boolean;
 }
 
 type ContentProps = IContentCallbackProps & IContentDataProps;
@@ -28,6 +29,7 @@ export class Content extends React.PureComponent<ContentProps, IContentDataState
     getNodes: PropTypes.func.isRequired,
 
     areNodesReady: PropTypes.bool.isRequired,
+    isError: PropTypes.bool.isRequired,
   };
 
   constructor(props: ContentProps) {
@@ -44,7 +46,7 @@ export class Content extends React.PureComponent<ContentProps, IContentDataState
   _getWidth = (ref: HTMLElement): void => {
     const width = ref.offsetWidth;
     const height = ref.offsetHeight;
-    this.setState(() => ({size: { width, height }}));
+    this.setState(() => ({ size: { width, height } }));
   };
 
   componentDidMount(): void {
@@ -52,13 +54,13 @@ export class Content extends React.PureComponent<ContentProps, IContentDataState
   }
 
   render() {
-    const {areNodesReady} = this.props;
+    const { areNodesReady, isError } = this.props;
     return (
       <section
         className="canvas__content"
         ref={this._getWidth}
       >
-        {areNodesReady ? <Graph size={this.state.size}/> : <Spinner/>}
+        {areNodesReady ? <Graph size={this.state.size}/> : <ContentPlaceholder isError={isError}/>}
       </section>
     );
   }

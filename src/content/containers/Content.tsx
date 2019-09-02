@@ -10,7 +10,7 @@ import { IState } from '../../_shared/models/IState';
 import { NodeMode } from '../../models/stateModels';
 
 const mapStateToProps = (state: IState): IContentDataProps => {
-  const {nodes: {mode, pages, components}} = state;
+  const {nodes: {mode, pages, components}, isError} = state;
   const areNodesReady = () => {
     switch (mode) {
       case NodeMode.Components:
@@ -27,6 +27,7 @@ const mapStateToProps = (state: IState): IContentDataProps => {
 
   return {
     areNodesReady: areNodesReady(),
+    isError,
   };
 };
 
