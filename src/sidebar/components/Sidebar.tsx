@@ -5,10 +5,12 @@ import { GroupBySelector } from './GroupBySelector';
 import { NodeMode } from '../../models/stateModels';
 import { ComponentInfo } from '../containers/ComponentInfo';
 import { PageInfo } from '../containers/PageInfo';
+import { ZoomOutOptions } from './ZoomOutOptions';
 
 export interface ISidebarDataProps {
   readonly groupBy: GroupBy;
   readonly nodeMode: NodeMode;
+  readonly selectedComponent: Uuid | null;
   readonly selectedNodeId: Uuid;
 }
 
@@ -30,13 +32,14 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
   static propTypes: PropTypesShape<SidebarProps> = {
     groupBy: PropTypes.string.isRequired,
     nodeMode: PropTypes.string.isRequired,
+    selectedComponent: PropTypes.string.isRequired,
     selectedNodeId: PropTypes.string.isRequired,
 
     onFilterSearch: PropTypes.func.isRequired,
     onGroupUpdate: PropTypes.func.isRequired,
   };
 
-  _updateGroup = (value: GroupBy) => () => {
+  _updateGroupBy = (value: GroupBy) => () => {
     this.props.onGroupUpdate(value);
   };
 
@@ -60,18 +63,30 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
     }
   };
 
+  _getLevelNumber = (): string => {
+    const selectedComponentId = this.props.selectedComponent;
+    if (!selectedComponentId) {
+      return '0';
+    }
+    const idParts = selectedComponentId.split('.');
+    return '' + idParts.length;
+  };
+
   render() {
-    const {groupBy, selectedNodeId} = this.props;
+    const { groupBy, selectedNodeId } = this.props;
     return (
       <div className="canvas__sidebar">
         <div className="sidebar sidebar__content">
           <div>
             <GroupBySelector
               groupBy={groupBy}
-              onGroupByUpdate={this._updateGroup}
+              onGroupByUpdate={this._updateGroupBy}
             />
-
             <SearchBar onSearch={this._filterNodes}/>
+            <ZoomOutOptions
+              lvlNum={this._getLevelNumber()}
+              onZoomOut={() => console.log('zoom out')}
+            />
             {selectedNodeId && this._renderNodeInfo()}
           </div>
         </div>

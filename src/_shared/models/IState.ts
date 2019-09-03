@@ -7,4 +7,5 @@ export interface IState {
   readonly isFetchingNodes: boolean;
   readonly nodes: INodes;
   readonly selectedNode: Uuid;
+  readonly selectedComponent: Uuid;
 }
