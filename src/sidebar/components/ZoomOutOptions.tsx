@@ -7,7 +7,7 @@ import {
 } from 'react-bootstrap';
 
 interface IZoomOutOptionsDataProps {
-  readonly lvlNum: string;
+  readonly lvlNumber: number;
 }
 
 interface IZoomOutOptionsCallbackProps {
@@ -19,26 +19,29 @@ type ZoomOutOptionsProps = IZoomOutOptionsCallbackProps & IZoomOutOptionsDataPro
 export const ZoomOutOptions: React.SFC<ZoomOutOptionsProps> = (props: ZoomOutOptionsProps) => (
   <InputGroup className="mb-3">
     <FormControl
-      placeholder={'Level no. ' + props.lvlNum}
+      placeholder={'Level no. ' + props.lvlNumber}
       aria-label="Level number"
       aria-describedby="zoom-out-options"
       readOnly
     />
-    <InputGroup.Append>
-      <Button
-        type="submit"
-        id="zoom-out-icon"
-        onClick={this._onSearch}
-      >
-        <i className="fa fa-search-minus "/>
-      </Button>
-    </InputGroup.Append>
+    {
+      props.lvlNumber > 0 &&
+      <InputGroup.Append>
+        <Button
+          type="submit"
+          id="zoom-out-icon"
+          onClick={props.onZoomOut}
+        >
+          <i className="fa fa-search-minus "/>
+        </Button>
+      </InputGroup.Append>
+    }
   </InputGroup>
 );
 
 
 ZoomOutOptions.displayName = 'ZoomOutOptions';
 ZoomOutOptions.propTypes = {
-  lvlNum: PropTypes.string.isRequired,
+  lvlNumber: PropTypes.number.isRequired,
   onZoomOut: PropTypes.func.isRequired,
 };

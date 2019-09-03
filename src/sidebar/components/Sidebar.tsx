@@ -10,13 +10,14 @@ import { ZoomOutOptions } from './ZoomOutOptions';
 export interface ISidebarDataProps {
   readonly groupBy: GroupBy;
   readonly nodeMode: NodeMode;
-  readonly selectedComponent: Uuid | null;
+  readonly selectedComponentId: Uuid | null;
   readonly selectedNodeId: Uuid;
 }
 
 export interface ISidebarCallbackProps {
   readonly onFilterSearch: (searchPhrase: string) => void;
   readonly onGroupUpdate: (value: GroupBy) => void;
+  readonly onGroupZoomOut: (groupId: Uuid) => void;
 }
 
 type SidebarProps = ISidebarCallbackProps & ISidebarDataProps;
@@ -32,16 +33,15 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
   static propTypes: PropTypesShape<SidebarProps> = {
     groupBy: PropTypes.string.isRequired,
     nodeMode: PropTypes.string.isRequired,
-    selectedComponent: PropTypes.string.isRequired,
+    selectedComponentId: PropTypes.string.isRequired,
     selectedNodeId: PropTypes.string.isRequired,
 
     onFilterSearch: PropTypes.func.isRequired,
     onGroupUpdate: PropTypes.func.isRequired,
+    onGroupZoomOut: PropTypes.func.isRequired,
   };
 
-  _updateGroupBy = (value: GroupBy) => () => {
-    this.props.onGroupUpdate(value);
-  };
+  _updateGroupBy = (value: GroupBy) => () => this.props.onGroupUpdate(value);
 
   _filterNodes = (searchPhrase: string) => {
     this.props.onFilterSearch(searchPhrase);
@@ -63,13 +63,24 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
     }
   };
 
-  _getLevelNumber = (): string => {
-    const selectedComponentId = this.props.selectedComponent;
-    if (!selectedComponentId) {
-      return '0';
+  _zoomOutGroup = () => {
+    const selectedComponentId = this.props.selectedComponentId;
+    if (selectedComponentId) {
+      const idParts = selectedComponentId.split('.');
+      const upComponentId = idParts.slice(0, idParts.length - 1);
+
+      this.props.onGroupZoomOut(upComponentId.join('.'));
     }
+  };
+
+  _getLevelNumber = (): number => {
+    const selectedComponentId = this.props.selectedComponentId;
+    if (!selectedComponentId) {
+      return 0;
+    }
+
     const idParts = selectedComponentId.split('.');
-    return '' + idParts.length;
+    return idParts.length;
   };
 
   render() {
@@ -84,8 +95,8 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
             />
             <SearchBar onSearch={this._filterNodes}/>
             <ZoomOutOptions
-              lvlNum={this._getLevelNumber()}
-              onZoomOut={() => console.log('zoom out')}
+              lvlNumber={this._getLevelNumber()}
+              onZoomOut={this._zoomOutGroup}
             />
             {selectedNodeId && this._renderNodeInfo()}
           </div>
