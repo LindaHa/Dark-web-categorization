@@ -10,8 +10,11 @@ import { IState } from '../../_shared/models/IState';
 import { NodeMode } from '../../models/stateModels';
 
 const mapStateToProps = (state: IState): IContentDataProps => {
-  const {nodes: {mode, pages, components}, isError} = state;
+  const {nodes: {mode, pages, components}, isError, isFetchingNodes} = state;
   const areNodesReady = () => {
+    if (isFetchingNodes) {
+      return false;
+    }
     switch (mode) {
       case NodeMode.Components:
         return !components.isEmpty();
