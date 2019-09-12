@@ -6,11 +6,11 @@ import {
   IGraphDataProps,
 } from '../components/ContentWithGraph';
 import { IState } from '../../_shared/models/IState';
-import { selectNode } from '../../_shared/actions/selectedNodeActionCreators';
+import { selectNode } from '../../_shared/actionCreators/selectedNodeActionCreators';
 import { getLinksForNodes } from '../utils/getLinksFromArray';
 import { ISize } from '../components/Content';
 import { NodeMode } from '../../models/stateModels';
-import { fetchNodes } from '../actions/requests/fetchNodes';
+import { fetchNodes } from '../actionCreators/requests/fetchNodes';
 
 interface IGraphOwnProps {
   readonly size: ISize;

@@ -6,10 +6,10 @@ import {
   ISidebarDataProps,
   Sidebar as SidebarComponent
 } from '../components/Sidebar';
-import { updateGroupBy } from '../../_shared/actions/groupByActionCreators';
+import { updateGroupBy } from '../../_shared/actionCreators/groupByActionCreators';
 import { IState } from '../../_shared/models/IState';
-import { requestFilteredNodes } from '../../content/actions/nodesActionCreators';
-import { fetchNodes } from '../../content/actions/requests/fetchNodes';
+import { requestFilteredNodes } from '../../content/actionCreators/nodesActionCreators';
+import { fetchNodes } from '../../content/actionCreators/requests/fetchNodes';
 
 const mapStateToProps = (state: IState): ISidebarDataProps => {
   const {groupBy, nodes: {mode}, selectedComponent, selectedNode} = state;

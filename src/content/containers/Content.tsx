@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { fetchNodes } from '../actions/requests/fetchNodes';
+import { fetchNodes } from '../actionCreators/requests/fetchNodes';
 import { connect } from 'react-redux';
 import {
   Content as ContentComponent,
