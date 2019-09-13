@@ -7,7 +7,7 @@ import {
 
 const mapStateToProps = (state: IState): IComponentInfoDataProps => {
   const { components } = state.nodes;
-  const selectedComponent = components.get(state.selectedNode)!;
+  const selectedComponent = components.get(state.selectedNode.selectedPage)!;
 
   return {
     selectedComponent,

@@ -9,7 +9,8 @@ export const selectedComponentReducer = (prevState: Uuid = '', action: Action): 
       return action.payload.componentId;
     }
 
-    case Nodes_GetAll_Request: {
+    case Nodes_GetAll_Request:
+    case Nodes_GetSubComponents_Request: {
       return '';
     }
 

@@ -8,7 +8,7 @@ import {
 
 const mapStateToProps = (state: IState): IPageInfoDataProps => {
   const { pages } = state.nodes;
-  const selectedPage = pages.get(state.selectedNode)!;
+  const selectedPage = pages.get(state.selectedNode.selectedPage)!;
   // @ts-ignore
   const pageLinks: Immutable.Set<Url> = selectedPage.links
     .map((linkUrl: Url) => {

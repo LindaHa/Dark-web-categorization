@@ -13,3 +13,8 @@ export interface INodes {
   readonly components: Immutable.Map<Url, IComponent>;
   readonly mode: NodeMode;
 }
+
+export interface ISelectedNode {
+  readonly selectedComponent: Uuid;
+  readonly selectedPage: Url;
+}
