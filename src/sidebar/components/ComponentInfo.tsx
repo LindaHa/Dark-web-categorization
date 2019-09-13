@@ -7,7 +7,7 @@ import {
 } from '../../content/utils/getComponentInfo';
 
 export interface IComponentInfoDataProps {
-  readonly selectedComponent: IComponent;
+  readonly selectedComponent?: IComponent;
 }
 
 export interface IComponentInfoCallbackProps {
@@ -18,11 +18,12 @@ type ComponentInfoProps = IComponentInfoCallbackProps & IComponentInfoDataProps;
 export class ComponentInfo extends React.PureComponent<ComponentInfoProps> {
   static displayName = 'ComponentInfo';
   static propTypes: PropTypesShape<ComponentInfoProps> = {
-    selectedComponent: PropTypes.object.isRequired,
+    selectedComponent: PropTypes.object,
   };
 
   render() {
-    const {selectedComponent: { members}} = this.props;
+    const { selectedComponent } = this.props;
+    const members = selectedComponent && selectedComponent.members;
     const categories = getCategoriesFromPages(members);
     const urls = getUrlsFromPages(members);
     const areCategoriesNotEmpty = categories && !categories.isEmpty();
