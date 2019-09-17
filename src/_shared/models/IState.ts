@@ -6,6 +6,7 @@ export interface IState {
   readonly groupBy: GroupBy;
   readonly isError: boolean;
   readonly isFetchingNodes: boolean;
+  readonly currentLevel: number;
   readonly nodes: Immutable.Map<Uuid, IComponent>;
   readonly selectedNodeId: Uuid;
 }

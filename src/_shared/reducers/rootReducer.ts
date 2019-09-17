@@ -5,6 +5,7 @@ import { isFetchingNodesReducer } from '../../content/reducers/isFetchingNodesRe
 import { isErrorReducer } from './isErrorReducer';
 import { selectedComponentReducer } from './selectedCommunityReducer';
 import { componentsReducer } from '../../content/reducers/componentsReducer';
+import { levelReducer } from './levelReducer';
 
 export const rootReducer = combineReducers<IState>({
   groupBy: groupByReducer,
@@ -12,4 +13,5 @@ export const rootReducer = combineReducers<IState>({
   nodes: componentsReducer,
   isFetchingNodes: isFetchingNodesReducer,
   selectedNodeId: selectedComponentReducer,
+  currentLevel: levelReducer,
 });
