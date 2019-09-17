@@ -9,7 +9,6 @@ import { IState } from '../../_shared/models/IState';
 import { selectNode } from '../../_shared/actionCreators/selectedNodeActionCreators';
 import { getLinksForNodes } from '../utils/getLinksFromArray';
 import { ISize } from '../components/Content';
-import { NodeMode } from '../../models/stateModels';
 import { fetchNodes } from '../actionCreators/requests/fetchNodes';
 
 interface IGraphOwnProps {
@@ -17,14 +16,12 @@ interface IGraphOwnProps {
 }
 
 const mapStateToProps = (state: IState, ownProps: IGraphOwnProps): IGraphDataProps => {
-  const {components, mode, pages} = state.nodes;
-  const nodes = mode === NodeMode.Pages ? pages : components;
+  const { nodes} = state;
   const links = getLinksForNodes(nodes.toSet());
 
   return {
     nodes,
     links,
-    nodeMode: mode,
     size: ownProps.size,
   };
 };

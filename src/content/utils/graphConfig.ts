@@ -41,7 +41,7 @@ export const graphConfig = {
   width: window.innerWidth / 3 * 2.19,
 };
 
-export const getLabelConfigForComponents = (nodes: Immutable.Map<string, IComponent>) => (node: IGraphNode): string => {
+export const getLabelConfigForNodes = (nodes: Immutable.Map<string, IComponent>) => (node: IGraphNode): string => {
   const clientNode = nodes.get(node.id);
   if (!clientNode) {
     return node.id;

@@ -6,8 +6,8 @@ import {
 } from '../components/PageInfo';
 
 const mapStateToProps = (state: IState): IPageInfoDataProps => {
-  const { components } = state.nodes;
-  const selectedNode = components.get(state.selectedNode.selectedComponent)!;
+  const { nodes, selectedNodeId } = state;
+  const selectedNode = nodes.get(selectedNodeId)!;
 
   return {
     selectedNode,

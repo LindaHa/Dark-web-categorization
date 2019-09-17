@@ -7,6 +7,3 @@ export const Nodes_GetSubComponents_Request = 'Nodes_GetSubComponents_Request';
 export const Nodes_GetFiltered_Request = 'Nodes_GetFiltered_Request';
 export const Nodes_GetFiltered_Success = 'Nodes_GetFiltered_Success';
 export const Nodes_GetFiltered_Failure = 'Nodes_GetFiltered_Failure';
-
-
-export const Nodes_Mode_Updated = 'Nodes_Mode_Updated';

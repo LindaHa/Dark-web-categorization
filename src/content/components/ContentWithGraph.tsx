@@ -8,18 +8,16 @@ import {
 } from 'react-d3-graph';
 import { ILink } from '../../models/link';
 import {
-  getLabelConfigForComponents,
+  getLabelConfigForNodes,
   graphConfig
 } from '../utils/graphConfig';
 import { IComponent } from '../../models/component';
 import { IPage } from '../../models/page';
-import { NodeMode } from '../../models/stateModels';
 import { ISize } from './Content';
 
 export interface IGraphDataProps {
   readonly links: Immutable.Set<ILink>;
   readonly nodes: Immutable.Map<Uuid, IComponent | IPage>;
-  readonly nodeMode: NodeMode;
   readonly size: ISize;
 }
 
@@ -35,7 +33,6 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
   static propTypes = {
     nodes: ImmutablePropTypes.map.isRequired,
     links: ImmutablePropTypes.set.isRequired,
-    nodeMode: PropTypes.string.isRequired,
     size: PropTypes.object.isRequired,
 
     selectNode: PropTypes.func.isRequired,
@@ -72,7 +69,7 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
   };
 
   render() {
-    const {nodes, links, nodeMode, size: {height, width}} = this.props;
+    const {nodes, links,  size: {height, width}} = this.props;
     const adjustedNodes = nodes.keySeq().toArray().map((nodeUrl: Uuid) => ({id: nodeUrl}));
 
     const data = {
@@ -81,9 +78,7 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
     };
 
     const myConfig = JSON.parse(JSON.stringify(graphConfig));
-    myConfig.node.labelProperty = nodeMode === NodeMode.Pages ?
-      '' :
-      getLabelConfigForComponents(nodes as Immutable.Map<Uuid, IComponent>);
+    myConfig.node.labelProperty = getLabelConfigForNodes(nodes as Immutable.Map<Uuid, IComponent>);
     myConfig.height = height;
     myConfig.width = width;
 

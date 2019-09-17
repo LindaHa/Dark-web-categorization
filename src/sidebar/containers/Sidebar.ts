@@ -12,9 +12,8 @@ import { requestFilteredNodes } from '../../content/actionCreators/nodesActionCr
 import { fetchNodes } from '../../content/actionCreators/requests/fetchNodes';
 
 const mapStateToProps = (state: IState): ISidebarDataProps => {
-  const { groupBy, selectedNode: { selectedComponent } } = state;
-  const { components } = state.nodes;
-  const selectedNode = components.get(selectedComponent);
+  const { groupBy, selectedNodeId, nodes } = state;
+  const selectedNode = nodes.get(selectedNodeId);
 
   return {
     groupBy,

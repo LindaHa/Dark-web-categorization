@@ -6,8 +6,8 @@ import {
 } from '../components/ComponentInfo';
 
 const mapStateToProps = (state: IState): IComponentInfoDataProps => {
-  const { components } = state.nodes;
-  const selectedComponent = components.get(state.selectedNode.selectedComponent)!;
+  const { nodes, selectedNodeId } = state;
+  const selectedComponent = nodes.get(selectedNodeId)!;
 
   return {
     selectedComponent,

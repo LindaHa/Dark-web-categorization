@@ -2,14 +2,14 @@ import {combineReducers} from 'redux';
 import { groupByReducer } from './groupByReducer';
 import { IState } from '../models/IState';
 import { isFetchingNodesReducer } from '../../content/reducers/isFetchingNodesReducer';
-import { nodeReducers } from '../../content/reducers/nodesReducers';
 import { isErrorReducer } from './isErrorReducer';
-import { selectedNodeReducers } from '../../content/reducers/selectedNodeReducers';
+import { selectedComponentReducer } from './selectedCommunityReducer';
+import { componentsReducer } from '../../content/reducers/componentsReducer';
 
 export const rootReducer = combineReducers<IState>({
   groupBy: groupByReducer,
   isError: isErrorReducer,
-  nodes: nodeReducers,
+  nodes: componentsReducer,
   isFetchingNodes: isFetchingNodesReducer,
-  selectedNode: selectedNodeReducers,
+  selectedNodeId: selectedComponentReducer,
 });
