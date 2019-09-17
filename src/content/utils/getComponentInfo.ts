@@ -1,23 +1,11 @@
 import * as Immutable from 'immutable';
-import { IPage } from '../../models/page';
+import { IComponent } from '../../models/component';
 
-export const getCategoriesFromPages = (pages?: Immutable.List<IPage>): Immutable.Set<string> => {
-  let categories = Immutable.Set<string>();
-
-  if (pages) {
-    pages.forEach((page: IPage) => (
-      page.categories.forEach((category: string) => categories = categories.add(category))
-    ));
-  }
-
-  return categories;
-};
-
-export const getUrlsFromPages = (pages?: Immutable.List<IPage>): Immutable.Set<string> => {
+export const getUrlsFromMembers = (nodes?: Immutable.List<IComponent>): Immutable.Set<string> => {
   let urls = Immutable.Set<string>();
 
-  if (pages) {
-    pages.forEach((page: IPage) => urls = urls.add(page.url));
+  if (nodes) {
+    nodes.forEach((node: IComponent) => urls = urls.add(node.id));
   }
 
   return urls;

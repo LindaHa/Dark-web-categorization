@@ -10,8 +10,7 @@ import { ZoomOutOptions } from './ZoomOutOptions';
 export interface ISidebarDataProps {
   readonly groupBy: GroupBy;
   readonly nodeMode: NodeMode;
-  readonly selectedComponentId: Uuid | null;
-  readonly selectedNodeId: Uuid;
+  readonly selectedNodeId?: Uuid;
 }
 
 export interface ISidebarCallbackProps {
@@ -33,8 +32,7 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
   static propTypes: PropTypesShape<SidebarProps> = {
     groupBy: PropTypes.string.isRequired,
     nodeMode: PropTypes.string.isRequired,
-    selectedComponentId: PropTypes.string.isRequired,
-    selectedNodeId: PropTypes.string.isRequired,
+    selectedNodeId: PropTypes.string,
 
     onFilterSearch: PropTypes.func.isRequired,
     onGroupUpdate: PropTypes.func.isRequired,
@@ -64,7 +62,7 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
   };
 
   _zoomOutGroup = () => {
-    const selectedComponentId = this.props.selectedComponentId;
+    const selectedComponentId = this.props.selectedNodeId;
     if (selectedComponentId) {
       const idParts = selectedComponentId.split('.');
       const upComponentId = idParts.slice(0, idParts.length - 1);
@@ -74,7 +72,7 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
   };
 
   _getLevelNumber = (): number => {
-    const selectedComponentId = this.props.selectedComponentId;
+    const selectedComponentId = this.props.selectedNodeId;
     if (!selectedComponentId) {
       return 0;
     }

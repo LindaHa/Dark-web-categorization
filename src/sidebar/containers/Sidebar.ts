@@ -12,11 +12,10 @@ import { requestFilteredNodes } from '../../content/actionCreators/nodesActionCr
 import { fetchNodes } from '../../content/actionCreators/requests/fetchNodes';
 
 const mapStateToProps = (state: IState): ISidebarDataProps => {
-  const { groupBy, nodes: { mode }, selectedNode: { selectedComponent, selectedPage } } = state;
+  const { groupBy, nodes: { mode }, selectedNode: { selectedComponent } } = state;
   return {
     groupBy,
-    selectedComponentId: selectedComponent,
-    selectedNodeId: selectedPage,
+    selectedNodeId: selectedComponent,
     nodeMode: mode,
   };
 };

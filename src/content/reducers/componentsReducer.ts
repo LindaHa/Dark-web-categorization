@@ -4,7 +4,7 @@ import {
   Nodes_GetFiltered_Request
 } from '../actionTypes/nodesActionTypes';
 import {
-  convertServerToViewComponentModel,
+  convertServerToViewNodeModel,
 } from '../utils/convertNodeModel';
 import {
   IComponent,
@@ -18,7 +18,7 @@ export const componentsReducer = (prevState: Immutable.Map<Uuid, IComponent> = I
     case Nodes_GetComponents_Success: {
       const serverNodes = action.payload.nodes;
       const clientNodes = serverNodes.map((component: IComponentServerModel) =>
-        [component.id, convertServerToViewComponentModel(component)]
+        [component.id, convertServerToViewNodeModel(component)]
       );
 
       return Immutable.Map<Uuid, IComponent>(clientNodes);

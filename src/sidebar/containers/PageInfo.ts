@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import * as Immutable from 'immutable';
 import { IState } from '../../_shared/models/IState';
 import {
   IPageInfoDataProps,
@@ -7,19 +6,11 @@ import {
 } from '../components/PageInfo';
 
 const mapStateToProps = (state: IState): IPageInfoDataProps => {
-  const { pages } = state.nodes;
-  const selectedPage = pages.get(state.selectedNode.selectedPage)!;
-  // @ts-ignore
-  const pageLinks: Immutable.Set<Url> = selectedPage.links
-    .map((linkUrl: Url) => {
-      const linkedPage = pages.get(linkUrl);
-      return linkedPage && linkedPage.url;
-    })
-    .filter((url: string | undefined) => !!url);
+  const { components } = state.nodes;
+  const selectedNode = components.get(state.selectedNode.selectedComponent)!;
 
   return {
-    selectedPage,
-    pageLinks,
+    selectedNode,
   };
 };
 

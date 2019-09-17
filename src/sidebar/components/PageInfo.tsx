@@ -1,12 +1,9 @@
 import * as React from 'react';
-import * as Immutable from 'immutable';
 import * as PropTypes from 'prop-types';
-import * as ImmutablePropTypes from 'immutable-prop-types';
-import { IPage } from '../../models/page';
+import { IComponent } from '../../models/component';
 
 export interface IPageInfoDataProps {
-  readonly selectedPage: IPage;
-  readonly pageLinks: Immutable.Set<string>;
+  readonly selectedNode: IComponent;
 }
 
 interface IPageInfoCallbackProps {
@@ -17,12 +14,22 @@ type PageInfoProps = IPageInfoCallbackProps & IPageInfoDataProps;
 export class PageInfo extends React.PureComponent<PageInfoProps> {
   static displayName = 'PageInfo';
   static propTypes: PropTypesShape<PageInfoProps> = {
-    selectedPage: PropTypes.object.isRequired,
-    pageLinks: ImmutablePropTypes.set,
+    selectedNode: PropTypes.object.isRequired,
   };
 
   render() {
-    const {selectedPage: {url, categories}, pageLinks} = this.props;
+    const { selectedNode: { firstMembers } } = this.props;
+    const individualPage = firstMembers.first(null);
+    if (!individualPage) {
+      return (
+        <div>
+          <div className="sidebar__info-group"/>
+        </div>
+      );
+    }
+    const categories = individualPage.categories;
+    const pageLinks = individualPage.links;
+    const id = individualPage.id;
     const areCategoriesNotEmpty = categories && !categories.isEmpty();
     const areLinkNotEmpty = pageLinks && !pageLinks.isEmpty();
 
@@ -33,7 +40,7 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
             Url
           </div>
           <div className="sidebar__info-group-value-item">
-            {url}
+            {id}
           </div>
 
         </div>

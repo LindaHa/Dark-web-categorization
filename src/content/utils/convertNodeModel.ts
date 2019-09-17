@@ -1,9 +1,5 @@
 import * as Immutable from 'immutable';
-import {
-  IPage,
-  IPageServerModel,
-  Page,
-} from '../../models/page';
+import { IPageServerModel } from '../../models/page';
 import {
   Component,
   IComponent,
@@ -19,33 +15,36 @@ const getRawLinks = (links: Url[]): Immutable.Set<Url> => {
   return clientLinks;
 };
 
-export const convertServerToViewPageModel = (serverModel: IPageServerModel): IPage => {
-  const {url, description, id, categories, language, links} = serverModel;
+export const convertServerPageToViewNodeModel = (serverModel: IPageServerModel): IComponent => {
+  const { url, categories, links } = serverModel;
   const clientLinks = getRawLinks(links);
 
   const separateCategories = categories && categories.split(', ');
   const clientCategories = Immutable.Set<string>(separateCategories);
-  return (new Page({
+
+  return (new Component({
     categories: clientCategories,
-    description,
-    id,
-    language,
+    id: url,
     links: clientLinks,
-    url,
+    firstMembers: Immutable.List<IComponent>(),
+    membersCount: 1,
   }));
 };
 
-export const convertServerToViewComponentModel = (serverModel: IComponentServerModel): IComponent => {
-  const {id, links, first_members, members_count} = serverModel;
-  let clientMembers = Immutable.List<IPage>();
+export const convertServerToViewNodeModel = (serverModel: IComponentServerModel): IComponent => {
+  const { categories, id, links, first_members, members_count } = serverModel;
+  let clientMembers = Immutable.List<IComponent>();
   if (first_members) {
     first_members.forEach((member: IPageServerModel) => {
-      const clientMember = convertServerToViewPageModel(member);
+      const clientMember = convertServerPageToViewNodeModel(member);
       clientMembers = clientMembers.push(clientMember);
     });
   }
   const clientLinks = getRawLinks(links);
+  const clientCategories = Immutable.Set<Uuid>(categories);
+
   return (new Component({
+    categories: clientCategories,
     id,
     links: clientLinks,
     firstMembers: clientMembers,

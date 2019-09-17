@@ -1,10 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { IComponent } from '../../models/component';
-import {
-  getCategoriesFromPages,
-  getUrlsFromPages
-} from '../../content/utils/getComponentInfo';
+import { getUrlsFromMembers } from '../../content/utils/getComponentInfo';
 
 export interface IComponentInfoDataProps {
   readonly selectedComponent?: IComponent;
@@ -24,8 +21,8 @@ export class ComponentInfo extends React.PureComponent<ComponentInfoProps> {
   render() {
     const { selectedComponent } = this.props;
     const members = selectedComponent && selectedComponent.firstMembers;
-    const categories = getCategoriesFromPages(members);
-    const urls = getUrlsFromPages(members);
+    const categories = selectedComponent && selectedComponent.categories;
+    const urls = getUrlsFromMembers(members);
     const areCategoriesNotEmpty = categories && !categories.isEmpty();
 
     return (
@@ -48,17 +45,17 @@ export class ComponentInfo extends React.PureComponent<ComponentInfoProps> {
         </div>
         {
           areCategoriesNotEmpty &&
-          <div className="sidebar__info-group">
-            <div className="sidebar__info-group-label-item">Categories</div>
-            {categories.map((category: string, index: string) =>
-              <div
-                key={index}
-                className="sidebar__info-group-value-item"
-              >
-                {category}
-              </div>
-            )}
-          </div>
+            <div className="sidebar__info-group">
+              <div className="sidebar__info-group-label-item">Categories</div>
+              {categories!.map((category: string, index: string) =>
+                <div
+                  key={index}
+                  className="sidebar__info-group-value-item"
+                >
+                  {category}
+                </div>
+              )}
+            </div>
         }
       </div>
     );
