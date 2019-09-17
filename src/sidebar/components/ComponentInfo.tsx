@@ -23,7 +23,7 @@ export class ComponentInfo extends React.PureComponent<ComponentInfoProps> {
 
   render() {
     const { selectedComponent } = this.props;
-    const members = selectedComponent && selectedComponent.members;
+    const members = selectedComponent && selectedComponent.firstMembers;
     const categories = getCategoriesFromPages(members);
     const urls = getUrlsFromPages(members);
     const areCategoriesNotEmpty = categories && !categories.isEmpty();

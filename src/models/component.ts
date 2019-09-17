@@ -7,8 +7,8 @@ import {
 export interface IComponentData {
   readonly id: string;
   readonly links: Immutable.Set<Url>;
-  readonly members: Immutable.List<IPage>;
-  readonly members_count: number;
+  readonly firstMembers: Immutable.List<IPage>;
+  readonly membersCount: number;
 }
 
 export interface IComponent extends IComponentData, IRecordFunctions<IComponentData, IComponent> {
@@ -17,15 +17,15 @@ export interface IComponent extends IComponentData, IRecordFunctions<IComponentD
 const recordData: IComponentData = {
   id: '',
   links: Immutable.Set<Url>(),
-  members: Immutable.List<IPage>(),
-  members_count: 0,
+  firstMembers: Immutable.List<IPage>(),
+  membersCount: 0,
 };
 
 export class Component extends Immutable.Record(recordData) implements IComponent {
   readonly id: string;
   readonly links: Immutable.Set<Url>;
-  readonly members: Immutable.List<IPage>;
-  readonly members_count: number;
+  readonly firstMembers: Immutable.List<IPage>;
+  readonly membersCount: number;
 
   toObject(): IComponentData {
     return super.toObject() as IComponentData;
@@ -39,20 +39,20 @@ export class Component extends Immutable.Record(recordData) implements IComponen
 export interface IComponentServerModel {
   readonly id: string;
   readonly links: Url[];
-  readonly members: IPageServerModel[];
+  readonly first_members: IPageServerModel[];
   readonly members_count: number;
 }
 
 const componentServerModelData: IComponentServerModel = {
   id: '',
   links: [],
-  members: [],
+  first_members: [],
   members_count: 0,
 };
 
 export class ComponentServerModel extends Immutable.Record(componentServerModelData) implements IComponentServerModel {
   readonly id: string;
   readonly links: Url[];
-  readonly members: IPageServerModel[];
+  readonly first_members: IPageServerModel[];
   readonly members_count: number;
 }

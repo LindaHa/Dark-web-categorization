@@ -36,10 +36,10 @@ export const convertServerToViewPageModel = (serverModel: IPageServerModel): IPa
 };
 
 export const convertServerToViewComponentModel = (serverModel: IComponentServerModel): IComponent => {
-  const {id, links, members, members_count} = serverModel;
+  const {id, links, first_members, members_count} = serverModel;
   let clientMembers = Immutable.List<IPage>();
-  if (members) {
-    members.forEach((member: IPageServerModel) => {
+  if (first_members) {
+    first_members.forEach((member: IPageServerModel) => {
       const clientMember = convertServerToViewPageModel(member);
       clientMembers = clientMembers.push(clientMember);
     });
@@ -48,8 +48,8 @@ export const convertServerToViewComponentModel = (serverModel: IComponentServerM
   return (new Component({
     id,
     links: clientLinks,
-    members: clientMembers,
-    members_count,
+    firstMembers: clientMembers,
+    membersCount: members_count,
   }));
 };
 
