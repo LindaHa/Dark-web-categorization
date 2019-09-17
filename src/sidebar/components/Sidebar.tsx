@@ -8,8 +8,10 @@ import { ZoomOutOptions } from './ZoomOutOptions';
 import { IComponent } from '../../models/component';
 
 export interface ISidebarDataProps {
+  readonly currentLevel: number;
   readonly groupBy: GroupBy;
   readonly selectedNode?: IComponent;
+  readonly selectedNodeId?: Uuid;
 }
 
 export interface ISidebarCallbackProps {
@@ -29,8 +31,10 @@ export enum GroupBy {
 export class Sidebar extends React.PureComponent<SidebarProps> {
   static displayName = 'Sidebar';
   static propTypes: PropTypesShape<SidebarProps> = {
+    currentLevel: PropTypes.number.isRequired,
     groupBy: PropTypes.string.isRequired,
     selectedNode: PropTypes.object,
+    selectedNodeId: PropTypes.string,
 
     onFilterSearch: PropTypes.func.isRequired,
     onGroupUpdate: PropTypes.func.isRequired,
@@ -54,9 +58,8 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
   };
 
   _zoomOutGroup = () => {
-    const { selectedNode } = this.props;
-    if (selectedNode) {
-      const selectedNodeId = selectedNode.id;
+    const { selectedNodeId } = this.props;
+    if (selectedNodeId) {
       const idParts = selectedNodeId.split('.');
       const upComponentId = idParts.slice(0, idParts.length - 1);
 
@@ -64,19 +67,8 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
     }
   };
 
-  _getLevelNumber = (): number => {
-    const { selectedNode } = this.props;
-    if (!selectedNode) {
-      return 0;
-    }
-
-    const selectedComponentId = selectedNode.id;
-    const idParts = selectedComponentId.split('.');
-    return idParts.length;
-  };
-
   render() {
-    const { groupBy, selectedNode } = this.props;
+    const { groupBy, selectedNode, currentLevel } = this.props;
     return (
       <div className="canvas__sidebar">
         <div className="sidebar sidebar__content">
@@ -87,7 +79,7 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
             />
             <SearchBar onSearch={this._filterNodes}/>
             <ZoomOutOptions
-              lvlNumber={this._getLevelNumber()}
+              lvlNumber={currentLevel}
               onZoomOut={this._zoomOutGroup}
             />
             {selectedNode && this._renderNodeInfo()}

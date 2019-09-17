@@ -26,7 +26,7 @@ export const succeedToFetchComponents = (json: object): Action => ({
 
 export const requestSubComponents = (componentId: Uuid): Action => ({
   type: Nodes_GetSubComponents_Request,
-  payload: { componentId },
+  payload: { nodeId: componentId },
 });
 
 export const failToFetchNodes = (id: string, error: Error): Action => ({

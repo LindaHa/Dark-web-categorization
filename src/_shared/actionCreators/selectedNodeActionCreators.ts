@@ -2,5 +2,5 @@ import { SelectedNode_Id_Updated } from '../../content/actionTypes/selectedNodeA
 
 export const selectNode = (value: Uuid): Action => ({
   type: SelectedNode_Id_Updated,
-  payload: value,
+  payload: { nodeId: value },
 });
