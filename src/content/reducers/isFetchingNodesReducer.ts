@@ -8,7 +8,7 @@ import {
   Nodes_GetSubComponents_Request
 } from '../actionTypes/nodesActionTypes';
 
-export const isFetchingNodesReducer = (prevState: boolean = false, action: Action): boolean => {
+export const isFetchingNodesReducer = (prevState: boolean = true, action: Action): boolean => {
   switch (action.type) {
     // case Nodes_GetFiltered_Request:
     case Nodes_GetAll_Request:

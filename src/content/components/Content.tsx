@@ -8,7 +8,7 @@ export interface IContentCallbackProps {
 }
 
 export interface IContentDataProps {
-  areNodesReady: boolean;
+  isFetchingNodes: boolean;
   isError: boolean;
 }
 
@@ -28,7 +28,7 @@ export class Content extends React.PureComponent<ContentProps, IContentDataState
   static propTypes = {
     getNodes: PropTypes.func.isRequired,
 
-    areNodesReady: PropTypes.bool.isRequired,
+    isFetchingNodes: PropTypes.bool.isRequired,
     isError: PropTypes.bool.isRequired,
   };
 
@@ -54,7 +54,8 @@ export class Content extends React.PureComponent<ContentProps, IContentDataState
   }
 
   render() {
-    const { areNodesReady, isError } = this.props;
+    const { isFetchingNodes, isError } = this.props;
+    const areNodesReady = !isFetchingNodes && !isError;
     return (
       <section
         className="canvas__content"

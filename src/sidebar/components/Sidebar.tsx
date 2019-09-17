@@ -2,15 +2,14 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { SearchBar } from './SearchBar';
 import { GroupBySelector } from './GroupBySelector';
-import { NodeMode } from '../../models/stateModels';
 import { ComponentInfo } from '../containers/ComponentInfo';
 import { PageInfo } from '../containers/PageInfo';
 import { ZoomOutOptions } from './ZoomOutOptions';
+import { IComponent } from '../../models/component';
 
 export interface ISidebarDataProps {
   readonly groupBy: GroupBy;
-  readonly nodeMode: NodeMode;
-  readonly selectedNodeId?: Uuid;
+  readonly selectedNode?: IComponent;
 }
 
 export interface ISidebarCallbackProps {
@@ -31,8 +30,7 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
   static displayName = 'Sidebar';
   static propTypes: PropTypesShape<SidebarProps> = {
     groupBy: PropTypes.string.isRequired,
-    nodeMode: PropTypes.string.isRequired,
-    selectedNodeId: PropTypes.string,
+    selectedNode: PropTypes.object,
 
     onFilterSearch: PropTypes.func.isRequired,
     onGroupUpdate: PropTypes.func.isRequired,
@@ -46,25 +44,20 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
   };
 
   _renderNodeInfo = () => {
-    const { nodeMode } = this.props;
-    switch (nodeMode) {
-      case NodeMode.Components:
-        return <ComponentInfo/>;
-
-      case NodeMode.Pages:
-        return <PageInfo/>;
-
-      case NodeMode.Empty:
-      default: {
-        return null;
-      }
+    const { selectedNode } = this.props;
+    if (!selectedNode) {
+      return null;
     }
+    const isIndividual = selectedNode.membersCount === 1 && selectedNode.firstMembers;
+
+    return isIndividual ? <PageInfo/> : <ComponentInfo/>;
   };
 
   _zoomOutGroup = () => {
-    const selectedComponentId = this.props.selectedNodeId;
-    if (selectedComponentId) {
-      const idParts = selectedComponentId.split('.');
+    const { selectedNode } = this.props;
+    if (selectedNode) {
+      const selectedNodeId = selectedNode.id;
+      const idParts = selectedNodeId.split('.');
       const upComponentId = idParts.slice(0, idParts.length - 1);
 
       this.props.onGroupZoomOut(upComponentId.join('.'));
@@ -72,17 +65,18 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
   };
 
   _getLevelNumber = (): number => {
-    const selectedComponentId = this.props.selectedNodeId;
-    if (!selectedComponentId) {
+    const { selectedNode } = this.props;
+    if (!selectedNode) {
       return 0;
     }
 
+    const selectedComponentId = selectedNode.id;
     const idParts = selectedComponentId.split('.');
     return idParts.length;
   };
 
   render() {
-    const { groupBy, selectedNodeId } = this.props;
+    const { groupBy, selectedNode } = this.props;
     return (
       <div className="canvas__sidebar">
         <div className="sidebar sidebar__content">
@@ -96,7 +90,7 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
               lvlNumber={this._getLevelNumber()}
               onZoomOut={this._zoomOutGroup}
             />
-            {selectedNodeId && this._renderNodeInfo()}
+            {selectedNode && this._renderNodeInfo()}
           </div>
         </div>
       </div>
