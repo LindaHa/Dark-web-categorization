@@ -17,7 +17,7 @@ export const graphConfig = {
 
   node: {
     color: primaryNodeColor,
-    size: 10,
+    size: 400,
     highlightStrokeColor: primaryNodeColor,
     highlightColor: highlightNodeColor,
     highlightDegree: 0,
@@ -34,7 +34,8 @@ export const graphConfig = {
   },
 
   d3: {
-    gravity: -200,
+    gravity: -300,
+    linkLength: 200
   },
 
   height: window.innerHeight - 40,
