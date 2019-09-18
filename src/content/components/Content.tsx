@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Graph } from '../containers/Graph';
+import { ContentWithGraph } from '../containers/ContentWithGraph';
 import * as PropTypes from 'prop-types';
 import { ContentPlaceholder } from '../../_shared/components/ContentPlaceholder';
 
@@ -61,7 +61,7 @@ export class Content extends React.PureComponent<ContentProps, IContentDataState
         className="canvas__content"
         ref={this._getWidth}
       >
-        {areNodesReady ? <Graph size={this.state.size}/> : <ContentPlaceholder isError={isError}/>}
+        {areNodesReady ? <ContentWithGraph size={this.state.size}/> : <ContentPlaceholder isError={isError}/>}
       </section>
     );
   }
