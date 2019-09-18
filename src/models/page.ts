@@ -1,4 +1,5 @@
 import * as Immutable from 'immutable';
+import { ILinkServerModel } from './link';
 
 export interface IPageData {
   readonly categories: Immutable.Set<Uuid>;
@@ -43,7 +44,7 @@ export interface IPageServerModel {
   readonly description: string;
   readonly id: Uuid;
   readonly language: string;
-  readonly links: Url[];
+  readonly links: ILinkServerModel[];
   readonly url: string;
 }
 
@@ -61,6 +62,6 @@ export class PageServerModel extends Immutable.Record(pageServerModelData) imple
   readonly description: string;
   readonly id: Uuid;
   readonly language: string;
-  readonly links: Url[];
+  readonly links: ILinkServerModel[];
   readonly url: string;
 }

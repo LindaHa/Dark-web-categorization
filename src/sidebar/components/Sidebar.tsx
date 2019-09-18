@@ -52,7 +52,7 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
     if (!selectedNode) {
       return null;
     }
-    const isIndividual = selectedNode.membersCount === 1 && selectedNode.firstMembers;
+    const isIndividual = selectedNode.membersCount === 1 && !selectedNode.firstMembers.isEmpty();
 
     return isIndividual ? <PageInfo/> : <ComponentInfo/>;
   };

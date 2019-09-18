@@ -5,11 +5,12 @@ import {
   IComponent,
   IComponentServerModel
 } from '../../models/component';
+import { ILinkServerModel } from '../../models/link';
 
-const getRawLinks = (links: Url[]): Immutable.Set<Url> => {
+const getRawLinks = (links: ILinkServerModel[]): Immutable.Set<Url> => {
   let clientLinks = Immutable.Set<Url>();
   if (links) {
-    links.map((link: string) => clientLinks = clientLinks.add(link));
+    links.map((link: ILinkServerModel) => clientLinks = clientLinks.add(link.link));
   }
 
   return clientLinks;
@@ -40,7 +41,7 @@ export const convertServerToViewNodeModel = (serverModel: IComponentServerModel)
       clientMembers = clientMembers.push(clientMember);
     });
   }
-  const clientLinks = getRawLinks(links);
+  const clientLinks = Immutable.Set<Url>(links);
   const clientCategories = Immutable.Set<Uuid>(categories);
 
   return (new Component({

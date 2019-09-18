@@ -31,7 +31,7 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
     const pageLinks = individualPage.links;
     const id = individualPage.id;
     const areCategoriesNotEmpty = categories && !categories.isEmpty();
-    const areLinkNotEmpty = pageLinks && !pageLinks.isEmpty();
+    const areLinksNotEmpty = pageLinks && !pageLinks.isEmpty();
 
     return (
       <div>
@@ -60,7 +60,7 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
         }
 
         {
-          areLinkNotEmpty &&
+          areLinksNotEmpty &&
           <div className="sidebar__info-group">
             <div className="sidebar__info-group-label-item">Linked pages</div>
             {pageLinks.map((link: string) =>

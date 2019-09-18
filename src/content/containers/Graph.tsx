@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import {
-  ContentWithGraph,
+  ContentWithGraph as ContentWithGraphComponent,
   IGraphCallbackProps,
   IGraphDataProps,
 } from '../components/ContentWithGraph';
@@ -16,7 +16,7 @@ interface IGraphOwnProps {
 }
 
 const mapStateToProps = (state: IState, ownProps: IGraphOwnProps): IGraphDataProps => {
-  const { nodes} = state;
+  const { nodes } = state;
   const links = getLinksForNodes(nodes.toSet());
 
   return {
@@ -31,4 +31,4 @@ const mapDispatchToProps = (dispatch: Dispatch): IGraphCallbackProps => ({
   zoomNode: (nodeId: Uuid) => dispatch(fetchNodes(nodeId)),
 });
 
-export const Graph = connect(mapStateToProps, mapDispatchToProps)(ContentWithGraph);
+export const Graph = connect(mapStateToProps, mapDispatchToProps)(ContentWithGraphComponent);

@@ -4,7 +4,6 @@ import {
   ILink,
   Link
 } from '../../models/link';
-import { IPage } from '../../models/page';
 import { IComponent } from '../../models/component';
 
 const getLinksFromArray = (_idGenerator: () => Uuid) =>
@@ -25,9 +24,9 @@ const getLinksFromArray = (_idGenerator: () => Uuid) =>
     return wholeLinks;
   };
 
-export const getLinksForNodes = (nodes: Immutable.Set<IPage | IComponent>): Immutable.Set<ILink> => {
+export const getLinksForNodes = (nodes: Immutable.Set<IComponent>): Immutable.Set<ILink> => {
   let links = Immutable.Set<ILink>();
-  nodes.forEach((node: IPage | IComponent) => {
+  nodes.forEach((node: IComponent) => {
     const linksPerNode = getLinksFromArray(uuid)(node.id, node.links);
     links = links.union(linksPerNode);
   });
