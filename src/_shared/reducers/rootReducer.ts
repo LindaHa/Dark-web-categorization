@@ -3,15 +3,15 @@ import { groupByReducer } from './groupByReducer';
 import { IState } from '../models/IState';
 import { isFetchingNodesReducer } from '../../content/reducers/isFetchingNodesReducer';
 import { isErrorReducer } from './isErrorReducer';
-import { selectedComponentReducer } from './selectedCommunityReducer';
-import { componentsReducer } from '../../content/reducers/componentsReducer';
+import { selectedNodeReducer } from './selectedCommunityReducer';
+import { nodesReducer } from '../../content/reducers/nodesReducer';
 import { levelReducer } from './levelReducer';
 
 export const rootReducer = combineReducers<IState>({
   groupBy: groupByReducer,
   isError: isErrorReducer,
-  nodes: componentsReducer,
+  nodes: nodesReducer,
   isFetchingNodes: isFetchingNodesReducer,
-  selectedNodeId: selectedComponentReducer,
+  selectedNodeId: selectedNodeReducer,
   currentLevel: levelReducer,
 });

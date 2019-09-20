@@ -11,7 +11,7 @@ import {
   ICommunityServerModel
 } from '../../models/node';
 
-export const componentsReducer = (prevState: Immutable.Map<Uuid, INode> = Immutable.Map<Url, INode>(), action: Action)
+export const nodesReducer = (prevState: Immutable.Map<Uuid, INode> = Immutable.Map<Url, INode>(), action: Action)
   : Immutable.Map<Uuid, INode> => {
   switch (action.type) {
     case Nodes_GetFiltered_Request:

@@ -5,14 +5,14 @@ import {
   Nodes_GetNodes_Success,
   Nodes_GetFiltered_Failure,
   Nodes_GetFiltered_Success,
-  Nodes_GetSubComponents_Request
+  Nodes_GetSubNodes_Request
 } from '../actionTypes/nodesActionTypes';
 
 export const isFetchingNodesReducer = (prevState: boolean = true, action: Action): boolean => {
   switch (action.type) {
     // case Nodes_GetFiltered_Request:
     case Nodes_GetAll_Request:
-    case Nodes_GetSubComponents_Request: {
+    case Nodes_GetSubNodes_Request: {
       return true;
     }
 

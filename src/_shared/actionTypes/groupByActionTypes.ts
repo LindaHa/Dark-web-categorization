@@ -1,1 +1,1 @@
-export const GroupPagesBy_Item_Updated = 'GroupPagesBy_Item_Updated';
+export const GroupNodesBy_Item_Updated = 'GroupNodesBy_Item_Updated';

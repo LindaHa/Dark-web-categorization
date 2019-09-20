@@ -6,7 +6,7 @@ import {
   Nodes_GetFiltered_Failure,
   Nodes_GetFiltered_Request,
   Nodes_GetFiltered_Success,
-  Nodes_GetSubComponents_Request,
+  Nodes_GetSubNodes_Request,
 } from '../actionTypes/nodesActionTypes';
 
 export const requestNodes = (): Action => ({
@@ -14,19 +14,19 @@ export const requestNodes = (): Action => ({
   payload: {},
 });
 
-export const succeedToFetchNodes = (json: object): Action => ({
+export const succeedToFetchAllNodes = (json: object): Action => ({
   type: Nodes_GetAll_Success,
   payload: { nodes: json },
 });
 
-export const succeedToFetchComponents = (json: object): Action => ({
+export const succeedToFetchNodes = (json: object): Action => ({
   type: Nodes_GetNodes_Success,
   payload: { nodes: json },
 });
 
-export const requestSubComponents = (componentId: Uuid): Action => ({
-  type: Nodes_GetSubComponents_Request,
-  payload: { nodeId: componentId },
+export const requestSubNodes = (nodeId: Uuid): Action => ({
+  type: Nodes_GetSubNodes_Request,
+  payload: { nodeId },
 });
 
 export const failToFetchNodes = (id: string, error: Error): Action => ({

@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { SearchBar } from './SearchBar';
 import { GroupBySelector } from './GroupBySelector';
-import { ComponentInfo } from '../containers/ComponentInfo';
+import { CommunityInfo } from '../containers/CommunityInfo';
 import { PageInfo } from '../containers/PageInfo';
 import { ZoomOutOptions } from './ZoomOutOptions';
 import { INode } from '../../models/node';
@@ -54,16 +54,16 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
     }
     const isIndividual = selectedNode.membersCount === 1 && !selectedNode.firstMembers.isEmpty();
 
-    return isIndividual ? <PageInfo/> : <ComponentInfo/>;
+    return isIndividual ? <PageInfo/> : <CommunityInfo/>;
   };
 
   _zoomOutGroup = () => {
     const { selectedNodeId } = this.props;
     if (selectedNodeId) {
       const idParts = selectedNodeId.split('.');
-      const upComponentId = idParts.slice(0, idParts.length - 1);
+      const upNodeId = idParts.slice(0, idParts.length - 1);
 
-      this.props.onGroupZoomOut(upComponentId.join('.'));
+      this.props.onGroupZoomOut(upNodeId.join('.'));
     }
   };
 

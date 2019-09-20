@@ -3,25 +3,25 @@ import * as PropTypes from 'prop-types';
 import { INode } from '../../models/node';
 import { getUrlsFromMembers } from '../../content/utils/getComponentInfo';
 
-export interface IComponentInfoDataProps {
-  readonly selectedComponent?: INode;
+export interface ICommunityInfoDataProps {
+  readonly selectedNode?: INode;
 }
 
-export interface IComponentInfoCallbackProps {
+export interface ICommunityInfoCallbackProps {
 }
 
-type ComponentInfoProps = IComponentInfoCallbackProps & IComponentInfoDataProps;
+type CommunityInfoProps = ICommunityInfoCallbackProps & ICommunityInfoDataProps;
 
-export class ComponentInfo extends React.PureComponent<ComponentInfoProps> {
-  static displayName = 'ComponentInfo';
-  static propTypes: PropTypesShape<ComponentInfoProps> = {
-    selectedComponent: PropTypes.object,
+export class CommunityInfo extends React.PureComponent<CommunityInfoProps> {
+  static displayName = 'CommunityInfo';
+  static propTypes: PropTypesShape<CommunityInfoProps> = {
+    selectedNode: PropTypes.object,
   };
 
   render() {
-    const { selectedComponent } = this.props;
-    const members = selectedComponent && selectedComponent.firstMembers;
-    const categories = selectedComponent && selectedComponent.categories;
+    const { selectedNode } = this.props;
+    const members = selectedNode && selectedNode.firstMembers;
+    const categories = selectedNode && selectedNode.categories;
     const urls = getUrlsFromMembers(members);
     const areCategoriesNotEmpty = categories && !categories.isEmpty();
 
