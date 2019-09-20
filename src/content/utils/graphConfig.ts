@@ -34,8 +34,6 @@ export const graphConfig = {
   },
 
   d3: {
-    gravity: -300,
-    linkLength: 200
   },
 
   height: window.innerHeight - 40,

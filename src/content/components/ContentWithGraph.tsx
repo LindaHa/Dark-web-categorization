@@ -14,6 +14,7 @@ import {
 import { INode } from '../../models/node';
 import { IPage } from '../../models/page';
 import { ISize } from './Content';
+import { seedRandom } from '../utils/seedRandom';
 
 export interface IGraphDataProps {
   readonly links: Immutable.Set<ILink>;
@@ -59,18 +60,16 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
    * @return {Object} the graph where now nodes containing (x,y) coords.
    */
   _decorateGraphNodesWithInitialPositioning = (nodes: IGraphNode[]) => {
-    const {size: {width, height}} = this.props;
-    return nodes.map((node: IGraphNode) =>
-      Object.assign({}, node, {
-        x: node.x || Math.floor(Math.random() * (width - 20) + 10),
-        y: node.y || Math.floor(Math.random() * (height - 30) + 10),
-      })
-    );
+    const { size: { width, height } } = this.props;
+    return nodes.map((node: IGraphNode) => (Object.assign({}, node, {
+        x: node.x || Math.floor(seedRandom('x' + node.id) * (width - 20) + 10),
+        y: node.y || Math.floor(seedRandom('y' + node.id) * (height - 30) + 10),
+      })));
   };
 
   render() {
-    const {nodes, links,  size: {height, width}} = this.props;
-    const adjustedNodes = nodes.keySeq().toArray().map((nodeUrl: Uuid) => ({id: nodeUrl}));
+    const { nodes, links, size: { height, width } } = this.props;
+    const adjustedNodes = nodes.keySeq().toArray().map((nodeUrl: Uuid) => ({ id: nodeUrl }));
 
     const data = {
       nodes: this._decorateGraphNodesWithInitialPositioning(adjustedNodes),
