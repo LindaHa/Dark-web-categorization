@@ -1,3 +1,4 @@
+import * as Immutable from 'immutable';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import {
@@ -10,6 +11,8 @@ import { selectNode } from '../../_shared/actionCreators/selectedNodeActionCreat
 import { getLinksForNodes } from '../utils/getLinksFromArray';
 import { ISize } from '../components/Content';
 import { fetchNodes } from '../actionCreators/requests/fetchNodes';
+import { INode } from '../../models/node';
+import { MAX_NODES_FOR_DISPLAY } from '../constants/graphConstants';
 
 interface IGraphOwnProps {
   readonly size: ISize;
@@ -17,10 +20,22 @@ interface IGraphOwnProps {
 
 const mapStateToProps = (state: IState, ownProps: IGraphOwnProps): IGraphDataProps => {
   const { nodes } = state;
-  const links = getLinksForNodes(nodes.toSet());
+  let memberNodes = Immutable.Map<Uuid, INode>();
+  if (nodes.count() === 1) {
+    nodes.valueSeq().forEach((node: INode) => {
+      if (node.firstMembers.count() <= MAX_NODES_FOR_DISPLAY) {
+        node.firstMembers.forEach((member: INode) => {
+          memberNodes = memberNodes.set(member.id, member);
+        });
+      }
+    });
+  }
+
+  const finalNodes = memberNodes.isEmpty() ? nodes : memberNodes;
+  const links = getLinksForNodes(finalNodes);
 
   return {
-    nodes,
+    nodes: finalNodes,
     links,
     size: ownProps.size,
   };

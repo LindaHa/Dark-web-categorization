@@ -24,10 +24,18 @@ const getLinksFromArray = (_idGenerator: () => Uuid) =>
     return wholeLinks;
   };
 
-export const getLinksForNodes = (nodes: Immutable.Set<INode>): Immutable.Set<ILink> => {
+export const getLinksForNodes = (nodes: Immutable.Map<Uuid, INode>): Immutable.Set<ILink> => {
   let links = Immutable.Set<ILink>();
-  nodes.forEach((node: INode) => {
-    const linksPerNode = getLinksFromArray(uuid)(node.id, node.links);
+  nodes.valueSeq().forEach((node: INode) => {
+    let linksOfNode = Immutable.Set<Url>();
+    node.links.forEach((link: Url) => {
+      const doesLinkExist = nodes.get(link);
+      if (doesLinkExist) {
+        linksOfNode = linksOfNode.add(link);
+      }
+    });
+
+    const linksPerNode = getLinksFromArray(uuid)(node.id, linksOfNode);
     links = links.union(linksPerNode);
   });
 
