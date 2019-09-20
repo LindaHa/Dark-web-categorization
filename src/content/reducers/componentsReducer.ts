@@ -1,27 +1,27 @@
 import * as Immutable from 'immutable';
 import {
-  Nodes_GetComponents_Success,
+  Nodes_GetNodes_Success,
   Nodes_GetFiltered_Request
 } from '../actionTypes/nodesActionTypes';
 import {
-  convertServerToViewNodeModel,
+  convertCommunityServerToViewNodeModel,
 } from '../utils/convertNodeModel';
 import {
-  IComponent,
-  IComponentServerModel
-} from '../../models/component';
+  INode,
+  ICommunityServerModel
+} from '../../models/node';
 
-export const componentsReducer = (prevState: Immutable.Map<Uuid, IComponent> = Immutable.Map<Url, IComponent>(), action: Action)
-  : Immutable.Map<Uuid, IComponent> => {
+export const componentsReducer = (prevState: Immutable.Map<Uuid, INode> = Immutable.Map<Url, INode>(), action: Action)
+  : Immutable.Map<Uuid, INode> => {
   switch (action.type) {
     case Nodes_GetFiltered_Request:
-    case Nodes_GetComponents_Success: {
+    case Nodes_GetNodes_Success: {
       const serverNodes = action.payload.nodes;
-      const clientNodes = serverNodes.map((component: IComponentServerModel) =>
-        [component.id, convertServerToViewNodeModel(component)]
+      const clientNodes = serverNodes.map((node: ICommunityServerModel) =>
+        [node.id, convertCommunityServerToViewNodeModel(node)]
       );
 
-      return Immutable.Map<Uuid, IComponent>(clientNodes);
+      return Immutable.Map<Uuid, INode>(clientNodes);
     }
 
     default:

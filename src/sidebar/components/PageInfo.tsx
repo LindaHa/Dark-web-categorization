@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import { IComponent } from '../../models/component';
+import { INode } from '../../models/node';
 
 export interface IPageInfoDataProps {
-  readonly selectedNode: IComponent;
+  readonly selectedNode: INode;
 }
 
 interface IPageInfoCallbackProps {

@@ -11,13 +11,13 @@ import {
   getLabelConfigForNodes,
   graphConfig
 } from '../utils/graphConfig';
-import { IComponent } from '../../models/component';
+import { INode } from '../../models/node';
 import { IPage } from '../../models/page';
 import { ISize } from './Content';
 
 export interface IGraphDataProps {
   readonly links: Immutable.Set<ILink>;
-  readonly nodes: Immutable.Map<Uuid, IComponent | IPage>;
+  readonly nodes: Immutable.Map<Uuid, INode | IPage>;
   readonly size: ISize;
 }
 
@@ -78,7 +78,7 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
     };
 
     const myConfig = JSON.parse(JSON.stringify(graphConfig));
-    myConfig.node.labelProperty = getLabelConfigForNodes(nodes as Immutable.Map<Uuid, IComponent>);
+    myConfig.node.labelProperty = getLabelConfigForNodes(nodes as Immutable.Map<Uuid, INode>);
     myConfig.height = height;
     myConfig.width = width;
 

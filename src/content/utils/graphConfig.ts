@@ -7,7 +7,7 @@ import {
   primaryNodeColor
 } from '../../_shared/constants/styles';
 import { IGraphNode } from 'react-d3-graph';
-import { IComponent } from '../../models/component';
+import { INode } from '../../models/node';
 
 export const graphConfig = {
   collapsible: false,
@@ -42,7 +42,7 @@ export const graphConfig = {
   width: window.innerWidth / 3 * 2.19,
 };
 
-export const getLabelConfigForNodes = (nodes: Immutable.Map<string, IComponent>) => (node: IGraphNode): string => {
+export const getLabelConfigForNodes = (nodes: Immutable.Map<string, INode>) => (node: IGraphNode): string => {
   const clientNode = nodes.get(node.id);
   if (!clientNode) {
     return node.id;

@@ -1,10 +1,10 @@
 import {
   Nodes_GetAll_Request,
-  Nodes_GetComponents_Success,
+  Nodes_GetNodes_Success,
   Nodes_GetSubComponents_Request
 } from '../../content/actionTypes/nodesActionTypes';
 import { SelectedNode_Id_Updated } from '../../content/actionTypes/selectedNodeActionTypes';
-import { IComponentServerModel } from '../../models/component';
+import { ICommunityServerModel } from '../../models/node';
 
 export const selectedComponentReducer = (prevState: Uuid = '', action: Action): Uuid => {
   switch (action.type) {
@@ -12,8 +12,8 @@ export const selectedComponentReducer = (prevState: Uuid = '', action: Action): 
       return action.payload.nodeId;
     }
 
-    case Nodes_GetComponents_Success: {
-      const firstComponent: IComponentServerModel = action.payload.nodes[0];
+    case Nodes_GetNodes_Success: {
+      const firstComponent: ICommunityServerModel = action.payload.nodes[0];
       if (!firstComponent) {
         return prevState;
       }

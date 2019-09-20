@@ -5,12 +5,12 @@ import { GroupBySelector } from './GroupBySelector';
 import { ComponentInfo } from '../containers/ComponentInfo';
 import { PageInfo } from '../containers/PageInfo';
 import { ZoomOutOptions } from './ZoomOutOptions';
-import { IComponent } from '../../models/component';
+import { INode } from '../../models/node';
 
 export interface ISidebarDataProps {
   readonly currentLevel: number;
   readonly groupBy: GroupBy;
-  readonly selectedNode?: IComponent;
+  readonly selectedNode?: INode;
   readonly selectedNodeId?: Uuid;
 }
 

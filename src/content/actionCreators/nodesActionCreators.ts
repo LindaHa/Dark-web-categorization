@@ -2,7 +2,7 @@ import {
   Nodes_GetAll_Failure,
   Nodes_GetAll_Request,
   Nodes_GetAll_Success,
-  Nodes_GetComponents_Success,
+  Nodes_GetNodes_Success,
   Nodes_GetFiltered_Failure,
   Nodes_GetFiltered_Request,
   Nodes_GetFiltered_Success,
@@ -20,7 +20,7 @@ export const succeedToFetchNodes = (json: object): Action => ({
 });
 
 export const succeedToFetchComponents = (json: object): Action => ({
-  type: Nodes_GetComponents_Success,
+  type: Nodes_GetNodes_Success,
   payload: { nodes: json },
 });
 

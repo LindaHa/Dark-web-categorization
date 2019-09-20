@@ -1,42 +1,42 @@
 import * as Immutable from 'immutable';
 import { IPageServerModel } from './page';
 
-export interface IComponentData {
+export interface INodeData {
   readonly categories: Immutable.Set<Uuid>;
   readonly id: string;
   readonly links: Immutable.Set<Url>;
-  readonly firstMembers: Immutable.List<IComponent>;
+  readonly firstMembers: Immutable.List<INode>;
   readonly membersCount: number;
 }
 
-export interface IComponent extends IComponentData, IRecordFunctions<IComponentData, IComponent> {
+export interface INode extends INodeData, IRecordFunctions<INodeData, INode> {
 }
 
-const recordData: IComponentData = {
+const recordData: INodeData = {
   categories: Immutable.Set<Uuid>(),
   id: '',
   links: Immutable.Set<Url>(),
-  firstMembers: Immutable.List<IComponent>(),
+  firstMembers: Immutable.List<INode>(),
   membersCount: 0,
 };
 
-export class Component extends Immutable.Record(recordData) implements IComponent {
+export class Node extends Immutable.Record(recordData) implements INode {
   readonly categories: Immutable.Set<Uuid>;
   readonly id: string;
   readonly links: Immutable.Set<Url>;
-  readonly firstMembers: Immutable.List<IComponent>;
+  readonly firstMembers: Immutable.List<INode>;
   readonly membersCount: number;
 
-  toObject(): IComponentData {
-    return super.toObject() as IComponentData;
+  toObject(): INodeData {
+    return super.toObject() as INodeData;
   }
 
-  with(data: Partial<IComponentData>): IComponent {
-    return super.merge(data) as Component;
+  with(data: Partial<INodeData>): INode {
+    return super.merge(data) as Node;
   }
 }
 
-export interface IComponentServerModel {
+export interface ICommunityServerModel {
   readonly categories: Uuid[];
   readonly id: string;
   readonly links: Url[];
@@ -44,7 +44,7 @@ export interface IComponentServerModel {
   readonly members_count: number;
 }
 
-const componentServerModelData: IComponentServerModel = {
+const communityServerModelData: ICommunityServerModel = {
   categories: [],
   id: '',
   links: [],
@@ -52,7 +52,7 @@ const componentServerModelData: IComponentServerModel = {
   members_count: 0,
 };
 
-export class ComponentServerModel extends Immutable.Record(componentServerModelData) implements IComponentServerModel {
+export class CommunityServerModel extends Immutable.Record(communityServerModelData) implements ICommunityServerModel {
   readonly categories: Uuid[];
   readonly id: string;
   readonly links: Url[];

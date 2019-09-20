@@ -1,10 +1,10 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import { IComponent } from '../../models/component';
+import { INode } from '../../models/node';
 import { getUrlsFromMembers } from '../../content/utils/getComponentInfo';
 
 export interface IComponentInfoDataProps {
-  readonly selectedComponent?: IComponent;
+  readonly selectedComponent?: INode;
 }
 
 export interface IComponentInfoCallbackProps {

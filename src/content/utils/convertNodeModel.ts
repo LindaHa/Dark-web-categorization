@@ -1,10 +1,10 @@
 import * as Immutable from 'immutable';
 import { IPageServerModel } from '../../models/page';
 import {
-  Component,
-  IComponent,
-  IComponentServerModel
-} from '../../models/component';
+  Node,
+  INode,
+  ICommunityServerModel
+} from '../../models/node';
 import { ILinkServerModel } from '../../models/link';
 
 const getRawLinks = (links: ILinkServerModel[]): Immutable.Set<Url> => {
@@ -16,25 +16,25 @@ const getRawLinks = (links: ILinkServerModel[]): Immutable.Set<Url> => {
   return clientLinks;
 };
 
-export const convertServerPageToViewNodeModel = (serverModel: IPageServerModel): IComponent => {
+export const convertServerPageToViewNodeModel = (serverModel: IPageServerModel): INode => {
   const { url, categories, links } = serverModel;
   const clientLinks = getRawLinks(links);
 
   const separateCategories = categories && categories.split(', ');
   const clientCategories = Immutable.Set<string>(separateCategories);
 
-  return (new Component({
+  return (new Node({
     categories: clientCategories,
     id: url,
     links: clientLinks,
-    firstMembers: Immutable.List<IComponent>(),
+    firstMembers: Immutable.List<INode>(),
     membersCount: 1,
   }));
 };
 
-export const convertServerToViewNodeModel = (serverModel: IComponentServerModel): IComponent => {
+export const convertCommunityServerToViewNodeModel = (serverModel: ICommunityServerModel): INode => {
   const { categories, id, links, first_members, members_count } = serverModel;
-  let clientMembers = Immutable.List<IComponent>();
+  let clientMembers = Immutable.List<INode>();
   if (first_members) {
     first_members.forEach((member: IPageServerModel) => {
       const clientMember = convertServerPageToViewNodeModel(member);
@@ -44,7 +44,7 @@ export const convertServerToViewNodeModel = (serverModel: IComponentServerModel)
   const clientLinks = Immutable.Set<Url>(links);
   const clientCategories = Immutable.Set<Uuid>(categories);
 
-  return (new Component({
+  return (new Node({
     categories: clientCategories,
     id,
     links: clientLinks,
