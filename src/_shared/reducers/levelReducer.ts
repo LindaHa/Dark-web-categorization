@@ -1,4 +1,5 @@
 import {
+  Nodes_GetAll_Request,
   Nodes_GetSubNodes_Request
 } from '../../content/actionTypes/nodesActionTypes';
 
@@ -8,6 +9,10 @@ export const levelReducer = (prevState: number = 0, action: Action): number => {
       const nodeId = action.payload.nodeId;
       const ids = nodeId.split('.');
       return ids.length;
+    }
+
+    case Nodes_GetAll_Request: {
+      return 0;
     }
 
     default:
