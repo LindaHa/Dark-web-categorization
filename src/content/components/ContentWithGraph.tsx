@@ -12,13 +12,12 @@ import {
   graphConfig
 } from '../utils/graphConfig';
 import { INode } from '../../models/node';
-import { IPage } from '../../models/page';
 import { ISize } from './Content';
 import { seedRandom } from '../utils/seedRandom';
 
 export interface IGraphDataProps {
   readonly links: Immutable.Set<ILink>;
-  readonly nodes: Immutable.Map<Uuid, INode | IPage>;
+  readonly nodes: Immutable.Map<Uuid, INode>;
   readonly size: ISize;
 }
 

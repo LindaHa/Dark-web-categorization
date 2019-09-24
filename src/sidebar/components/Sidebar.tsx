@@ -54,17 +54,29 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
     }
     const isIndividual = selectedNode.membersCount === 1 && !selectedNode.firstMembers.isEmpty();
 
+    console.log('isIndividueal', isIndividual);
     return isIndividual ? <PageInfo/> : <CommunityInfo/>;
   };
 
   _zoomOutGroup = () => {
     const { selectedNodeId } = this.props;
-    if (selectedNodeId) {
-      const idParts = selectedNodeId.split('.');
-      const upNodeId = idParts.slice(0, idParts.length - 1);
-
-      this.props.onGroupZoomOut(upNodeId.join('.'));
+    if (!selectedNodeId) {
+      return;
     }
+
+    let upNodeIds: Url[] = [];
+    if (selectedNodeId.endsWith(' ')) {
+      const idAndUrl = selectedNodeId.split(' ');
+      const baseId = idAndUrl[0];
+      const idParts = baseId.split('.');
+      upNodeIds = idParts.slice(0, idParts.length - 2);
+    } else {
+      const idParts = selectedNodeId.split('.');
+      upNodeIds = idParts.slice(0, idParts.length - 1);
+    }
+    const upNodeId = upNodeIds.join('.');
+
+    this.props.onGroupZoomOut(upNodeId);
   };
 
   render() {
