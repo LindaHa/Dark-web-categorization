@@ -54,7 +54,6 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
     }
     const isIndividual = selectedNode.membersCount === 1 && !selectedNode.firstMembers.isEmpty();
 
-    console.log('isIndividueal', isIndividual);
     return isIndividual ? <PageInfo/> : <CommunityInfo/>;
   };
 
