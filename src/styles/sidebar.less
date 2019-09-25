@@ -4,6 +4,10 @@
   flex: 1 1 auto;
 }
 
+.sidebar__content {
+  max-width: 100%;
+}
+
 .sidebar__info-group {
   color: @font-color-blue-inverted;
   padding-bottom: @grid-unit * 2;
@@ -16,4 +20,7 @@
 .sidebar__info-group-value-item {
   font-size: 13px;
   padding-left: @grid-unit * 2;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
