@@ -58,20 +58,24 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
   };
 
   _zoomOutGroup = () => {
-    const { selectedNodeId } = this.props;
+    const { selectedNodeId, selectedNode } = this.props;
     if (!selectedNodeId) {
       return;
     }
 
     let upNodeIds: Url[] = [];
-    if (selectedNodeId.endsWith(' ')) {
-      const idAndUrl = selectedNodeId.split(' ');
-      const baseId = idAndUrl[0];
-      const idParts = baseId.split('.');
-      upNodeIds = idParts.slice(0, idParts.length - 2);
+
+    if (selectedNodeId.endsWith(' ') || !selectedNode) {
+      let baseId = '';
+      if (selectedNodeId.endsWith(' ')) {
+        const idAndUrl = selectedNodeId.split(' ');
+        baseId = idAndUrl[0];
+      }
+      const idParts = (baseId || selectedNodeId).split('.');
+      upNodeIds = idParts.slice(0, idParts.length - 1);
     } else {
       const idParts = selectedNodeId.split('.');
-      upNodeIds = idParts.slice(0, idParts.length - 1);
+      upNodeIds = idParts.slice(0, idParts.length - 2);
     }
     const upNodeId = upNodeIds.join('.');
 
