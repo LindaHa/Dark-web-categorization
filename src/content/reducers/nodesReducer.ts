@@ -8,7 +8,10 @@ import {
   ICommunityServerModel,
   INode
 } from '../../models/node';
-import { MAX_NODES_FOR_DISPLAY } from '../constants/graphConstants';
+import {
+  MAX_COMMUNITIES_FOR_DISPLAY,
+  MAX_NODES_FOR_DISPLAY
+} from '../constants/graphConstants';
 import { decomposeCommunity } from '../utils/decomposeCommunity';
 
 export const nodesReducer = (prevState: Immutable.Map<Uuid, INode> = Immutable.Map<Url, INode>(), action: Action)
@@ -23,6 +26,10 @@ export const nodesReducer = (prevState: Immutable.Map<Uuid, INode> = Immutable.M
         )
       );
 
+      if (clientNodes.size > MAX_COMMUNITIES_FOR_DISPLAY) {
+        return clientNodes;
+      }
+
       let memberNodes = Immutable.Map<Uuid, INode>();
       const hasNotMoreThanFirstMembers: boolean = clientNodes
         .map((node: INode) => node.membersCount <= MAX_NODES_FOR_DISPLAY)
@@ -32,8 +39,7 @@ export const nodesReducer = (prevState: Immutable.Map<Uuid, INode> = Immutable.M
         memberNodes = decomposeCommunity(clientNodes);
       }
 
-      const finalNodes = memberNodes.isEmpty() ? clientNodes : memberNodes;
-      return finalNodes;
+      return memberNodes.isEmpty() ? clientNodes : memberNodes;
     }
 
     default:
