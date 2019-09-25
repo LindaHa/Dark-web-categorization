@@ -44,6 +44,11 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
   };
 
   _onDoubleClickNode = (nodeId: string) => {
+    const node = this.props.nodes.get(nodeId);
+
+    if (node && node.id.endsWith(' ')) {
+      return;
+    }
     this.props.zoomNode(nodeId);
   };
 
@@ -61,9 +66,9 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
   _decorateGraphNodesWithInitialPositioning = (nodes: IGraphNode[]) => {
     const { size: { width, height } } = this.props;
     return nodes.map((node: IGraphNode) => (Object.assign({}, node, {
-        x: node.x || Math.floor(seedRandom('x' + node.id) * (width - 20) + 10),
-        y: node.y || Math.floor(seedRandom('y' + node.id) * (height - 30) + 10),
-      })));
+      x: node.x || Math.floor(seedRandom('x' + node.id) * (width - 20) + 10),
+      y: node.y || Math.floor(seedRandom('y' + node.id) * (height - 30) + 10),
+    })));
   };
 
   render() {
