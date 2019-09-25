@@ -24,11 +24,11 @@ export const nodesReducer = (prevState: Immutable.Map<Uuid, INode> = Immutable.M
       );
 
       let memberNodes = Immutable.Map<Uuid, INode>();
-      const hasMoreThanFirstMembers: boolean = clientNodes
+      const hasNotMoreThanFirstMembers: boolean = clientNodes
         .map((node: INode) => node.membersCount <= MAX_NODES_FOR_DISPLAY)
         .every((item: boolean) => item);
 
-      if (hasMoreThanFirstMembers) {
+      if (hasNotMoreThanFirstMembers) {
         memberNodes = decomposeCommunity(clientNodes);
       }
 
