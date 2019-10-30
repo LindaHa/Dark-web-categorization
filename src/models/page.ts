@@ -40,7 +40,7 @@ export class Page extends Immutable.Record(recordData) implements IPage {
 }
 
 export interface IPageServerModel {
-  readonly categories: string;
+  readonly categories: Immutable.Map<Uuid, number>;
   readonly description: string;
   readonly id: Uuid;
   readonly language: string;
@@ -49,7 +49,7 @@ export interface IPageServerModel {
 }
 
 const pageServerModelData: IPageServerModel = {
-  categories: '',
+  categories: Immutable.Map<Uuid, number>(),
   description: '',
   id: '',
   language: '',
@@ -58,7 +58,7 @@ const pageServerModelData: IPageServerModel = {
 };
 
 export class PageServerModel extends Immutable.Record(pageServerModelData) implements IPageServerModel {
-  readonly categories: string;
+  readonly categories: Immutable.Map<Uuid, number>;
   readonly description: string;
   readonly id: Uuid;
   readonly language: string;

@@ -9,6 +9,7 @@ import {
 import { ILink } from '../../models/link';
 import {
   getLabelConfigForNodes,
+  getSVGConfigForNodes,
   graphConfig
 } from '../utils/graphConfig';
 import { INode } from '../../models/node';
@@ -81,7 +82,8 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
     };
 
     const myConfig = JSON.parse(JSON.stringify(graphConfig));
-    myConfig.node.labelProperty = getLabelConfigForNodes(nodes as Immutable.Map<Uuid, INode>);
+    myConfig.node.labelProperty = getLabelConfigForNodes(nodes);
+    myConfig.node.viewGenerator = getSVGConfigForNodes(nodes);
     myConfig.height = height;
     myConfig.width = width;
 

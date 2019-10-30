@@ -1,5 +1,7 @@
 import * as Immutable from 'immutable';
+import * as React from 'react';
 import {
+  CategoryColours,
   highlightLinkColor,
   highlightNodeColor,
   primaryFontColor,
@@ -8,6 +10,7 @@ import {
 } from '../../_shared/constants/styles';
 import { IGraphNode } from 'react-d3-graph';
 import { INode } from '../../models/node';
+import PieChart, { PieChartData } from 'react-minimal-pie-chart';
 
 export const graphConfig = {
   collapsible: false,
@@ -53,4 +56,29 @@ export const getLabelConfigForNodes = (nodes: Immutable.Map<string, INode>) => (
   }
 
   return numberOfMembers.toString() + ' onions';
+};
+
+export const getSVGConfigForNodes = (nodes: Immutable.Map<string, INode>) => (node: IGraphNode): React.ReactElement<PieChartData> => {
+  const clientNode = nodes.get(node.id);
+  if (!clientNode) {
+    console.log('node not found');
+    return (<div />);
+  }
+  // const categories: Immutable.Map<Uuid, number> = clientNode.categories;
+  const categories = Immutable.Map({
+    ['Porn']: 33,
+    ['Drugs']: 46,
+    ['Finance']: 21,
+  });
+  const data: PieChartData[] = [];
+  categories.forEach((val: number, cat: Uuid) => {
+    const chartObject = ({ title: cat, value: val, color: CategoryColours[cat] });
+    data.push(chartObject);
+  });
+
+  return (
+    <div style={{position: 'relative', width: '30px', height: '30px'}}>
+      <PieChart data={data} />
+    </div>
+  );
 };

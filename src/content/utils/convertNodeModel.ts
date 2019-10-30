@@ -20,11 +20,8 @@ export const convertServerPageToViewNodeModel = (serverModel: IPageServerModel):
   const { url, categories, links } = serverModel;
   const clientLinks = getRawLinks(links);
 
-  const separateCategories = categories && categories.split(', ');
-  const clientCategories = Immutable.Set<string>(separateCategories);
-
   return (new Node({
-    categories: clientCategories,
+    categories,
     id: url,
     links: clientLinks,
     firstMembers: Immutable.List<INode>(),
@@ -42,10 +39,9 @@ export const convertCommunityServerToViewNodeModel = (serverModel: ICommunitySer
     });
   }
   const clientLinks = Immutable.Set<Url>(links);
-  const clientCategories = Immutable.Set<Uuid>(categories);
 
   return (new Node({
-    categories: clientCategories,
+    categories,
     id,
     links: clientLinks,
     firstMembers: clientMembers,

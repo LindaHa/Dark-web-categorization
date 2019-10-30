@@ -47,12 +47,12 @@ export class CommunityInfo extends React.PureComponent<CommunityInfoProps> {
           areCategoriesNotEmpty &&
             <div className="sidebar__info-group">
               <div className="sidebar__info-group-label-item">Categories</div>
-              {categories!.map((category: string, index: string) =>
+              {categories!.map(( relevance: number, category: string) =>
                 <div
-                  key={index}
+                  key={category}
                   className="sidebar__info-group-value-item"
                 >
-                  {category}
+                  {category} : {relevance} pages
                 </div>
               )}
             </div>

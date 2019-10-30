@@ -2,7 +2,7 @@ import * as Immutable from 'immutable';
 import { IPageServerModel } from './page';
 
 export interface INodeData {
-  readonly categories: Immutable.Set<Uuid>;
+  readonly categories: Immutable.Map<Uuid, number>;
   readonly id: string;
   readonly links: Immutable.Set<Url>;
   readonly firstMembers: Immutable.List<INode>;
@@ -13,7 +13,7 @@ export interface INode extends INodeData, IRecordFunctions<INodeData, INode> {
 }
 
 const recordData: INodeData = {
-  categories: Immutable.Set<Uuid>(),
+  categories: Immutable.Map<Uuid, number>(),
   id: '',
   links: Immutable.Set<Url>(),
   firstMembers: Immutable.List<INode>(),
@@ -21,7 +21,7 @@ const recordData: INodeData = {
 };
 
 export class Node extends Immutable.Record(recordData) implements INode {
-  readonly categories: Immutable.Set<Uuid>;
+  readonly categories: Immutable.Map<Uuid, number>;
   readonly id: string;
   readonly links: Immutable.Set<Url>;
   readonly firstMembers: Immutable.List<INode>;
@@ -37,7 +37,7 @@ export class Node extends Immutable.Record(recordData) implements INode {
 }
 
 export interface ICommunityServerModel {
-  readonly categories: Uuid[];
+  readonly categories: Immutable.Map<string, number>;
   readonly id: string;
   readonly links: Url[];
   readonly first_members: IPageServerModel[];
@@ -45,7 +45,7 @@ export interface ICommunityServerModel {
 }
 
 const communityServerModelData: ICommunityServerModel = {
-  categories: [],
+  categories: Immutable.Map<string, number>(),
   id: '',
   links: [],
   first_members: [],
@@ -53,7 +53,7 @@ const communityServerModelData: ICommunityServerModel = {
 };
 
 export class CommunityServerModel extends Immutable.Record(communityServerModelData) implements ICommunityServerModel {
-  readonly categories: Uuid[];
+  readonly categories: Immutable.Map<string, number>;
   readonly id: string;
   readonly links: Url[];
   readonly first_members: IPageServerModel[];
