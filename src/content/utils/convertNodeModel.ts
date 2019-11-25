@@ -3,7 +3,8 @@ import { IPageServerModel } from '../../models/page';
 import {
   Node,
   INode,
-  ICommunityServerModel
+  ICommunityServerModel,
+  IServerCategory
 } from '../../models/node';
 import { ILinkServerModel } from '../../models/link';
 
@@ -19,9 +20,13 @@ const getRawLinks = (links: ILinkServerModel[]): Immutable.Set<Url> => {
 export const convertServerPageToViewNodeModel = (serverModel: IPageServerModel): INode => {
   const { url, categories, links } = serverModel;
   const clientLinks = getRawLinks(links);
+  let clientCategories = Immutable.Map<string, number>();
+  categories.forEach((serverCat: IServerCategory) => (
+    clientCategories = clientCategories.set(serverCat.name, serverCat.occurrence)
+  ));
 
   return (new Node({
-    categories,
+    categories: clientCategories,
     id: url,
     links: clientLinks,
     firstMembers: Immutable.List<INode>(),
@@ -31,6 +36,10 @@ export const convertServerPageToViewNodeModel = (serverModel: IPageServerModel):
 
 export const convertCommunityServerToViewNodeModel = (serverModel: ICommunityServerModel): INode => {
   const { categories, id, links, first_members, members_count } = serverModel;
+  let clientCategories = Immutable.Map<string, number>();
+  categories.forEach((serverCat: IServerCategory) => (
+    clientCategories = clientCategories.set(serverCat.name, serverCat.occurrence)
+  ));
   let clientMembers = Immutable.List<INode>();
   if (first_members) {
     first_members.forEach((member: IPageServerModel) => {
@@ -41,7 +50,7 @@ export const convertCommunityServerToViewNodeModel = (serverModel: ICommunitySer
   const clientLinks = Immutable.Set<Url>(links);
 
   return (new Node({
-    categories,
+    categories: clientCategories,
     id,
     links: clientLinks,
     firstMembers: clientMembers,

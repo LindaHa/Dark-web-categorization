@@ -10,7 +10,9 @@ import {
 } from '../../_shared/constants/styles';
 import { IGraphNode } from 'react-d3-graph';
 import { INode } from '../../models/node';
-import PieChart, { PieChartData } from 'react-minimal-pie-chart';
+import { PieChartData } from 'react-minimal-pie-chart';
+import PieChart from 'react-minimal-pie-chart';
+
 
 export const graphConfig = {
   collapsible: false,
@@ -20,7 +22,6 @@ export const graphConfig = {
 
   node: {
     color: primaryNodeColor,
-    size: 400,
     highlightStrokeColor: primaryNodeColor,
     highlightColor: highlightNodeColor,
     highlightDegree: 0,
@@ -58,27 +59,33 @@ export const getLabelConfigForNodes = (nodes: Immutable.Map<string, INode>) => (
   return numberOfMembers.toString() + ' onions';
 };
 
+export const getDimensionsOfNode = (numberOfNodes: number): number => {
+  const percent = numberOfNodes % 100;
+  if (percent < 10) {
+    return 30;
+  } else if (percent < 85) {
+    return percent / 2 + 30;
+  } else {
+    return 75;
+  }
+};
+
 export const getSVGConfigForNodes = (nodes: Immutable.Map<string, INode>) => (node: IGraphNode): React.ReactElement<PieChartData> => {
   const clientNode = nodes.get(node.id);
   if (!clientNode) {
-    console.log('node not found');
-    return (<div />);
+    return (<div/>);
   }
   // const categories: Immutable.Map<Uuid, number> = clientNode.categories;
-  const categories = Immutable.Map({
-    ['Porn']: 33,
-    ['Drugs']: 46,
-    ['Finance']: 21,
-  });
+  const categories = clientNode.categories;
   const data: PieChartData[] = [];
   categories.forEach((val: number, cat: Uuid) => {
     const chartObject = ({ title: cat, value: val, color: CategoryColours[cat] });
     data.push(chartObject);
   });
-
+  const dimension = getDimensionsOfNode(clientNode.membersCount) + 'px';
   return (
-    <div style={{position: 'relative', width: '30px', height: '30px'}}>
-      <PieChart data={data} />
+    <div style={{ position: 'relative', width: dimension, height: dimension }}>
+      <PieChart data={data}/>
     </div>
   );
 };

@@ -8,6 +8,7 @@ import {
 } from 'react-d3-graph';
 import { ILink } from '../../models/link';
 import {
+  getDimensionsOfNode,
   getLabelConfigForNodes,
   getSVGConfigForNodes,
   graphConfig
@@ -61,15 +62,19 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
    * This function decorates nodes and links with positions. The motivation
    * for this function its to set `config.staticGraph` to true on the first render
    * call, and to get nodes and links statically set to their initial positions.
-   * @param  {Object} nodes nodes and links with minimalist structure.
+   * @param  {Object} graphNodes nodes and links with minimalist structure.
    * @return {Object} the graph where now nodes containing (x,y) coords.
    */
-  _decorateGraphNodesWithInitialPositioning = (nodes: IGraphNode[]) => {
-    const { size: { width, height } } = this.props;
-    return nodes.map((node: IGraphNode) => (Object.assign({}, node, {
-      x: node.x || Math.floor(seedRandom('x' + node.id) * (width - 20) + 10),
-      y: node.y || Math.floor(seedRandom('y' + node.id) * (height - 30) + 10),
-    })));
+  _decorateGraphNodesWithInitialPositioningAndSize = (graphNodes: IGraphNode[]) => {
+    const { nodes, size: { width, height } } = this.props;
+    return graphNodes.map((graphNode: IGraphNode) => {
+      const node = nodes.get(graphNode.id);
+      return (Object.assign({}, graphNode, {
+        x: graphNode.x || Math.floor(seedRandom('x' + graphNode.id) * (width - 20) + 10),
+        y: graphNode.y || Math.floor(seedRandom('y' + graphNode.id) * (height - 30) + 10),
+        size: node ? getDimensionsOfNode(node.membersCount) * 10 : 200
+      }));
+    });
   };
 
   render() {
@@ -77,7 +82,7 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
     const adjustedNodes = nodes.keySeq().toArray().map((nodeUrl: Uuid) => ({ id: nodeUrl }));
 
     const data = {
-      nodes: this._decorateGraphNodesWithInitialPositioning(adjustedNodes),
+      nodes: this._decorateGraphNodesWithInitialPositioningAndSize(adjustedNodes),
       links: links.map((link: ILink) => link.toObject()).toArray(),
     };
 

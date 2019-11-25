@@ -36,8 +36,13 @@ export class Node extends Immutable.Record(recordData) implements INode {
   }
 }
 
+export interface IServerCategory {
+  readonly name: string;
+  readonly occurrence: number;
+}
+
 export interface ICommunityServerModel {
-  readonly categories: Immutable.Map<string, number>;
+  readonly categories: IServerCategory[];
   readonly id: string;
   readonly links: Url[];
   readonly first_members: IPageServerModel[];
@@ -45,7 +50,7 @@ export interface ICommunityServerModel {
 }
 
 const communityServerModelData: ICommunityServerModel = {
-  categories: Immutable.Map<string, number>(),
+  categories: [],
   id: '',
   links: [],
   first_members: [],
@@ -53,7 +58,7 @@ const communityServerModelData: ICommunityServerModel = {
 };
 
 export class CommunityServerModel extends Immutable.Record(communityServerModelData) implements ICommunityServerModel {
-  readonly categories: Immutable.Map<string, number>;
+  readonly categories: IServerCategory[];
   readonly id: string;
   readonly links: Url[];
   readonly first_members: IPageServerModel[];

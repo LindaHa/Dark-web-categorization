@@ -1,5 +1,6 @@
 import * as Immutable from 'immutable';
 import { ILinkServerModel } from './link';
+import { IServerCategory } from './node';
 
 export interface IPageData {
   readonly categories: Immutable.Set<Uuid>;
@@ -40,7 +41,7 @@ export class Page extends Immutable.Record(recordData) implements IPage {
 }
 
 export interface IPageServerModel {
-  readonly categories: Immutable.Map<Uuid, number>;
+  readonly categories: IServerCategory[];
   readonly description: string;
   readonly id: Uuid;
   readonly language: string;
@@ -49,7 +50,7 @@ export interface IPageServerModel {
 }
 
 const pageServerModelData: IPageServerModel = {
-  categories: Immutable.Map<Uuid, number>(),
+  categories: [],
   description: '',
   id: '',
   language: '',
@@ -58,7 +59,7 @@ const pageServerModelData: IPageServerModel = {
 };
 
 export class PageServerModel extends Immutable.Record(pageServerModelData) implements IPageServerModel {
-  readonly categories: Immutable.Map<Uuid, number>;
+  readonly categories: IServerCategory[];
   readonly description: string;
   readonly id: Uuid;
   readonly language: string;
