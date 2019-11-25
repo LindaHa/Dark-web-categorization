@@ -56,7 +56,7 @@ export const getLabelConfigForNodes = (nodes: Immutable.Map<string, INode>) => (
     return '';
   }
 
-  return numberOfMembers.toString() + ' onions';
+  return '' && numberOfMembers.toString() + ' onions';
 };
 
 export const getDimensionsOfNode = (numberOfNodes: number): number => {

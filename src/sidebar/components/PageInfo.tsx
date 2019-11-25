@@ -55,7 +55,7 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
               >
                 {category} : {relevance} pages
               </div>
-            )}
+            ).toSet()}
           </div>
         }
 

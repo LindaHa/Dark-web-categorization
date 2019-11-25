@@ -54,7 +54,7 @@ export class CommunityInfo extends React.PureComponent<CommunityInfoProps> {
                 >
                   {category} : {relevance} pages
                 </div>
-              )}
+              ).toSet()}
             </div>
         }
       </div>
