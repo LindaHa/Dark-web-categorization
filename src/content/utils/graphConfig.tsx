@@ -21,7 +21,6 @@ export const graphConfig = {
   staticGraph: false,
 
   node: {
-    color: primaryNodeColor,
     highlightStrokeColor: primaryNodeColor,
     highlightColor: highlightNodeColor,
     highlightDegree: 0,
@@ -60,8 +59,14 @@ export const getLabelConfigForNodes = (nodes: Immutable.Map<string, INode>) => (
 };
 
 export const getDimensionsOfNode = (numberOfNodes: number): number => {
-  const percent = numberOfNodes % 100;
-  if (percent < 10) {
+  if (numberOfNodes === 1) {
+    return 10;
+  }
+  const percent = Math.floor(numberOfNodes / 100);
+  if (percent === 0) {
+    return 20;
+  }
+  else if (percent < 10) {
     return 30;
   } else if (percent < 85) {
     return percent / 2 + 30;
