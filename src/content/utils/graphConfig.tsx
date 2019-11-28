@@ -67,11 +67,13 @@ export const getDimensionsOfNode = (numberOfNodes: number): number => {
     return 20;
   }
   else if (percent < 10) {
-    return 30;
+    return 20 + percent;
   } else if (percent < 85) {
-    return percent / 2 + 30;
+    return Math.floor(percent / 4) + 30;
+  } else if (percent < 500) {
+    return Math.floor(percent / 13) + 50;
   } else {
-    return 75;
+    return 85;
   }
 };
 
