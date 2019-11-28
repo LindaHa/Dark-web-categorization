@@ -6,14 +6,14 @@
 //   requestFilteredNodes,
 //   succeedToFetchFilteredNodes,
 // } from '../nodesActionCreators';
-// import { PagesRoute } from '../../../_shared/constants/routes';
+// import { ByLinkRoute } from '../../../_shared/constants/routes';
 // import { checkStatus } from '../../../_shared/utils/checkStatus';
 //
 // const fetchNodesFactoryDependencies = {
 //   fetchBegin: requestFilteredNodes,
 //   nodesSuccess: succeedToFetchFilteredNodes,
 //   error: failToFetchFilteredNodes,
-//   fetch: () => isoFetch(PagesRoute, {
+//   fetch: () => isoFetch(ByLinkRoute, {
 //     method: 'GET',
 //     headers: {
 //       accept: 'application/json',

@@ -11,8 +11,8 @@ import { checkStatus } from '../../../_shared/utils/checkStatus';
 import { GroupBy } from '../../../sidebar/components/Sidebar';
 import { IState } from '../../../_shared/models/IState';
 import {
-  NodesByCategoriesRoute,
-  NodesRoute
+  NodesByCategoryRoute,
+  NodesByLinkRoute
 } from '../../../_shared/constants/routes';
 
 const fetchNodesFactoryDependencies = ({
@@ -39,9 +39,9 @@ interface IFetchNodesFactoryDependencies {
 
 const getRouteAccordingToGroupBy = (groupBy: string) => {
   if (groupBy === GroupBy.Category) {
-    return (nodeId?: string) => NodesByCategoriesRoute(nodeId);
+    return (nodeId?: string) => NodesByCategoryRoute(nodeId);
   } else  {
-    return (nodeId?: string) => NodesRoute(nodeId);
+    return (nodeId?: string) => NodesByLinkRoute(nodeId);
   }
 };
 
