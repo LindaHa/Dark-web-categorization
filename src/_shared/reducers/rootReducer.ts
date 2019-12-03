@@ -3,7 +3,7 @@ import { groupByReducer } from './groupByReducer';
 import { IState } from '../models/IState';
 import { isFetchingNodesReducer } from '../../content/reducers/isFetchingNodesReducer';
 import { isErrorReducer } from './isErrorReducer';
-import { selectedNodeReducer } from './selectedCommunityReducer';
+import { selectedNodeReducer } from './selectedNodeReducer';
 import { nodesReducer } from '../../content/reducers/nodesReducer';
 import { levelReducer } from './levelReducer';
 import { detailsReducer } from '../../content/reducers/detailsReducer';
