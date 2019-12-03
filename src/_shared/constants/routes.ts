@@ -17,7 +17,7 @@ export const NodesByCategoryRoute = (nodeId?: Uuid) => {
 const DetailsRoute = RootRoute + 'details/';
 const PageDetailsRouteBase = DetailsRoute + 'page/?format=json';
 const CommunityDetailsRouteBase = DetailsRoute + 'group/?format=json';
-const DetailsParametersRoute = (nodeId: Uuid, groupBy: GroupBy): string => `&id=${nodeId}&groupby=${groupBy}`;
+const DetailsParametersRoute = (nodeId: Uuid, groupBy: GroupBy): string => `&id=${nodeId}&groupby=${groupBy.toLowerCase()}`;
 
 export const PageDetailsRoute = (nodeId: Uuid, groupBy: GroupBy): string => {
   const pageId = nodeId.split(' ')[1];
