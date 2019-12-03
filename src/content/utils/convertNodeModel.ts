@@ -17,7 +17,7 @@ const getRawLinks = (links: ILinkServerModel[]): Immutable.Set<Url> => {
   return clientLinks;
 };
 
-export const convertServerPageToViewNodeModel = (serverModel: IPageServerModel): INode => {
+export const convertPageServerToClientModel = (serverModel: IPageServerModel): INode => {
   const { url, categories, links } = serverModel;
   const clientLinks = getRawLinks(links);
   let clientCategories = Immutable.Map<string, number>();
@@ -34,7 +34,7 @@ export const convertServerPageToViewNodeModel = (serverModel: IPageServerModel):
   }));
 };
 
-export const convertCommunityServerToViewNodeModel = (serverModel: ICommunityServerModel): INode => {
+export const convertCommunityServerToClientModel = (serverModel: ICommunityServerModel): INode => {
   const { categories, id, links, first_members, members_count } = serverModel;
   let clientCategories = Immutable.Map<string, number>();
   categories.forEach((serverCat: IServerCategory) => (
@@ -43,7 +43,7 @@ export const convertCommunityServerToViewNodeModel = (serverModel: ICommunitySer
   let clientMembers = Immutable.List<INode>();
   if (first_members) {
     first_members.forEach((member: IPageServerModel) => {
-      const clientMember = convertServerPageToViewNodeModel(member);
+      const clientMember = convertPageServerToClientModel(member);
       clientMembers = clientMembers.push(clientMember);
     });
   }

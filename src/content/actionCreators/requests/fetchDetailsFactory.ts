@@ -5,6 +5,7 @@ import { IState } from '../../../_shared/models/IState';
 export interface IFetchDetailsFactoryDependencies {
   readonly fetchSuccess: (json: object) => Action;
   readonly createRoute: (nodeId: Uuid) => Url;
+  readonly convertToClientModel: (serverModel: object) => object;
   readonly error: (id: Uuid, error: Error) => Action;
   readonly fetch: (route: Url) => Promise<Response>;
   readonly fetchBegin: (nodeId?: Uuid) => Action;
@@ -20,6 +21,6 @@ export const fetchDetailsFactory = (dependencies: IFetchDetailsFactoryDependenci
 
     return dependencies.fetch(route)
       .then(response => response.json())
-      .then(json => dispatch(dependencies.fetchSuccess(json.data)))
+      .then(json => dispatch(dependencies.fetchSuccess(dependencies.convertToClientModel(json.data))))
       .catch((error: Error) => dispatch(dependencies.error(errorId, error)));
   };

@@ -14,11 +14,14 @@ import {
   succeedToFetchPageDetails
 } from '../detailsActionCreators';
 import { fetchDetailsFactory } from './fetchDetailsFactory';
+import { convertServerPageDetailsToClientPageDetails } from '../../utils/convertDetails';
+import { convertCommunityServerToClientModel } from '../../utils/convertNodeModel';
 
 const fetchPageDetailsFactoryDependencies = ({
   fetchSuccess: succeedToFetchPageDetails,
   error: failToFetchPageDetails,
   createRoute: PageDetailsRoute,
+  convertToClientModel: convertServerPageDetailsToClientPageDetails,
   fetch: (route: Url) => isoFetch(route, {
     method: 'GET',
     headers: {
@@ -36,6 +39,7 @@ const fetchCommunityDetailsFactoryDependencies = ({
   fetchSuccess: succeedToFetchCommunityDetails,
   error: failToFetchCommunityDetails,
   createRoute: CommunityDetailsRoute,
+  convertToClientModel: convertCommunityServerToClientModel,
   fetch: (route: Url) => isoFetch(route, {
     method: 'GET',
     headers: {

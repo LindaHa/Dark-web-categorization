@@ -3,7 +3,7 @@ import {
   Nodes_GetFiltered_Request,
   Nodes_GetNodes_Success
 } from '../actionTypes/nodesActionTypes';
-import { convertCommunityServerToViewNodeModel, } from '../utils/convertNodeModel';
+import { convertCommunityServerToClientModel, } from '../utils/convertNodeModel';
 import {
   ICommunityServerModel,
   INode
@@ -22,7 +22,7 @@ export const nodesReducer = (prevState: Immutable.Map<Uuid, INode> = Immutable.M
       const serverNodes = action.payload.nodes;
       const clientNodes: Immutable.Map<Url, INode> = Immutable.Map<Url, INode>(
         serverNodes.map((node: ICommunityServerModel) =>
-          [node.id, convertCommunityServerToViewNodeModel(node)]
+          [node.id, convertCommunityServerToClientModel(node)]
         )
       );
 

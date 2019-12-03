@@ -14,7 +14,7 @@ export const requestCommunityDetails = (searchPhrase: string): Action => ({
 
 export const succeedToFetchCommunityDetails = (json: object): Action => ({
   type: DetailsOfCommunity_Get_Success,
-  payload: { nodes: json },
+  payload: { details: json },
 });
 
 export const failToFetchCommunityDetails = (id: string, error: Error): Action => ({
@@ -29,7 +29,7 @@ export const requestPageDetails = (searchPhrase: string): Action => ({
 
 export const succeedToFetchPageDetails = (json: object): Action => ({
   type: DetailsOfPage_Get_Success,
-  payload: { nodes: json },
+  payload: { details: json },
 });
 
 export const failToFetchPageDetails = (id: string, error: Error): Action => ({
