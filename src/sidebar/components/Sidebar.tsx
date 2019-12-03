@@ -23,9 +23,9 @@ export interface ISidebarCallbackProps {
 type SidebarProps = ISidebarCallbackProps & ISidebarDataProps;
 
 export enum GroupBy {
-  Category = 'Category',
-  Language = 'Language',
-  Link = 'Link',
+  Category = 'category',
+  Language = 'language',
+  Link = 'link',
 }
 
 export class Sidebar extends React.PureComponent<SidebarProps> {

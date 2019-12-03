@@ -4,6 +4,9 @@ import {
   IPageInfoDataProps,
   PageInfo as PageInfoComponent,
 } from '../components/PageInfo';
+import { Dispatch } from 'redux';
+import { IPageInfoCallbackProps } from '../components/PageInfo';
+import { fetchPageDetails } from '../../content/actionCreators/requests/fetchDetails';
 
 const mapStateToProps = (state: IState): IPageInfoDataProps => {
   const { nodes, selectedNodeId } = state;
@@ -14,4 +17,8 @@ const mapStateToProps = (state: IState): IPageInfoDataProps => {
   };
 };
 
-export const PageInfo = connect(mapStateToProps)(PageInfoComponent);
+const mapDispatchToProps = (dispatch: Dispatch): IPageInfoCallbackProps => ({
+  fetchDetails: () => dispatch(fetchPageDetails()),
+});
+
+export const PageInfo = connect(mapStateToProps, mapDispatchToProps)(PageInfoComponent);

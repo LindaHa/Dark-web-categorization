@@ -2,12 +2,14 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { INode } from '../../models/node';
 import { getUrlsFromMembers } from '../../content/utils/getComponentInfo';
+import { download } from '../../_shared/utils/download';
 
 export interface ICommunityInfoDataProps {
-  readonly selectedNode?: INode;
+  readonly selectedNode: INode;
 }
 
 export interface ICommunityInfoCallbackProps {
+  readonly fetchDetails: () => Promise<Action>;
 }
 
 type CommunityInfoProps = ICommunityInfoCallbackProps & ICommunityInfoDataProps;
@@ -15,7 +17,17 @@ type CommunityInfoProps = ICommunityInfoCallbackProps & ICommunityInfoDataProps;
 export class CommunityInfo extends React.PureComponent<CommunityInfoProps> {
   static displayName = 'CommunityInfo';
   static propTypes: PropTypesShape<CommunityInfoProps> = {
-    selectedNode: PropTypes.object,
+    selectedNode: PropTypes.object.isRequired,
+
+    fetchDetails: PropTypes.func.isRequired,
+  };
+
+  private _onDetailLinkClick = () => {
+    const { fetchDetails, selectedNode } = this.props;
+    fetchDetails().then((action: Action) => {
+      const filename = `community_details_for_node-${selectedNode.id}.txt`;
+      download(filename, action.payload.details.toString());
+    });
   };
 
   render() {
@@ -42,9 +54,9 @@ export class CommunityInfo extends React.PureComponent<CommunityInfoProps> {
             )}
             <div
               className="sidebar__info-group-detail-item"
-              onClick={() => { console.log('clicked'); }}
+              onClick={this._onDetailLinkClick}
             >
-              Get all links
+              Get all members
             </div>
           </div>
 

@@ -14,8 +14,10 @@ import {
   succeedToFetchPageDetails
 } from '../detailsActionCreators';
 import { fetchDetailsFactory } from './fetchDetailsFactory';
-import { convertServerPageDetailsToClientPageDetails } from '../../utils/convertDetails';
-import { convertCommunityServerToClientModel } from '../../utils/convertNodeModel';
+import {
+  convertServerCommunityDetailsToClientCommunityDetails,
+  convertServerPageDetailsToClientPageDetails,
+} from '../../utils/convertDetails';
 
 const fetchPageDetailsFactoryDependencies = ({
   fetchSuccess: succeedToFetchPageDetails,
@@ -39,7 +41,7 @@ const fetchCommunityDetailsFactoryDependencies = ({
   fetchSuccess: succeedToFetchCommunityDetails,
   error: failToFetchCommunityDetails,
   createRoute: CommunityDetailsRoute,
-  convertToClientModel: convertCommunityServerToClientModel,
+  convertToClientModel: convertServerCommunityDetailsToClientCommunityDetails,
   fetch: (route: Url) => isoFetch(route, {
     method: 'GET',
     headers: {
