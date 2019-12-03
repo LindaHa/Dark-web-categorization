@@ -40,6 +40,12 @@ export class CommunityInfo extends React.PureComponent<CommunityInfoProps> {
                 {url}
               </div>
             )}
+            <div
+              className="sidebar__info-group-detail-item"
+              onClick={() => { console.log('clicked'); }}
+            >
+              Get all links
+            </div>
           </div>
 
         </div>

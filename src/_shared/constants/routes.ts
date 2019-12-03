@@ -11,3 +11,10 @@ export const NodesByCategoryRoute = (nodeId?: Uuid) => {
   const nodeIdPath = nodeId ? '&id=' + nodeId : '';
   return ByCategoryRoute + nodeIdPath;
 };
+
+const DetailsRoute = RootRoute + 'details/';
+const PageDetailsRouteBase = DetailsRoute + 'page/?format=json';
+const CommunityDetailsRouteBase = DetailsRoute + 'group/?format=json';
+
+export const PageDetailsRoute = (nodeId: Uuid): string => `${PageDetailsRouteBase} + &id=${nodeId};`;
+export const CommunityDetailsRoute = (nodeId: Uuid): string => `${CommunityDetailsRouteBase} + &id=${nodeId};`;

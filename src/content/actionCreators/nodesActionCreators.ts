@@ -48,4 +48,3 @@ export const failToFetchFilteredNodes = (id: string, error: Error): Action => ({
   type: Nodes_GetFiltered_Failure,
   payload: { id, errorMessage: error.message || 'Nodes were not fetched' },
 });
-
