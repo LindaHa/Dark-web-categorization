@@ -2,9 +2,11 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { INode } from '../../models/node';
 import { download } from '../../_shared/utils/download';
+import { getIcon } from '../../content/utils/getDetailsIcon';
 
 export interface IPageInfoDataProps {
   readonly selectedNode: INode;
+  readonly isFetchingDetails: boolean;
 }
 
 export interface IPageInfoCallbackProps {
@@ -17,6 +19,7 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
   static displayName = 'PageInfo';
   static propTypes: PropTypesShape<PageInfoProps> = {
     selectedNode: PropTypes.object.isRequired,
+    isFetchingDetails: PropTypes.bool.isRequired,
 
     fetchDetails: PropTypes.func.isRequired,
   };
@@ -33,7 +36,7 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
   };
 
   render() {
-    const { selectedNode: { firstMembers } } = this.props;
+    const { selectedNode: { firstMembers }, isFetchingDetails } = this.props;
     const individualPage = firstMembers.first(null);
     if (!individualPage) {
       return (
@@ -91,6 +94,7 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
               onClick={this._onDetailLinkClick}
             >
               Get all links
+              {getIcon(isFetchingDetails)}
             </div>
           </div>
         }

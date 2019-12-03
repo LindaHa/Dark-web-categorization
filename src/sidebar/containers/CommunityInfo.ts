@@ -9,11 +9,12 @@ import { Dispatch } from 'redux';
 import { fetchCommunityDetails } from '../../content/actionCreators/requests/fetchDetails';
 
 const mapStateToProps = (state: IState): ICommunityInfoDataProps => {
-  const { nodes, selectedNodeId } = state;
+  const { nodes, selectedNodeId, details: { isFetchingDetails } } = state;
   const selectedNode = nodes.get(selectedNodeId)!;
 
   return {
     selectedNode,
+    isFetchingDetails,
   };
 };
 

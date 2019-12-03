@@ -1,4 +1,5 @@
 @spinner-teal: @teal-600;
+@spinner-teal: @teal-300;
 
 .spinner {
   border: solid @grid-unit @blue-500;
@@ -10,6 +11,13 @@
   animation: spinWithColor 2s linear infinite;
 }
 
+.spinner_icon {
+  &:extend(.spinner);
+  height: @grid-unit * 4;
+  width: @grid-unit * 4;
+  animation: spinWithIconColor 2s linear infinite;
+}
+
 @keyframes spinWithColor {
   0% {
     border-bottom: solid @grid-unit;
@@ -19,6 +27,23 @@
   50% {
     border-bottom: solid @grid-unit * 4;
     border-color: @blue-400;
+  }
+  100% {
+    border-bottom: solid @grid-unit;
+    border-color: @spinner-teal;
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinWithIconColor {
+  0% {
+    border-bottom: solid @grid-unit;
+    border-color: @spinner-teal;
+    transform: rotate(0deg);
+  }
+  50% {
+    border-bottom: solid @grid-unit;
+    border-color: @blue-100;
   }
   100% {
     border-bottom: solid @grid-unit;

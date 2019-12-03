@@ -9,11 +9,12 @@ import { IPageInfoCallbackProps } from '../components/PageInfo';
 import { fetchPageDetails } from '../../content/actionCreators/requests/fetchDetails';
 
 const mapStateToProps = (state: IState): IPageInfoDataProps => {
-  const { nodes, selectedNodeId } = state;
+  const { nodes, selectedNodeId, details: { isFetchingDetails } } = state;
   const selectedNode = nodes.get(selectedNodeId)!;
 
   return {
     selectedNode,
+    isFetchingDetails,
   };
 };
 
