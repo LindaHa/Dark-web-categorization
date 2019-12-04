@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { INode } from '../../models/node';
 import { download } from '../../_shared/utils/download';
-import { DetailsLink } from '../../content/utils/DetailsLink';
+import { DetailsLink } from './DetailsLink';
 
 export interface IPageInfoDataProps {
   readonly selectedNode: INode;
