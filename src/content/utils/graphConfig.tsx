@@ -1,7 +1,6 @@
 import * as Immutable from 'immutable';
 import * as React from 'react';
 import {
-  CategoryColours,
   highlightLinkColor,
   highlightNodeColor,
   primaryFontColor,
@@ -11,7 +10,7 @@ import {
 import { IGraphNode } from 'react-d3-graph';
 import { INode } from '../../models/node';
 import { PieChartData } from 'react-minimal-pie-chart';
-import PieChart from 'react-minimal-pie-chart';
+import { PieChartSVG } from '../components/PiechartSVG';
 
 
 export const graphConfig = {
@@ -65,8 +64,7 @@ export const getDimensionsOfNode = (numberOfNodes: number): number => {
   const percent = Math.floor(numberOfNodes / 100);
   if (percent === 0) {
     return 20;
-  }
-  else if (percent < 10) {
+  } else if (percent < 10) {
     return 20 + percent;
   } else if (percent < 85) {
     return Math.floor(percent / 4) + 30;
@@ -82,17 +80,11 @@ export const getSVGConfigForNodes = (nodes: Immutable.Map<string, INode>) => (no
   if (!clientNode) {
     return (<div/>);
   }
-  // const categories: Immutable.Map<Uuid, number> = clientNode.categories;
-  const categories = clientNode.categories;
-  const data: PieChartData[] = [];
-  categories.forEach((val: number, cat: Uuid) => {
-    const chartObject = ({ title: cat, value: val, color: CategoryColours[cat] });
-    data.push(chartObject);
-  });
   const dimension = getDimensionsOfNode(clientNode.membersCount) + 'px';
+
   return (
     <div style={{ position: 'relative', width: dimension, height: dimension }}>
-      <PieChart data={data}/>
+      <PieChartSVG node={clientNode}/>;
     </div>
   );
 };

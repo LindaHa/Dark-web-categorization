@@ -29,6 +29,7 @@ const green700 = '#1b753c';
 const green900 = '#0a4621';
 
 const purple400 = '#6340a6';
+const yellow = '#a1a600';
 
 export const primaryNodeColor = teal600;
 export const highlightNodeColor = teal200;
@@ -37,6 +38,8 @@ export const primaryLinkColor = teal900;
 export const highlightLinkColor = teal200;
 
 export const primaryFontColor = teal900;
+
+export const graphHighlightSector = yellow;
 
 export const CategoryColours: { [category: string]: string; } = {
   Other: teal300,
