@@ -8,9 +8,16 @@ interface IDetailsLinkProps {
   readonly text: string;
 }
 
+const getClassNames = (isFetching: boolean): string => {
+  if (isFetching) {
+    return 'sidebar__info-group-detail-item sidebar__info-group-detail-item--is-loading';
+  }
+  return 'sidebar__info-group-detail-item';
+};
+
 export const DetailsLink: React.SFC<IDetailsLinkProps> = (props: IDetailsLinkProps) => (
   <div
-    className="sidebar__info-group-detail-item"
+    className={getClassNames(props.isFetchingDetails)}
     onClick={props.onClick}
   >
     {props.text + ' '}

@@ -26,18 +26,27 @@
 }
 
 .sidebar__info-group-detail-item {
-  font-size: 13px;
   color: @link-color;
+  font-size: 13px;
   padding-right: @grid-unit * 2;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  float: right;
-  font-weight: bold;
+
   cursor: pointer;
+  float: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &--is-loading {
+    color: @link-color--disabled;
+    font-weight: normal;
+    opacity: 0.5;
+    text-decoration: none;
+
+    pointer-events: none;
+  }
 }
 
 .sidebar__info-group-detail-item:hover {
   color: @link-hover-color;
-  text-decoration:underline;
+  text-decoration: underline;
 }

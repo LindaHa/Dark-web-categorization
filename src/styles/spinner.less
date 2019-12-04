@@ -1,5 +1,6 @@
 @spinner-teal: @teal-600;
-@spinner-teal: @teal-300;
+@spinner-icon-teal: @teal-300;
+@spinner-icon-blue: @blue-100;
 
 .spinner {
   border: solid @grid-unit @blue-500;
@@ -48,17 +49,17 @@
 
 @keyframes spinWithIconColor {
   0% {
-    border-bottom: solid @grid-unit;
-    border-color: @spinner-teal;
+    border: solid @grid-unit @spinner-icon-teal;
+    border-bottom-color: @spinner-icon-blue;
     transform: rotate(0deg);
   }
   50% {
-    border-bottom: solid @grid-unit;
-    border-color: @blue-100;
+    border-color: @spinner-icon-blue;
+    border-bottom-color: @spinner-icon-teal;
   }
   100% {
-    border-bottom: solid @grid-unit;
-    border-color: @spinner-teal;
+    border-color: @spinner-icon-teal;
+    border-bottom-color: @spinner-icon-blue;
     transform: rotate(360deg);
   }
 }
