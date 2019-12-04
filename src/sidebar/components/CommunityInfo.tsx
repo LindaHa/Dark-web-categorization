@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 import { INode } from '../../models/node';
 import { getUrlsFromMembers } from '../../content/utils/getComponentInfo';
 import { download } from '../../_shared/utils/download';
-import { DetailsLink } from '../../content/utils/getDetailsIcon';
+import { DetailsLink } from '../../content/utils/DetailsLink';
 
 export interface ICommunityInfoDataProps {
   readonly selectedNode: INode;
