@@ -44,7 +44,13 @@ export class CommunityInfo extends React.PureComponent<CommunityInfoProps> {
       <div>
         <div className="sidebar__info-group">
           <div className="sidebar__info-group-label-item">
-            Urls
+            Number of members
+          </div>
+          <div className="sidebar__info-group-value-item">
+            {selectedNode.membersCount}
+          </div>
+          <div className="sidebar__info-group-label-item">
+            First urls
           </div>
           <div className="sidebar__info-group-value-item">
             {urls.map((url: string, index: string) =>

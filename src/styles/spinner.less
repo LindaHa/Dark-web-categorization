@@ -11,10 +11,21 @@
   animation: spinWithColor 2s linear infinite;
 }
 
-.spinner_icon {
+.spinner-icon__wrapper {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+}
+
+.spinner-icon__container {
+  position: absolute;
+}
+
+.spinner-icon {
   &:extend(.spinner);
-  height: @grid-unit * 4;
-  width: @grid-unit * 4;
+  height: @grid-unit * 3;
+  width: @grid-unit * 3;
   animation: spinWithIconColor 2s linear infinite;
 }
 

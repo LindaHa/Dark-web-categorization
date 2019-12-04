@@ -14,7 +14,7 @@ export const DetailsLink: React.SFC<IDetailsLinkProps> = (props: IDetailsLinkPro
     onClick={props.onClick}
   >
     {props.text + ' '}
-    {props.isFetchingDetails ? <i className="fas fa-file-download"/> : <IconSpinner/>}
+    {props.isFetchingDetails ? <IconSpinner/> : <i className="fas fa-file-download"/>}
   </div>
 );
 
