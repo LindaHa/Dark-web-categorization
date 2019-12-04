@@ -10,12 +10,14 @@
   },
   "dependencies": {
     "d3": "^5.5.0",
+    "file-saver": "^2.0.2",
     "react-d3-graph": "^2.2.0",
     "react-minimal-pie-chart": "^5.0.2",
     "seedrandom": "^3.0.5"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.9.0",
+    "@types/file-saver": "^2.0.1",
     "@types/isomorphic-fetch": "0.0.35",
     "@types/jest": "^23.1.5",
     "@types/prop-types": "^15.7.1",

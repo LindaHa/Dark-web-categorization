@@ -1,12 +1,6 @@
+import * as FileSaver from 'file-saver';
+
 export const download = (filename: string, text: string): void => {
-  const element = document.createElement('a');
-  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-  element.setAttribute('download', filename);
-
-  element.style.display = 'none';
-  document.body.appendChild(element);
-
-  element.click();
-
-  document.body.removeChild(element);
+  const blob = new Blob([text], {type: 'text/plain;charset=utf-8'});
+  FileSaver.saveAs(blob, filename);
 };
