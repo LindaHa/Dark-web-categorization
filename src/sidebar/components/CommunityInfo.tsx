@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 import { INode } from '../../models/node';
 import { getUrlsFromMembers } from '../../content/utils/getComponentInfo';
 import { download } from '../../_shared/utils/download';
-import { getIcon } from '../../content/utils/getDetailsIcon';
+import { DetailsLink } from '../../content/utils/getDetailsIcon';
 
 export interface ICommunityInfoDataProps {
   readonly selectedNode: INode;
@@ -25,7 +25,7 @@ export class CommunityInfo extends React.PureComponent<CommunityInfoProps> {
     fetchDetails: PropTypes.func.isRequired,
   };
 
-  private _onDetailLinkClick = () => {
+  private _onDetailLinkClick = (): void => {
     const { fetchDetails, selectedNode } = this.props;
     fetchDetails().then((action: Action) => {
       const filename = `community_details_for_node-${selectedNode.id}.txt`;
@@ -55,13 +55,11 @@ export class CommunityInfo extends React.PureComponent<CommunityInfoProps> {
                 {url}
               </div>
             )}
-            <div
-              className="sidebar__info-group-detail-item"
+            <DetailsLink
+              isFetchingDetails={isFetchingDetails}
               onClick={this._onDetailLinkClick}
-            >
-              Get all members
-              {getIcon(isFetchingDetails)}
-            </div>
+              text="Get all members"
+            />
           </div>
 
         </div>

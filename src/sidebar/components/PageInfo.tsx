@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { INode } from '../../models/node';
 import { download } from '../../_shared/utils/download';
-import { getIcon } from '../../content/utils/getDetailsIcon';
+import { DetailsLink } from '../../content/utils/getDetailsIcon';
 
 export interface IPageInfoDataProps {
   readonly selectedNode: INode;
@@ -89,13 +89,11 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
                 {link}
               </div>
             )}
-            <div
-              className="sidebar__info-group-detail-item"
+            <DetailsLink
+              isFetchingDetails={isFetchingDetails}
               onClick={this._onDetailLinkClick}
-            >
-              Get all links
-              {getIcon(isFetchingDetails)}
-            </div>
+              text="Get all links"
+            />
           </div>
         }
       </div>
