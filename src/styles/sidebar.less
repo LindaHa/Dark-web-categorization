@@ -31,7 +31,7 @@
   padding-right: @grid-unit * 2;
 
   cursor: pointer;
-  float: right;
+  float: left;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -49,4 +49,15 @@
 .sidebar__info-group-detail-item:hover {
   color: @link-hover-color;
   text-decoration: underline;
+}
+
+.sidebar__info-group-details-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+
+.sidebar__info-group-details-container {
+  position: absolute;
 }
