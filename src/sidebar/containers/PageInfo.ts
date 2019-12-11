@@ -7,6 +7,7 @@ import {
 import { Dispatch } from 'redux';
 import { IPageInfoCallbackProps } from '../components/PageInfo';
 import { fetchPageDetails } from '../../content/actionCreators/requests/fetchDetails';
+import { IDetailsOptions } from '../components/DetailsLink';
 
 const mapStateToProps = (state: IState): IPageInfoDataProps => {
   const { nodes, selectedNodeId, details: { isFetchingDetails } } = state;
@@ -19,7 +20,7 @@ const mapStateToProps = (state: IState): IPageInfoDataProps => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): IPageInfoCallbackProps => ({
-  fetchDetails: () => dispatch(fetchPageDetails()),
+  fetchDetails: (options: IDetailsOptions) => dispatch(fetchPageDetails(options)),
 });
 
 export const PageInfo = connect(mapStateToProps, mapDispatchToProps)(PageInfoComponent);

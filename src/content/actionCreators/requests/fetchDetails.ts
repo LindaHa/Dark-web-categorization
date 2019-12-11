@@ -18,39 +18,42 @@ import {
   convertServerCommunityDetailsToClientCommunityDetails,
   convertServerPageDetailsToClientPageDetails,
 } from '../../utils/convertDetails';
+import { IDetailsOptions } from '../../../sidebar/components/DetailsLink';
 
 const fetchPageDetailsFactoryDependencies = ({
   fetchSuccess: succeedToFetchPageDetails,
   error: failToFetchPageDetails,
   createRoute: PageDetailsRoute,
   convertToClientModel: convertServerPageDetailsToClientPageDetails,
-  fetch: (route: Url) => isoFetch(route, {
+  fetch: (options: IDetailsOptions, route: Url) => isoFetch(route, {
     method: 'GET',
     headers: {
       accept: 'application/json',
     },
+    body: JSON.stringify(options),
   })
     .then(response => checkStatus(response)),
   fetchBegin: requestPageDetails,
   idGenerator: createUuid,
 });
 
-export const fetchPageDetails = fetchDetailsFactory(fetchPageDetailsFactoryDependencies);
+export const fetchPageDetails = (options: IDetailsOptions) => fetchDetailsFactory(fetchPageDetailsFactoryDependencies)(options);
 
 const fetchCommunityDetailsFactoryDependencies = ({
   fetchSuccess: succeedToFetchCommunityDetails,
   error: failToFetchCommunityDetails,
   createRoute: CommunityDetailsRoute,
   convertToClientModel: convertServerCommunityDetailsToClientCommunityDetails,
-  fetch: (route: Url) => isoFetch(route, {
-    method: 'GET',
+  fetch: (options: IDetailsOptions, route: Url) => isoFetch(route, {
+    method: 'POST',
     headers: {
       accept: 'application/json',
     },
+    body: JSON.stringify(options)
   })
     .then(response => checkStatus(response)),
   fetchBegin: requestCommunityDetails,
   idGenerator: createUuid,
 });
 
-export const fetchCommunityDetails = fetchDetailsFactory(fetchCommunityDetailsFactoryDependencies);
+export const fetchCommunityDetails =  (options: IDetailsOptions) => fetchDetailsFactory(fetchCommunityDetailsFactoryDependencies)(options);

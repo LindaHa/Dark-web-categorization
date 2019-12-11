@@ -3,7 +3,10 @@ import * as PropTypes from 'prop-types';
 import { INode } from '../../models/node';
 import { getUrlsFromMembers } from '../../content/utils/getComponentInfo';
 import { download } from '../../_shared/utils/download';
-import { DetailsLink } from './DetailsLink';
+import {
+  DetailsLink,
+  IDetailsOptions
+} from './DetailsLink';
 
 export interface ICommunityInfoDataProps {
   readonly selectedNode: INode;
@@ -11,7 +14,7 @@ export interface ICommunityInfoDataProps {
 }
 
 export interface ICommunityInfoCallbackProps {
-  readonly fetchDetails: () => Promise<Action>;
+  readonly fetchDetails: (options: IDetailsOptions) => Promise<Action>;
 }
 
 type CommunityInfoProps = ICommunityInfoCallbackProps & ICommunityInfoDataProps;
@@ -25,9 +28,9 @@ export class CommunityInfo extends React.PureComponent<CommunityInfoProps> {
     fetchDetails: PropTypes.func.isRequired,
   };
 
-  private _onDetailLinkClick = (): void => {
+  private _onDetailLinkClick = (options: IDetailsOptions): void => {
     const { fetchDetails, selectedNode } = this.props;
-    fetchDetails().then((action: Action) => {
+    fetchDetails(options).then((action: Action) => {
       const filename = `community_details_for_node-${selectedNode.id}.txt`;
       download(filename, action.payload.details.toString());
     });
@@ -63,7 +66,7 @@ export class CommunityInfo extends React.PureComponent<CommunityInfoProps> {
             )}
             <DetailsLink
               isFetchingDetails={isFetchingDetails}
-              onClick={this._onDetailLinkClick}
+              onLinkClick={this._onDetailLinkClick}
               text="Get all members"
             />
           </div>

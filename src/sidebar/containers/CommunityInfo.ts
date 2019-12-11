@@ -7,6 +7,7 @@ import {
 } from '../components/CommunityInfo';
 import { Dispatch } from 'redux';
 import { fetchCommunityDetails } from '../../content/actionCreators/requests/fetchDetails';
+import { IDetailsOptions } from '../components/DetailsLink';
 
 const mapStateToProps = (state: IState): ICommunityInfoDataProps => {
   const { nodes, selectedNodeId, details: { isFetchingDetails } } = state;
@@ -19,7 +20,7 @@ const mapStateToProps = (state: IState): ICommunityInfoDataProps => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): ICommunityInfoCallbackProps => ({
-  fetchDetails: () => dispatch(fetchCommunityDetails()),
+  fetchDetails: (options: IDetailsOptions) => dispatch(fetchCommunityDetails(options)),
 });
 
 export const CommunityInfo = connect(mapStateToProps, mapDispatchToProps)(CommunityInfoComponent);

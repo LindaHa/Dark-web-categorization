@@ -5,25 +5,25 @@ import { IconSpinner } from '../../_shared/components/Spinner';
 
 interface IDetailsLinkProps {
   readonly isFetchingDetails: boolean;
-  readonly onClick: () => void;
+  readonly onLinkClick: (options: IDetailsOptions) => void;
   readonly text: string;
 }
 
-export enum AvailablePageDetails {
+export enum DetailsOptions {
   Title = 'Title',
   Category = 'Category',
   Content = 'Content',
   Links = 'Links',
 }
 
-interface IDesiredDetails {
+export interface IDetailsOptions {
   readonly title: boolean;
   readonly category: boolean;
   readonly content: boolean;
   readonly links: boolean;
 }
 
-interface IDetailsLinksState extends IDesiredDetails {
+interface IDetailsLinksState extends IDetailsOptions {
 }
 
 const getClassNames = (isFetching: boolean): string => {
@@ -37,7 +37,7 @@ export class DetailsLink extends React.PureComponent<IDetailsLinkProps, IDetails
   static displayName = 'DetailsLink';
   static propTypes = {
     isFetchingDetails: PropTypes.bool.isRequired,
-    onClick: PropTypes.func.isRequired,
+    onLinkClick: PropTypes.func.isRequired,
     text: PropTypes.string.isRequired,
   };
 
@@ -52,23 +52,23 @@ export class DetailsLink extends React.PureComponent<IDetailsLinkProps, IDetails
     };
   }
 
-  private handleToggle = (attribute: AvailablePageDetails): void => {
+  private handleToggle = (attribute: DetailsOptions): void => {
     switch (attribute) {
-      case AvailablePageDetails.Title: {
+      case DetailsOptions.Title: {
         const currentLinksState = this.state.title;
         return this.setState(() => ({ title: !currentLinksState }));
       }
-      case AvailablePageDetails.Category: {
+      case DetailsOptions.Category: {
         const currentLinksState = this.state.category;
         return this.setState(() => ({ category: !currentLinksState }));
       }
 
-      case AvailablePageDetails.Content: {
+      case DetailsOptions.Content: {
         const currentLinksState = this.state.content;
         return this.setState(() => ({ content: !currentLinksState }));
       }
 
-      case AvailablePageDetails.Links: {
+      case DetailsOptions.Links: {
         const currentLinksState = this.state.links;
         return this.setState(() => ({ links: !currentLinksState }));
       }
@@ -80,12 +80,12 @@ export class DetailsLink extends React.PureComponent<IDetailsLinkProps, IDetails
   };
 
   render() {
-    const { isFetchingDetails, onClick, text } = this.props;
+    const { isFetchingDetails, onLinkClick, text } = this.props;
     return (
       <div>
         <div
           className={getClassNames(isFetchingDetails)}
-          onClick={onClick}
+          onClick={() => onLinkClick(this.state)}
         >
           {text + ' '}
           {isFetchingDetails ? <IconSpinner/> : <i className="fas fa-file-download"/>}
@@ -98,27 +98,27 @@ export class DetailsLink extends React.PureComponent<IDetailsLinkProps, IDetails
         <Form>
           <Form.Check
             type="checkbox" inline
-            label={AvailablePageDetails.Title} id="withTitle"
+            label={DetailsOptions.Title} id="withTitle"
             checked={this.state.title}
-            onChange={() => this.handleToggle(AvailablePageDetails.Title)}
+            onChange={() => this.handleToggle(DetailsOptions.Title)}
           />
           <Form.Check
             type="checkbox" inline
-            label={AvailablePageDetails.Category} id="withCategory"
+            label={DetailsOptions.Category} id="withCategory"
             checked={this.state.category}
-            onChange={() => this.handleToggle(AvailablePageDetails.Category)}
+            onChange={() => this.handleToggle(DetailsOptions.Category)}
           />
           <Form.Check
             type="checkbox" inline
-            label={AvailablePageDetails.Content} id="withContent"
+            label={DetailsOptions.Content} id="withContent"
             checked={this.state.content}
-            onChange={() => this.handleToggle(AvailablePageDetails.Content)}
+            onChange={() => this.handleToggle(DetailsOptions.Content)}
           />
           <Form.Check
             type="checkbox" inline
-            label={AvailablePageDetails.Links} id="withLinks"
+            label={DetailsOptions.Links} id="withLinks"
             checked={this.state.links}
-            onChange={() => this.handleToggle(AvailablePageDetails.Links)}
+            onChange={() => this.handleToggle(DetailsOptions.Links)}
           />
         </Form>
       </div>

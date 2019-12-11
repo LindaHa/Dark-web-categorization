@@ -2,7 +2,10 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { INode } from '../../models/node';
 import { download } from '../../_shared/utils/download';
-import { DetailsLink } from './DetailsLink';
+import {
+  DetailsLink,
+  IDetailsOptions
+} from './DetailsLink';
 
 export interface IPageInfoDataProps {
   readonly selectedNode: INode;
@@ -10,7 +13,7 @@ export interface IPageInfoDataProps {
 }
 
 export interface IPageInfoCallbackProps {
-  readonly fetchDetails: () => Promise<Action>;
+  readonly fetchDetails: (options: IDetailsOptions) => Promise<Action>;
 }
 
 type PageInfoProps = IPageInfoCallbackProps & IPageInfoDataProps;
@@ -29,7 +32,14 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
     if (!selectedNode) {
       return;
     }
-    fetchDetails().then((action: Action) => {
+    const options: IDetailsOptions = {
+      title: true,
+      category: false,
+      content: false,
+      links: false
+    };
+
+    fetchDetails(options).then((action: Action) => {
       const filename = `page_details_for_node-${selectedNode.id}.txt`;
       download(filename, action.payload.details.toString());
     });
@@ -91,7 +101,7 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
             )}
             <DetailsLink
               isFetchingDetails={isFetchingDetails}
-              onClick={this._onDetailLinkClick}
+              onLinkClick={this._onDetailLinkClick}
               text="Get all links"
             />
           </div>
