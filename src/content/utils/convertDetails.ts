@@ -3,17 +3,22 @@ import {
   PageDetails,
   PageDetailsServerModel
 } from '../../models/pageDetails';
-import {
-  CommunityDetails,
-  CommunityDetailsServerModel
-} from '../../models/communityDetails';
 
 export const convertServerPageDetailsToClientPageDetails = (serverModel: PageDetailsServerModel) => {
-  const links = Immutable.List<Url>(serverModel.links);
-  return new PageDetails({links});
+  const pageDetails = new PageDetails({
+    url: serverModel.url,
+    title: serverModel.title,
+    category: serverModel.category,
+    content: serverModel.content,
+    links: Immutable.List(serverModel.links),
+  });
+
+  return pageDetails;
 };
 
-export const convertServerCommunityDetailsToClientCommunityDetails = (serverModel: CommunityDetailsServerModel) => {
-  const membersUrls = Immutable.List<Url>(serverModel.members_urls);
-  return new CommunityDetails({membersUrls});
+export const convertServerCommunityDetailsToClientCommunityDetails = (serverModel: PageDetailsServerModel[]) => {
+  const details = serverModel
+    .map((pageDetails: PageDetailsServerModel) => (convertServerPageDetailsToClientPageDetails(pageDetails)));
+
+  return Immutable.List(details);
 };

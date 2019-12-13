@@ -32,7 +32,7 @@ export class CommunityInfo extends React.PureComponent<CommunityInfoProps> {
     const { fetchDetails, selectedNode } = this.props;
     fetchDetails(options).then((action: Action) => {
       const filename = `community_details_for_node-${selectedNode.id}.txt`;
-      download(filename, action.payload.details.toString());
+      download(filename, JSON.stringify(action.payload.details));
     });
   };
 

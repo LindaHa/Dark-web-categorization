@@ -26,8 +26,9 @@ const fetchPageDetailsFactoryDependencies = ({
   createRoute: PageDetailsRoute,
   convertToClientModel: convertServerPageDetailsToClientPageDetails,
   fetch: (options: IDetailsOptions, route: Url) => isoFetch(route, {
-    method: 'GET',
+    method: 'POST',
     headers: {
+      'Content-Type': 'application/json; charset=utf-8',
       accept: 'application/json',
     },
     body: JSON.stringify(options),
@@ -47,6 +48,7 @@ const fetchCommunityDetailsFactoryDependencies = ({
   fetch: (options: IDetailsOptions, route: Url) => isoFetch(route, {
     method: 'POST',
     headers: {
+      'Content-Type': 'application/json; charset=utf-8',
       accept: 'application/json',
     },
     body: JSON.stringify(options)
