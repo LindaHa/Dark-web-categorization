@@ -7,6 +7,7 @@ import {
   DetailsLink,
   IDetailsOptions
 } from './DetailsLink';
+import { IPageDetails } from '../../models/pageDetails';
 
 export interface ICommunityInfoDataProps {
   readonly selectedNode: INode;
@@ -32,7 +33,22 @@ export class CommunityInfo extends React.PureComponent<CommunityInfoProps> {
     const { fetchDetails, selectedNode } = this.props;
     fetchDetails(options).then((action: Action) => {
       const filename = `community_details_for_node-${selectedNode.id}.txt`;
-      download(filename, JSON.stringify(action.payload.details));
+      const resultWithoutNulls = action.payload.details.toJS().map((details: IPageDetails) => {
+        if (!details.category) {
+          delete details.category;
+        }
+        if (!details.title) {
+          delete details.title;
+        }
+        if (!details.content) {
+          delete details.content;
+        }
+        if (!details.links || !details.links.size) {
+          delete details.links;
+        }
+        return details;
+      });
+      download(filename, JSON.stringify(resultWithoutNulls));
     });
   };
 

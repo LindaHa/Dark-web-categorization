@@ -1,27 +1,22 @@
 import * as Immutable from 'immutable';
 
-interface IBasePageDetailsData {
-  readonly url: string;
+interface IPageDetailsData {
+  url: string;
+  title: string;
+  category: string;
+  content: string;
+  links: Immutable.List<Url>;
 }
-
-interface IAdditionalPageDetailsData {
-  readonly title: string;
-  readonly category: string;
-  readonly content: string;
-  readonly links: Immutable.List<Url>;
-}
-
-export interface IPageDetailsData extends IBasePageDetailsData, Partial<IAdditionalPageDetailsData> {}
 
 export interface IPageDetails extends IPageDetailsData, IRecordFunctions<IPageDetailsData, IPageDetails> {
 }
 
 const recordData: IPageDetailsData = {
   url: '',
-  title: undefined,
-  category: undefined,
-  content: undefined,
-  links: undefined,
+  title: '',
+  category: '',
+  content: '',
+  links: Immutable.List<Url>(),
 };
 
 export class PageDetails extends Immutable.Record(recordData) implements IPageDetails {
@@ -40,26 +35,20 @@ export class PageDetails extends Immutable.Record(recordData) implements IPageDe
   }
 }
 
-export interface IBasePageDetailsServerModel {
+export interface IPageDetailsServerModel {
   readonly url: string;
-}
-
-interface IAdditionalPageDetailsServerModel {
   readonly title: string;
   readonly category: string;
   readonly content: string;
   readonly links: Url[];
 }
 
-export interface IPageDetailsServerModel extends IBasePageDetailsServerModel, Partial<IAdditionalPageDetailsServerModel>{}
-
-
 const linkServerModelData: IPageDetailsServerModel = {
   url: '',
-  title: undefined,
-  category: undefined,
-  content: undefined,
-  links: undefined,
+  title: '',
+  category: '',
+  content: '',
+  links: [],
 };
 
 export class PageDetailsServerModel extends Immutable.Record(linkServerModelData) implements IPageDetailsServerModel {
