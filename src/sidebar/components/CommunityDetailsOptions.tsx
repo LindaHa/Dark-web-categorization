@@ -13,7 +13,6 @@ export interface ICommunityDetailsOptions {
 
 interface ICommunityDetailsOptionsProps {
   readonly currentOptions: ICommunityDetailsOptions;
-  readonly isFetchingDetails: boolean;
 
   readonly handleToggle: (attribute: DetailsOptions) => void;
 }
@@ -23,11 +22,6 @@ export const CommunityDetailsOptions: React.SFC<ICommunityDetailsOptionsProps> =
 
   return (
     <div>
-      <div className="sidebar__info-group-details-wrapper">
-        <div className="sidebar__info-group-details-container">
-          with:
-        </div>
-      </div>
       <Form>
         <Form.Check
           type="checkbox" inline
@@ -61,7 +55,5 @@ export const CommunityDetailsOptions: React.SFC<ICommunityDetailsOptionsProps> =
 CommunityDetailsOptions.displayName = 'CommunityDetailsOptions';
 CommunityDetailsOptions.propTypes = {
   currentOptions: PropTypes.object.isRequired,
-  isFetchingDetails: PropTypes.bool.isRequired,
-
   handleToggle: PropTypes.func.isRequired,
 };

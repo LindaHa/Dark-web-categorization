@@ -1,10 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import { IconSpinner } from '../../_shared/components/Spinner';
-import {
-  CommunityDetailsOptions,
-  ICommunityDetailsOptions
-} from './CommunityDetailsOptions';
+import { ICommunityDetailsOptions } from './CommunityDetailsOptions';
+import { OptionsModal } from '../OptionsModal';
 
 export enum DetailsMode {
   Page,
@@ -24,7 +21,9 @@ interface IDetailsLinkProps {
   readonly mode: DetailsMode;
 }
 
-interface IDetailsLinksState extends ICommunityDetailsOptions {
+interface IDetailsLinksState {
+  readonly isModalShown: boolean;
+  readonly details: ICommunityDetailsOptions;
 }
 
 const getClassNames = (isFetching: boolean): string => {
@@ -46,32 +45,46 @@ export class DetailsLink extends React.PureComponent<IDetailsLinkProps, IDetails
     super(props);
 
     this.state = {
-      title: false,
-      category: false,
-      content: false,
-      links: false,
+      details: {
+        title: false,
+        category: false,
+        content: false,
+        links: false,
+      },
+      isModalShown: false,
     };
   }
 
-  private handleToggle = (attribute: DetailsOptions): void => {
+  componentDidUpdate(prevProps: Readonly<IDetailsLinkProps>): void {
+    if (prevProps.isFetchingDetails && !this.props.isFetchingDetails) {
+      this.setState(() => ({ isModalShown: false }));
+    }
+  }
+
+  private _handleToggle = (attribute: DetailsOptions): void => {
+    const stateDetails = { ...this.state.details };
     switch (attribute) {
       case DetailsOptions.Title: {
-        const currentLinksState = this.state.title;
-        return this.setState(() => ({ title: !currentLinksState }));
+        const currentLinksState = stateDetails.title;
+        stateDetails.title = !currentLinksState;
+        return this.setState(() => ({ details: stateDetails }));
       }
       case DetailsOptions.Category: {
-        const currentLinksState = this.state.category;
-        return this.setState(() => ({ category: !currentLinksState }));
+        const currentLinksState = stateDetails.category;
+        stateDetails.category = !currentLinksState;
+        return this.setState(() => ({ details: stateDetails }));
       }
 
       case DetailsOptions.Content: {
-        const currentLinksState = this.state.content;
-        return this.setState(() => ({ content: !currentLinksState }));
+        const currentLinksState = stateDetails.content;
+        stateDetails.content = !currentLinksState;
+        return this.setState(() => ({ details: stateDetails }));
       }
 
       case DetailsOptions.Links: {
-        const currentLinksState = this.state.links;
-        return this.setState(() => ({ links: !currentLinksState }));
+        const currentLinksState = stateDetails.links;
+        stateDetails.links = !currentLinksState;
+        return this.setState(() => ({ details: stateDetails }));
       }
 
       default: {
@@ -80,25 +93,40 @@ export class DetailsLink extends React.PureComponent<IDetailsLinkProps, IDetails
     }
   };
 
+  private _handleClickDownload = (details: ICommunityDetailsOptions) => {
+    this.props.onLinkClick(details);
+  };
+
+  private _hideModal = () => (
+    this.setState(() => ({ isModalShown: false }))
+  );
+
+  private _showModal = () => (
+    this.setState(() => ({ isModalShown: true }))
+  );
+
   render() {
-    const { isFetchingDetails, onLinkClick, mode } = this.props;
+    const { isFetchingDetails, mode } = this.props;
+    const { details, isModalShown } = this.state;
     const modeDependentText = (mode === DetailsMode.Page ? 'links' : 'members');
-    const text = `Get all ${modeDependentText} `;
+    const text = `Get all ${modeDependentText}`;
     return (
       <div>
         <div
           className={getClassNames(isFetchingDetails)}
-          onClick={() => onLinkClick(this.state)}
+          onClick={this._showModal}
         >
           {text}
-          {isFetchingDetails ? <IconSpinner/> : <i className="fas fa-file-download"/>}
         </div>
         {
           mode === DetailsMode.Community
-            ? <CommunityDetailsOptions
-              currentOptions={this.state}
+            ? <OptionsModal
+              currentOptions={details}
+              isModalShown={isModalShown}
               isFetchingDetails={isFetchingDetails}
-              handleToggle={this.handleToggle}
+              download={() => this._handleClickDownload(details)}
+              handleToggle={this._handleToggle}
+              onHide={this._hideModal}
             />
             : <></>
         }

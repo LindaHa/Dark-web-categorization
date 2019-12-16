@@ -1,6 +1,6 @@
 @spinner-teal: @teal-600;
-@spinner-icon-teal: @teal-300;
-@spinner-icon-blue: @blue-100;
+@spinner-icon-teal: @teal-100;
+@spinner-icon-blue: @blue-200;
 
 .spinner {
   border: solid @grid-unit @blue-500;
@@ -13,9 +13,11 @@
 }
 
 .spinner-icon__wrapper {
+  padding-left: @grid-unit / 2;
+  padding-top: @grid-unit / 2;
   position: relative;
-  width: 10px;
-  height: 10px;
+  width: @grid-unit * 4;
+  height: @grid-unit * 4;
   display: inline-block;
 }
 
@@ -25,8 +27,8 @@
 
 .spinner-icon {
   &:extend(.spinner);
-  height: @grid-unit * 3;
-  width: @grid-unit * 3;
+  height: @grid-unit * 4;
+  width: @grid-unit * 4;
   animation: spinWithIconColor 2s linear infinite;
 }
 
