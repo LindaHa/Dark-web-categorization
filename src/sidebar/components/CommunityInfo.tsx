@@ -5,9 +5,10 @@ import { getUrlsFromMembers } from '../../content/utils/getComponentInfo';
 import { download } from '../../_shared/utils/download';
 import {
   DetailsLink,
-  IDetailsOptions
+  DetailsMode,
 } from './DetailsLink';
-import { IPageDetails } from '../../models/pageDetails';
+import { ICommunityDetailsOptions } from './CommunityDetailsOptions';
+import { removeEmptyPropertiesFromDetails } from '../utils/detailsHelpers';
 
 export interface ICommunityInfoDataProps {
   readonly selectedNode: INode;
@@ -15,7 +16,7 @@ export interface ICommunityInfoDataProps {
 }
 
 export interface ICommunityInfoCallbackProps {
-  readonly fetchDetails: (options: IDetailsOptions) => Promise<Action>;
+  readonly fetchDetails: (options: ICommunityDetailsOptions) => Promise<Action>;
 }
 
 type CommunityInfoProps = ICommunityInfoCallbackProps & ICommunityInfoDataProps;
@@ -29,25 +30,12 @@ export class CommunityInfo extends React.PureComponent<CommunityInfoProps> {
     fetchDetails: PropTypes.func.isRequired,
   };
 
-  private _onDetailLinkClick = (options: IDetailsOptions): void => {
+  private _onDetailLinkClick = (options: ICommunityDetailsOptions): void => {
     const { fetchDetails, selectedNode } = this.props;
     fetchDetails(options).then((action: Action) => {
       const filename = `community_details_for_node-${selectedNode.id}.txt`;
-      const resultWithoutNulls = action.payload.details.toJS().map((details: IPageDetails) => {
-        if (!details.category) {
-          delete details.category;
-        }
-        if (!details.title) {
-          delete details.title;
-        }
-        if (!details.content) {
-          delete details.content;
-        }
-        if (!details.links || !details.links.size) {
-          delete details.links;
-        }
-        return details;
-      });
+      const resultWithoutNulls = action.payload.details.toJS()
+        .map((details: ICommunityDetailsOptions) => removeEmptyPropertiesFromDetails(details));
       download(filename, JSON.stringify(resultWithoutNulls));
     });
   };
@@ -83,7 +71,7 @@ export class CommunityInfo extends React.PureComponent<CommunityInfoProps> {
             <DetailsLink
               isFetchingDetails={isFetchingDetails}
               onLinkClick={this._onDetailLinkClick}
-              text="Get all members"
+              mode={DetailsMode.Community}
             />
           </div>
 

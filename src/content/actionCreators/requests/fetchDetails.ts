@@ -18,14 +18,15 @@ import {
   convertServerCommunityDetailsToClientCommunityDetails,
   convertServerPageDetailsToClientPageDetails,
 } from '../../utils/convertDetails';
-import { IDetailsOptions } from '../../../sidebar/components/DetailsLink';
+import { ICommunityDetailsOptions } from '../../../sidebar/components/CommunityDetailsOptions';
+import { IPageDetailsOptions } from '../../../sidebar/components/PageDetailsOptions';
 
 const fetchPageDetailsFactoryDependencies = ({
   fetchSuccess: succeedToFetchPageDetails,
   error: failToFetchPageDetails,
   createRoute: PageDetailsRoute,
   convertToClientModel: convertServerPageDetailsToClientPageDetails,
-  fetch: (options: IDetailsOptions, route: Url) => isoFetch(route, {
+  fetch: (options: ICommunityDetailsOptions | IPageDetailsOptions, route: Url) => isoFetch(route, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
@@ -38,14 +39,14 @@ const fetchPageDetailsFactoryDependencies = ({
   idGenerator: createUuid,
 });
 
-export const fetchPageDetails = (options: IDetailsOptions) => fetchDetailsFactory(fetchPageDetailsFactoryDependencies)(options);
+export const fetchPageDetails = (options: ICommunityDetailsOptions) => fetchDetailsFactory(fetchPageDetailsFactoryDependencies)(options);
 
 const fetchCommunityDetailsFactoryDependencies = ({
   fetchSuccess: succeedToFetchCommunityDetails,
   error: failToFetchCommunityDetails,
   createRoute: CommunityDetailsRoute,
   convertToClientModel: convertServerCommunityDetailsToClientCommunityDetails,
-  fetch: (options: IDetailsOptions, route: Url) => isoFetch(route, {
+  fetch: (options: ICommunityDetailsOptions, route: Url) => isoFetch(route, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
@@ -58,4 +59,4 @@ const fetchCommunityDetailsFactoryDependencies = ({
   idGenerator: createUuid,
 });
 
-export const fetchCommunityDetails =  (options: IDetailsOptions) => fetchDetailsFactory(fetchCommunityDetailsFactoryDependencies)(options);
+export const fetchCommunityDetails =  (options: ICommunityDetailsOptions) => fetchDetailsFactory(fetchCommunityDetailsFactoryDependencies)(options);

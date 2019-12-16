@@ -1,7 +1,8 @@
 import { Dispatch } from 'redux';
 import { IState } from '../../../_shared/models/IState';
 import { GroupBy } from '../../../sidebar/components/Sidebar';
-import { IDetailsOptions } from '../../../sidebar/components/DetailsLink';
+import { ICommunityDetailsOptions } from '../../../sidebar/components/CommunityDetailsOptions';
+import { IPageDetailsOptions } from '../../../sidebar/components/PageDetailsOptions';
 
 
 export interface IFetchDetailsFactoryDependencies {
@@ -9,13 +10,13 @@ export interface IFetchDetailsFactoryDependencies {
   readonly createRoute: (nodeId: Uuid, groupBy: GroupBy) => Url;
   readonly convertToClientModel: (serverModel: object) => object;
   readonly error: (id: Uuid, error: Error) => Action;
-  readonly fetch: (options: IDetailsOptions, route: Url) => Promise<Response>;
+  readonly fetch: (options: ICommunityDetailsOptions | IPageDetailsOptions, route: Url) => Promise<Response>;
   readonly fetchBegin: (nodeId?: Uuid) => Action;
   readonly idGenerator: () => string;
 }
 
 export const fetchDetailsFactory = (dependencies: IFetchDetailsFactoryDependencies) =>
-  (options: IDetailsOptions): any => (dispatch: Dispatch, getState: () => IState): Promise<Action> => {
+  (options: ICommunityDetailsOptions): any => (dispatch: Dispatch, getState: () => IState): Promise<Action> => {
     const { selectedNodeId, groupBy } = getState();
     dispatch(dependencies.fetchBegin(selectedNodeId));
     const errorId = dependencies.idGenerator();

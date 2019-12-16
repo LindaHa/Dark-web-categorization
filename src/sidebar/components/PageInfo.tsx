@@ -4,8 +4,13 @@ import { INode } from '../../models/node';
 import { download } from '../../_shared/utils/download';
 import {
   DetailsLink,
-  IDetailsOptions
+  DetailsMode,
 } from './DetailsLink';
+import {
+  IPageDetailsOptions,
+  PageDetailsOptions
+} from './PageDetailsOptions';
+import { removeEmptyPropertiesFromDetails } from '../utils/detailsHelpers';
 
 export interface IPageInfoDataProps {
   readonly selectedNode: INode;
@@ -13,7 +18,7 @@ export interface IPageInfoDataProps {
 }
 
 export interface IPageInfoCallbackProps {
-  readonly fetchDetails: (options: IDetailsOptions) => Promise<Action>;
+  readonly fetchDetails: (options: IPageDetailsOptions) => Promise<Action>;
 }
 
 type PageInfoProps = IPageInfoCallbackProps & IPageInfoDataProps;
@@ -32,16 +37,12 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
     if (!selectedNode) {
       return;
     }
-    const options: IDetailsOptions = {
-      title: true,
-      category: false,
-      content: false,
-      links: false
-    };
+    const options: IPageDetailsOptions = {};
 
     fetchDetails(options).then((action: Action) => {
       const filename = `page_details_for_node-${selectedNode.id}.txt`;
-      download(filename, JSON.stringify(action.payload.details));
+      const resultWithoutNulls = removeEmptyPropertiesFromDetails(action.payload.details.toJS()) as IPageDetailsOptions;
+      download(filename, JSON.stringify(resultWithoutNulls));
     });
   };
 
@@ -102,8 +103,9 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
             <DetailsLink
               isFetchingDetails={isFetchingDetails}
               onLinkClick={this._onDetailLinkClick}
-              text="Get all links"
+              mode={DetailsMode.Page}
             />
+          <PageDetailsOptions />
           </div>
         }
       </div>

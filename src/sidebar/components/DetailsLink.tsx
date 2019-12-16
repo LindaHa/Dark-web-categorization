@@ -1,12 +1,14 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import { Form } from 'react-bootstrap';
 import { IconSpinner } from '../../_shared/components/Spinner';
+import {
+  CommunityDetailsOptions,
+  ICommunityDetailsOptions
+} from './CommunityDetailsOptions';
 
-interface IDetailsLinkProps {
-  readonly isFetchingDetails: boolean;
-  readonly onLinkClick: (options: IDetailsOptions) => void;
-  readonly text: string;
+export enum DetailsMode {
+  Page,
+  Community,
 }
 
 export enum DetailsOptions {
@@ -16,14 +18,13 @@ export enum DetailsOptions {
   Links = 'Links',
 }
 
-export interface IDetailsOptions {
-  readonly title: boolean;
-  readonly category: boolean;
-  readonly content: boolean;
-  readonly links: boolean;
+interface IDetailsLinkProps {
+  readonly isFetchingDetails: boolean;
+  readonly onLinkClick: (options: ICommunityDetailsOptions) => void;
+  readonly mode: DetailsMode;
 }
 
-interface IDetailsLinksState extends IDetailsOptions {
+interface IDetailsLinksState extends ICommunityDetailsOptions {
 }
 
 const getClassNames = (isFetching: boolean): string => {
@@ -38,7 +39,7 @@ export class DetailsLink extends React.PureComponent<IDetailsLinkProps, IDetails
   static propTypes = {
     isFetchingDetails: PropTypes.bool.isRequired,
     onLinkClick: PropTypes.func.isRequired,
-    text: PropTypes.string.isRequired,
+    mode: PropTypes.number.isRequired,
   };
 
   constructor(props: IDetailsLinkProps) {
@@ -80,47 +81,27 @@ export class DetailsLink extends React.PureComponent<IDetailsLinkProps, IDetails
   };
 
   render() {
-    const { isFetchingDetails, onLinkClick, text } = this.props;
+    const { isFetchingDetails, onLinkClick, mode } = this.props;
+    const modeDependentText = (mode === DetailsMode.Page ? 'links' : 'members');
+    const text = `Get all ${modeDependentText} `;
     return (
       <div>
         <div
           className={getClassNames(isFetchingDetails)}
           onClick={() => onLinkClick(this.state)}
         >
-          {text + ' '}
+          {text}
           {isFetchingDetails ? <IconSpinner/> : <i className="fas fa-file-download"/>}
         </div>
-        <div className="sidebar__info-group-details-wrapper">
-          <div className="sidebar__info-group-details-container">
-            with:
-          </div>
-        </div>
-        <Form>
-          <Form.Check
-            type="checkbox" inline
-            label={DetailsOptions.Title} id="withTitle"
-            checked={this.state.title}
-            onChange={() => this.handleToggle(DetailsOptions.Title)}
-          />
-          <Form.Check
-            type="checkbox" inline
-            label={DetailsOptions.Category} id="withCategory"
-            checked={this.state.category}
-            onChange={() => this.handleToggle(DetailsOptions.Category)}
-          />
-          <Form.Check
-            type="checkbox" inline
-            label={DetailsOptions.Content} id="withContent"
-            checked={this.state.content}
-            onChange={() => this.handleToggle(DetailsOptions.Content)}
-          />
-          <Form.Check
-            type="checkbox" inline
-            label={DetailsOptions.Links} id="withLinks"
-            checked={this.state.links}
-            onChange={() => this.handleToggle(DetailsOptions.Links)}
-          />
-        </Form>
+        {
+          mode === DetailsMode.Community
+            ? <CommunityDetailsOptions
+              currentOptions={this.state}
+              isFetchingDetails={isFetchingDetails}
+              handleToggle={this.handleToggle}
+            />
+            : <></>
+        }
       </div>
     );
   }
