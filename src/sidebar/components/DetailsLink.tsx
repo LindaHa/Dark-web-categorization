@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { ICommunityDetailsOptions } from './CommunityDetailsOptions';
 import { OptionsModal } from '../OptionsModal';
+import { IconSpinner } from '../../_shared/components/Spinner';
 
 export enum DetailsMode {
   Page,
@@ -109,26 +110,36 @@ export class DetailsLink extends React.PureComponent<IDetailsLinkProps, IDetails
     const { isFetchingDetails, mode } = this.props;
     const { details, isModalShown } = this.state;
     const modeDependentText = (mode === DetailsMode.Page ? 'links' : 'members');
-    const text = `Get all ${modeDependentText}`;
+    const text = `Get all ${modeDependentText} `;
     return (
       <div>
-        <div
-          className={getClassNames(isFetchingDetails)}
-          onClick={this._showModal}
-        >
-          {text}
-        </div>
         {
           mode === DetailsMode.Community
-            ? <OptionsModal
-              currentOptions={details}
-              isModalShown={isModalShown}
-              isFetchingDetails={isFetchingDetails}
-              download={() => this._handleClickDownload(details)}
-              handleToggle={this._handleToggle}
-              onHide={this._hideModal}
-            />
-            : <></>
+            ?
+            <div>
+              <div
+                className={getClassNames(isFetchingDetails)}
+                onClick={this._showModal}
+              >
+                {text}
+              </div>
+              <OptionsModal
+                currentOptions={details}
+                isModalShown={isModalShown}
+                isFetchingDetails={isFetchingDetails}
+                download={() => this._handleClickDownload(details)}
+                handleToggle={this._handleToggle}
+                onHide={this._hideModal}
+              />
+            </div>
+            :
+            <div
+              className={getClassNames(isFetchingDetails)}
+              onClick={() => this._handleClickDownload(details)}
+            >
+              {text}
+              {isFetchingDetails ? <IconSpinner/> : <i className="fas fa-file-download"/>}
+            </div>
         }
       </div>
     );
