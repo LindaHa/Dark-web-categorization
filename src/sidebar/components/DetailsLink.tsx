@@ -1,8 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import { ICommunityDetailsOptions } from './CommunityDetailsOptions';
+import { INodeDetailsOptions } from './CommunityDetailsOptions';
 import { OptionsModal } from '../OptionsModal';
-import { IconSpinner } from '../../_shared/components/Spinner';
 
 export enum DetailsMode {
   Page,
@@ -18,13 +17,13 @@ export enum DetailsOptions {
 
 interface IDetailsLinkProps {
   readonly isFetchingDetails: boolean;
-  readonly onLinkClick: (options: ICommunityDetailsOptions) => void;
+  readonly onLinkClick: (options: INodeDetailsOptions) => void;
   readonly mode: DetailsMode;
 }
 
 interface IDetailsLinksState {
   readonly isModalShown: boolean;
-  readonly details: ICommunityDetailsOptions;
+  readonly details: INodeDetailsOptions;
 }
 
 const getClassNames = (isFetching: boolean): string => {
@@ -94,7 +93,7 @@ export class DetailsLink extends React.PureComponent<IDetailsLinkProps, IDetails
     }
   };
 
-  private _handleClickDownload = (details: ICommunityDetailsOptions) => {
+  private _handleClickDownload = (details: INodeDetailsOptions) => {
     this.props.onLinkClick(details);
   };
 
@@ -109,37 +108,26 @@ export class DetailsLink extends React.PureComponent<IDetailsLinkProps, IDetails
   render() {
     const { isFetchingDetails, mode } = this.props;
     const { details, isModalShown } = this.state;
-    const modeDependentText = (mode === DetailsMode.Page ? 'links' : 'members');
-    const text = `Get all ${modeDependentText} `;
+    const modeDependentText = (mode === DetailsMode.Page ? 'Get more details' : 'Get all members');
     return (
       <div>
         {
-          mode === DetailsMode.Community
-            ?
-            <div>
-              <div
-                className={getClassNames(isFetchingDetails)}
-                onClick={this._showModal}
-              >
-                {text}
-              </div>
-              <OptionsModal
-                currentOptions={details}
-                isModalShown={isModalShown}
-                isFetchingDetails={isFetchingDetails}
-                download={() => this._handleClickDownload(details)}
-                handleToggle={this._handleToggle}
-                onHide={this._hideModal}
-              />
-            </div>
-            :
+          <div>
             <div
               className={getClassNames(isFetchingDetails)}
-              onClick={() => this._handleClickDownload(details)}
+              onClick={this._showModal}
             >
-              {text}
-              {isFetchingDetails ? <IconSpinner/> : <i className="fas fa-file-download"/>}
+              {modeDependentText}
             </div>
+            <OptionsModal
+              currentOptions={details}
+              isModalShown={isModalShown}
+              isFetchingDetails={isFetchingDetails}
+              download={() => this._handleClickDownload(details)}
+              handleToggle={this._handleToggle}
+              onHide={this._hideModal}
+            />
+          </div>
         }
       </div>
     );

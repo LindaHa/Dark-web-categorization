@@ -6,7 +6,7 @@ import {
 } from 'react-bootstrap';
 import {
   CommunityDetailsOptions,
-  ICommunityDetailsOptions
+  INodeDetailsOptions
 } from './components/CommunityDetailsOptions';
 import { DetailsOptions } from './components/DetailsLink';
 import { IconSpinner } from '../_shared/components/Spinner';
@@ -14,7 +14,7 @@ import { IconSpinner } from '../_shared/components/Spinner';
 interface IOptionsModalProps {
   readonly isModalShown: boolean;
   readonly isFetchingDetails: boolean;
-  readonly currentOptions: ICommunityDetailsOptions;
+  readonly currentOptions: INodeDetailsOptions;
 
   readonly download: () => void;
   readonly handleToggle: (attribute: DetailsOptions) => void;
@@ -38,7 +38,7 @@ export const OptionsModal: React.SFC<IOptionsModalProps> = (props: IOptionsModal
       </Modal.Header>
       <Modal.Body>
         <CommunityDetailsOptions
-          currentOptions={currentOptions as ICommunityDetailsOptions}
+          currentOptions={currentOptions as INodeDetailsOptions}
           handleToggle={handleToggle}
         />
       </Modal.Body>

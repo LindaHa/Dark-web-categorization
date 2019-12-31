@@ -7,7 +7,7 @@ import {
   DetailsLink,
   DetailsMode,
 } from './DetailsLink';
-import { ICommunityDetailsOptions } from './CommunityDetailsOptions';
+import { INodeDetailsOptions } from './CommunityDetailsOptions';
 import { removeEmptyPropertiesFromDetails } from '../utils/detailsHelpers';
 
 export interface ICommunityInfoDataProps {
@@ -16,7 +16,7 @@ export interface ICommunityInfoDataProps {
 }
 
 export interface ICommunityInfoCallbackProps {
-  readonly fetchDetails: (options: ICommunityDetailsOptions) => Promise<Action>;
+  readonly fetchDetails: (options: INodeDetailsOptions) => Promise<Action>;
 }
 
 type CommunityInfoProps = ICommunityInfoCallbackProps & ICommunityInfoDataProps;
@@ -30,12 +30,12 @@ export class CommunityInfo extends React.PureComponent<CommunityInfoProps> {
     fetchDetails: PropTypes.func.isRequired,
   };
 
-  private _onDetailLinkClick = (options: ICommunityDetailsOptions): void => {
+  private _onDetailLinkClick = (options: INodeDetailsOptions): void => {
     const { fetchDetails, selectedNode } = this.props;
     fetchDetails(options).then((action: Action) => {
       const filename = `community_details_for_node-${selectedNode.id}.txt`;
       const resultWithoutNulls = action.payload.details.toJS()
-        .map((details: ICommunityDetailsOptions) => removeEmptyPropertiesFromDetails(details));
+        .map((details: INodeDetailsOptions) => removeEmptyPropertiesFromDetails(details));
       download(filename, JSON.stringify(resultWithoutNulls));
     });
   };

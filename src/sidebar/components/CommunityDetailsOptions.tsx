@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
 import { DetailsOptions } from './DetailsLink';
 
-export interface ICommunityDetailsOptions {
+export interface INodeDetailsOptions {
   readonly title: boolean;
   readonly category: boolean;
   readonly content: boolean;
@@ -12,7 +12,7 @@ export interface ICommunityDetailsOptions {
 }
 
 interface ICommunityDetailsOptionsProps {
-  readonly currentOptions: ICommunityDetailsOptions;
+  readonly currentOptions: INodeDetailsOptions;
 
   readonly handleToggle: (attribute: DetailsOptions) => void;
 }
