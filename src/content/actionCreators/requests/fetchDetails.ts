@@ -13,26 +13,28 @@ import {
   succeedToFetchCommunityDetails,
   succeedToFetchPageDetails
 } from '../detailsActionCreators';
-import { fetchDetailsFactory } from './fetchDetailsFactory';
+import {
+  fetchDetailsFactory,
+  IDetailsPayload
+} from './fetchDetailsFactory';
 import {
   convertServerCommunityDetailsToClientCommunityDetails,
   convertServerPageDetailsToClientPageDetails,
 } from '../../utils/convertDetails';
 import { INodeDetailsOptions } from '../../../sidebar/components/CommunityDetailsOptions';
-import { IPageDetailsOptions } from '../../../sidebar/components/PageDetailsOptions';
 
 const fetchPageDetailsFactoryDependencies = ({
   fetchSuccess: succeedToFetchPageDetails,
   error: failToFetchPageDetails,
   createRoute: PageDetailsRoute,
   convertToClientModel: convertServerPageDetailsToClientPageDetails,
-  fetch: (options: INodeDetailsOptions | IPageDetailsOptions, route: Url) => isoFetch(route, {
+  fetch: (payload: IDetailsPayload, route: Url) => isoFetch(route, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
       accept: 'application/json',
     },
-    body: JSON.stringify(options),
+    body: JSON.stringify(payload),
   })
     .then(response => checkStatus(response)),
   fetchBegin: requestPageDetails,
@@ -46,13 +48,13 @@ const fetchCommunityDetailsFactoryDependencies = ({
   error: failToFetchCommunityDetails,
   createRoute: CommunityDetailsRoute,
   convertToClientModel: convertServerCommunityDetailsToClientCommunityDetails,
-  fetch: (options: INodeDetailsOptions, route: Url) => isoFetch(route, {
+  fetch: (payload: IDetailsPayload, route: Url) => isoFetch(route, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
       accept: 'application/json',
     },
-    body: JSON.stringify(options)
+    body: JSON.stringify(payload)
   })
     .then(response => checkStatus(response)),
   fetchBegin: requestCommunityDetails,

@@ -1,16 +1,12 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { INode } from '../../models/node';
-import { download } from '../../_shared/utils/download';
 import {
   DetailsLink,
   DetailsMode,
 } from './DetailsLink';
-import {
-  IPageDetailsOptions,
-  PageDetailsOptions
-} from './PageDetailsOptions';
-import { removeEmptyPropertiesFromDetails } from '../utils/detailsHelpers';
+import { PageDetailsOptions } from './PageDetailsOptions';
+import { INodeDetailsOptions } from './CommunityDetailsOptions';
 
 export interface IPageInfoDataProps {
   readonly selectedNode: INode;
@@ -18,7 +14,7 @@ export interface IPageInfoDataProps {
 }
 
 export interface IPageInfoCallbackProps {
-  readonly fetchDetails: (options: IPageDetailsOptions) => Promise<Action>;
+  readonly fetchDetails: (options: INodeDetailsOptions) => Promise<Action>;
 }
 
 type PageInfoProps = IPageInfoCallbackProps & IPageInfoDataProps;
@@ -32,23 +28,9 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
     fetchDetails: PropTypes.func.isRequired,
   };
 
-  private _onDetailLinkClick = () => {
-    const { fetchDetails, selectedNode } = this.props;
-    if (!selectedNode) {
-      return;
-    }
-    const options: IPageDetailsOptions = {};
-
-    fetchDetails(options).then((action: Action) => {
-      const filename = `page_details_for_node-${selectedNode.id}.txt`;
-      const resultWithoutNulls = removeEmptyPropertiesFromDetails(action.payload.details.toJS()) as IPageDetailsOptions;
-      download(filename, JSON.stringify(resultWithoutNulls));
-    });
-  };
-
   render() {
-    const { selectedNode: { firstMembers }, isFetchingDetails } = this.props;
-    const individualPage = firstMembers.first(null);
+    const { selectedNode, isFetchingDetails, fetchDetails } = this.props;
+    const individualPage = selectedNode.firstMembers.first(null);
     if (!individualPage) {
       return (
         <div>
@@ -102,10 +84,11 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
             )}
             <DetailsLink
               isFetchingDetails={isFetchingDetails}
-              onLinkClick={this._onDetailLinkClick}
               mode={DetailsMode.Page}
+              fetchDetails={fetchDetails}
+              selectedNode={selectedNode}
             />
-          <PageDetailsOptions />
+            <PageDetailsOptions/>
           </div>
         }
       </div>

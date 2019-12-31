@@ -2,6 +2,9 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { INodeDetailsOptions } from './CommunityDetailsOptions';
 import { OptionsModal } from '../OptionsModal';
+import { INode } from '../../models/node';
+import { removeEmptyPropertiesFromDetailsResponse } from '../utils/detailsHelpers';
+import { download } from '../../_shared/utils/download';
 
 export enum DetailsMode {
   Page,
@@ -15,11 +18,17 @@ export enum DetailsOptions {
   Links = 'Links',
 }
 
-interface IDetailsLinkProps {
+interface IDetailsLinkDataProps {
   readonly isFetchingDetails: boolean;
-  readonly onLinkClick: (options: INodeDetailsOptions) => void;
   readonly mode: DetailsMode;
+  readonly selectedNode: INode;
 }
+
+interface IDetailsLinkCallbackProps {
+  readonly fetchDetails: (options: INodeDetailsOptions) => Promise<Action>;
+}
+
+type DetailsLinkProps = IDetailsLinkDataProps & IDetailsLinkCallbackProps;
 
 interface IDetailsLinksState {
   readonly isModalShown: boolean;
@@ -33,15 +42,17 @@ const getClassNames = (isFetching: boolean): string => {
   return 'sidebar__info-group-detail-item';
 };
 
-export class DetailsLink extends React.PureComponent<IDetailsLinkProps, IDetailsLinksState> {
+export class DetailsLink extends React.PureComponent<DetailsLinkProps, IDetailsLinksState> {
   static displayName = 'DetailsLink';
   static propTypes = {
     isFetchingDetails: PropTypes.bool.isRequired,
-    onLinkClick: PropTypes.func.isRequired,
     mode: PropTypes.number.isRequired,
+    selectedNode: PropTypes.object.isRequired,
+
+    fetchDetails: PropTypes.func.isRequired,
   };
 
-  constructor(props: IDetailsLinkProps) {
+  constructor(props: DetailsLinkProps) {
     super(props);
 
     this.state = {
@@ -55,7 +66,7 @@ export class DetailsLink extends React.PureComponent<IDetailsLinkProps, IDetails
     };
   }
 
-  componentDidUpdate(prevProps: Readonly<IDetailsLinkProps>): void {
+  componentDidUpdate(prevProps: Readonly<DetailsLinkProps>): void {
     if (prevProps.isFetchingDetails && !this.props.isFetchingDetails) {
       this.setState(() => ({ isModalShown: false }));
     }
@@ -93,8 +104,15 @@ export class DetailsLink extends React.PureComponent<IDetailsLinkProps, IDetails
     }
   };
 
-  private _handleClickDownload = (details: INodeDetailsOptions) => {
-    this.props.onLinkClick(details);
+  private _handleClickDownload = (options: INodeDetailsOptions): void => {
+    const { fetchDetails, mode, selectedNode } = this.props;
+
+    fetchDetails(options).then((action: Action) => {
+      const filePrefix = mode === DetailsMode.Page ? 'page' : 'community';
+      const filename = `${filePrefix}_details_for_node-${selectedNode.id}.txt`;
+      const resultWithoutNulls = removeEmptyPropertiesFromDetailsResponse(action.payload.details);
+      download(filename, JSON.stringify(resultWithoutNulls));
+    });
   };
 
   private _hideModal = () => (

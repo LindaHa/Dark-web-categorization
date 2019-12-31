@@ -1,13 +1,18 @@
-import { IPageDetailsOptions } from '../components/PageDetailsOptions';
 import { INodeDetailsOptions } from '../components/CommunityDetailsOptions';
 
-type DetailsOptions = IPageDetailsOptions | INodeDetailsOptions;
-
-export const removeEmptyPropertiesFromDetails = (details: DetailsOptions): DetailsOptions => {
-    for (const prop in details) {
-      if (details[prop] === null || details[prop] === undefined || details[prop] === []) {
-        delete details[prop];
-      }
+export const removeEmptyPropertiesFromDetails = (details: INodeDetailsOptions): INodeDetailsOptions => {
+  for (const prop in details) {
+    if (details[prop] === null || details[prop] === undefined || details[prop] === []) {
+      delete details[prop];
     }
-    return details;
+  }
+  return details;
 };
+
+export const removeEmptyPropertiesFromDetailsResponse = (details: any): any => {
+  const resultWithoutNulls = details.toJS()
+    .map((detail: INodeDetailsOptions) => removeEmptyPropertiesFromDetails(detail));
+
+  return resultWithoutNulls;
+};
+

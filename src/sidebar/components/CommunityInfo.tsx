@@ -2,13 +2,11 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { INode } from '../../models/node';
 import { getUrlsFromMembers } from '../../content/utils/getComponentInfo';
-import { download } from '../../_shared/utils/download';
 import {
   DetailsLink,
   DetailsMode,
 } from './DetailsLink';
 import { INodeDetailsOptions } from './CommunityDetailsOptions';
-import { removeEmptyPropertiesFromDetails } from '../utils/detailsHelpers';
 
 export interface ICommunityInfoDataProps {
   readonly selectedNode: INode;
@@ -30,18 +28,8 @@ export class CommunityInfo extends React.PureComponent<CommunityInfoProps> {
     fetchDetails: PropTypes.func.isRequired,
   };
 
-  private _onDetailLinkClick = (options: INodeDetailsOptions): void => {
-    const { fetchDetails, selectedNode } = this.props;
-    fetchDetails(options).then((action: Action) => {
-      const filename = `community_details_for_node-${selectedNode.id}.txt`;
-      const resultWithoutNulls = action.payload.details.toJS()
-        .map((details: INodeDetailsOptions) => removeEmptyPropertiesFromDetails(details));
-      download(filename, JSON.stringify(resultWithoutNulls));
-    });
-  };
-
   render() {
-    const { selectedNode, isFetchingDetails } = this.props;
+    const { selectedNode, isFetchingDetails, fetchDetails } = this.props;
     const members = selectedNode && selectedNode.firstMembers;
     const categories = selectedNode && selectedNode.categories;
     const urls = getUrlsFromMembers(members);
@@ -70,8 +58,9 @@ export class CommunityInfo extends React.PureComponent<CommunityInfoProps> {
             )}
             <DetailsLink
               isFetchingDetails={isFetchingDetails}
-              onLinkClick={this._onDetailLinkClick}
               mode={DetailsMode.Community}
+              selectedNode={selectedNode}
+              fetchDetails={fetchDetails}
             />
           </div>
 

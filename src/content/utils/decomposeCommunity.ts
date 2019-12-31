@@ -56,7 +56,7 @@ export const decomposeCommunity = (nodes: Immutable.Map<Url, INode>): Immutable.
         const decomposedLinks = getDecomposedLinks(member, commonId, firstMembersKeys);
 
         const decomposedMember: INode = new Node({
-          id: `${commonId} ${member.id} `,
+          id: `${commonId} ${member.id}`,
           categories: member.categories,
           links: decomposedLinks,
           firstMembers: Immutable.List<INode>([member]),

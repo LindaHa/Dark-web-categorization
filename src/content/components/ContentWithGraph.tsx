@@ -48,7 +48,7 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
   _onDoubleClickNode = (nodeId: string) => {
     const node = this.props.nodes.get(nodeId);
 
-    if (node && node.id.endsWith(' ')) {
+    if (node && node.id.includes(' ')) {
       return;
     }
     this.props.zoomNode(nodeId);

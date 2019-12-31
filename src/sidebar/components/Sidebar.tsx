@@ -64,9 +64,9 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
 
     let upNodeIds: Url[] = [];
 
-    if (selectedNodeId.endsWith(' ') || !selectedNode) {
+    if (selectedNodeId.includes(' ') || !selectedNode) {
       let baseId = '';
-      if (selectedNodeId.endsWith(' ')) {
+      if (selectedNodeId.includes(' ')) {
         const idAndUrl = selectedNodeId.split(' ');
         baseId = idAndUrl[0];
       }
