@@ -12,7 +12,11 @@ import {
   MAX_COMMUNITIES_FOR_DISPLAY,
   MAX_NODES_FOR_DISPLAY
 } from '../constants/graphConstants';
-import { decomposeCommunity } from '../utils/decomposeCommunity';
+import {
+  decomposeCommunity,
+  decomposeIfOnlySimplePages,
+  hasMaxNumberOfMembers
+} from '../utils/decomposeCommunity';
 
 export const nodesReducer = (prevState: Immutable.Map<Uuid, INode> = Immutable.Map<Url, INode>(), action: Action)
   : Immutable.Map<Uuid, INode> => {
@@ -27,15 +31,15 @@ export const nodesReducer = (prevState: Immutable.Map<Uuid, INode> = Immutable.M
       );
 
       if (clientNodes.size > MAX_COMMUNITIES_FOR_DISPLAY) {
-        return clientNodes;
+        return decomposeIfOnlySimplePages(clientNodes);
       }
 
       let memberNodes = Immutable.Map<Uuid, INode>();
-      const hasNotMoreThanFirstMembers: boolean = clientNodes
-        .map((node: INode) => node.membersCount <= MAX_NODES_FOR_DISPLAY)
-        .every((item: boolean) => item);
 
-      if (hasNotMoreThanFirstMembers) {
+      const hasNotMoreThanFirstMembers: boolean = hasMaxNumberOfMembers(clientNodes, MAX_NODES_FOR_DISPLAY);
+      const areSeparatePages: boolean = hasMaxNumberOfMembers(clientNodes, 1);
+
+      if (hasNotMoreThanFirstMembers || areSeparatePages) {
         memberNodes = decomposeCommunity(clientNodes);
       }
 

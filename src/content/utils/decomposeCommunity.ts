@@ -36,7 +36,7 @@ const getDecomposedLinks = (
 ): Immutable.Set<Url> => {
   const decomposedLinks: Immutable.Set<Url> = member.links
     .filter((link: Url) => memberKeys.contains(link))
-    .map((link: Url) => (`${commonId} ${link} `));
+    .map((link: Url) => (`${commonId} ${link}`));
 
   return decomposedLinks;
 };
@@ -68,4 +68,19 @@ export const decomposeCommunity = (nodes: Immutable.Map<Url, INode>): Immutable.
   });
 
   return memberNodes;
+};
+
+
+export const hasMaxNumberOfMembers = (nodes: Immutable.Map<Url, INode>, relevantNumber: number): boolean => (
+  nodes
+    .map((node: INode) => node.membersCount <= relevantNumber)
+    .every((item: boolean) => item)
+);
+
+export const decomposeIfOnlySimplePages = (nodes: Immutable.Map<Url, INode>): Immutable.Map<Url, INode> => {
+  if (hasMaxNumberOfMembers(nodes, 1)) {
+    return decomposeCommunity(nodes);
+  }
+
+  return nodes;
 };
