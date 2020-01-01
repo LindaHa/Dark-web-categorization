@@ -3,7 +3,10 @@ import * as PropTypes from 'prop-types';
 import { INodeDetailsOptions } from './CommunityDetailsOptions';
 import { OptionsModal } from '../OptionsModal';
 import { INode } from '../../models/node';
-import { removeEmptyPropertiesFromDetailsResponse } from '../utils/detailsHelpers';
+import {
+  removeEmptyPropertiesFromDetails,
+  removeEmptyPropertiesFromManyDetails
+} from '../utils/detailsHelpers';
 import { download } from '../../_shared/utils/download';
 
 export enum DetailsMode {
@@ -110,7 +113,11 @@ export class DetailsLink extends React.PureComponent<DetailsLinkProps, IDetailsL
     fetchDetails(options).then((action: Action) => {
       const filePrefix = mode === DetailsMode.Page ? 'page' : 'community';
       const filename = `${filePrefix}_details_for_node-${selectedNode.id}.txt`;
-      const resultWithoutNulls = removeEmptyPropertiesFromDetailsResponse(action.payload.details);
+      const responseDetails = action.payload.details.toJS();
+      const resultWithoutNulls = mode === DetailsMode.Community
+        ? removeEmptyPropertiesFromManyDetails(responseDetails)
+        : removeEmptyPropertiesFromDetails(responseDetails);
+
       download(filename, JSON.stringify(resultWithoutNulls));
     });
   };

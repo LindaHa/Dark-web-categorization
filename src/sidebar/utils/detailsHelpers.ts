@@ -9,8 +9,8 @@ export const removeEmptyPropertiesFromDetails = (details: INodeDetailsOptions): 
   return details;
 };
 
-export const removeEmptyPropertiesFromDetailsResponse = (details: any): any => {
-  const resultWithoutNulls = details.toJS()
+export const removeEmptyPropertiesFromManyDetails = (details: any): any => {
+  const resultWithoutNulls = details
     .map((detail: INodeDetailsOptions) => removeEmptyPropertiesFromDetails(detail));
 
   return resultWithoutNulls;
