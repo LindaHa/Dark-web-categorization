@@ -11,6 +11,8 @@ import { IGraphNode } from 'react-d3-graph';
 import { INode } from '../../models/node';
 import { PieChartData } from 'react-minimal-pie-chart';
 import { PieChartSVG } from '../components/PiechartSVG';
+import { PageVisualSVG } from '../components/PageVisual';
+import { SINGLE_PAGE_SIZE } from '../constants/graphConstants';
 
 
 export const graphConfig = {
@@ -59,13 +61,13 @@ export const getLabelConfigForNodes = (nodes: Immutable.Map<string, INode>) => (
 
 export const getDimensionsOfNode = (numberOfNodes: number): number => {
   if (numberOfNodes === 1) {
-    return 10;
+    return SINGLE_PAGE_SIZE;
   }
   const percent = Math.floor(numberOfNodes / 100);
   if (percent === 0) {
-    return 20;
+    return SINGLE_PAGE_SIZE;
   } else if (percent < 10) {
-    return 20 + percent;
+    return SINGLE_PAGE_SIZE + percent;
   } else if (percent < 85) {
     return Math.floor(percent / 4) + 30;
   } else if (percent < 500) {
@@ -81,10 +83,15 @@ export const getSVGConfigForNodes = (nodes: Immutable.Map<string, INode>) => (no
     return (<div/>);
   }
   const dimension = getDimensionsOfNode(clientNode.membersCount) + 'px';
+  const nodeCategory = clientNode.categories.keySeq().first('Other');
 
   return (
     <div style={{ position: 'relative', width: dimension, height: dimension }}>
-      <PieChartSVG node={clientNode}/>;
+      {
+        clientNode.membersCount === 1
+          ? <PageVisualSVG category={nodeCategory}/>
+          : <PieChartSVG node={clientNode}/>
+      }
     </div>
   );
 };
