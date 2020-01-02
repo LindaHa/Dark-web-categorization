@@ -1,20 +1,15 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { INode } from '../../models/node';
-import {
-  DetailsLink,
-  DetailsMode,
-} from './DetailsLink';
+import { DetailsMode } from './DetailsLink';
 import { PageDetailsOptions } from './PageDetailsOptions';
-import { INodeDetailsOptions } from './CommunityDetailsOptions';
+import { DetailsLink } from '../containers/DetailsLink';
 
 export interface IPageInfoDataProps {
   readonly selectedNode: INode;
-  readonly isFetchingDetails: boolean;
 }
 
 export interface IPageInfoCallbackProps {
-  readonly fetchDetails: (options: INodeDetailsOptions) => Promise<Action>;
 }
 
 type PageInfoProps = IPageInfoCallbackProps & IPageInfoDataProps;
@@ -23,13 +18,10 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
   static displayName = 'PageInfo';
   static propTypes: PropTypesShape<PageInfoProps> = {
     selectedNode: PropTypes.object.isRequired,
-    isFetchingDetails: PropTypes.bool.isRequired,
-
-    fetchDetails: PropTypes.func.isRequired,
   };
 
   render() {
-    const { selectedNode, isFetchingDetails, fetchDetails } = this.props;
+    const { selectedNode } = this.props;
     const individualPage = selectedNode.firstMembers.first(null);
     if (!individualPage) {
       return (
@@ -82,12 +74,7 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
                 {link}
               </div>
             )}
-            <DetailsLink
-              isFetchingDetails={isFetchingDetails}
-              mode={DetailsMode.Page}
-              fetchDetails={fetchDetails}
-              selectedNode={selectedNode}
-            />
+            <DetailsLink mode={DetailsMode.Page}/>
             <PageDetailsOptions/>
           </div>
         }

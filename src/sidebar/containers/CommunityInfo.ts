@@ -10,12 +10,11 @@ import { fetchCommunityDetails } from '../../content/actionCreators/requests/fet
 import { INodeDetailsOptions } from '../components/CommunityDetailsOptions';
 
 const mapStateToProps = (state: IState): ICommunityInfoDataProps => {
-  const { nodes, selectedNodeId, details: { isFetchingDetails } } = state;
+  const { nodes, selectedNodeId } = state;
   const selectedNode = nodes.get(selectedNodeId)!;
 
   return {
     selectedNode,
-    isFetchingDetails,
   };
 };
 

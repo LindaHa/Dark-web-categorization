@@ -21,13 +21,13 @@ export enum DetailsOptions {
   Links = 'Links',
 }
 
-interface IDetailsLinkDataProps {
+export interface IDetailsLinkDataProps {
   readonly isFetchingDetails: boolean;
   readonly mode: DetailsMode;
   readonly selectedNode: INode;
 }
 
-interface IDetailsLinkCallbackProps {
+export interface IDetailsLinkCallbackProps {
   readonly fetchDetails: (options: INodeDetailsOptions) => Promise<Action>;
 }
 
@@ -113,7 +113,7 @@ export class DetailsLink extends React.PureComponent<DetailsLinkProps, IDetailsL
     fetchDetails(options).then((action: Action) => {
       const filePrefix = mode === DetailsMode.Page ? 'page' : 'community';
       const filename = `${filePrefix}_details_for_node-${selectedNode.id}.txt`;
-      const responseDetails = action.payload.details.toJS();
+      const responseDetails = action.payload.details && action.payload.details.toJS();
       const resultWithoutNulls = mode === DetailsMode.Community
         ? removeEmptyPropertiesFromManyDetails(responseDetails)
         : removeEmptyPropertiesFromDetails(responseDetails);

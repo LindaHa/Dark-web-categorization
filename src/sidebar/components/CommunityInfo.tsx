@@ -2,19 +2,14 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { INode } from '../../models/node';
 import { getUrlsFromMembers } from '../../content/utils/getComponentInfo';
-import {
-  DetailsLink,
-  DetailsMode,
-} from './DetailsLink';
-import { INodeDetailsOptions } from './CommunityDetailsOptions';
+import { DetailsMode } from './DetailsLink';
+import { DetailsLink } from '../containers/DetailsLink';
 
 export interface ICommunityInfoDataProps {
   readonly selectedNode: INode;
-  readonly isFetchingDetails: boolean;
 }
 
 export interface ICommunityInfoCallbackProps {
-  readonly fetchDetails: (options: INodeDetailsOptions) => Promise<Action>;
 }
 
 type CommunityInfoProps = ICommunityInfoCallbackProps & ICommunityInfoDataProps;
@@ -23,13 +18,10 @@ export class CommunityInfo extends React.PureComponent<CommunityInfoProps> {
   static displayName = 'CommunityInfo';
   static propTypes: PropTypesShape<CommunityInfoProps> = {
     selectedNode: PropTypes.object.isRequired,
-    isFetchingDetails: PropTypes.bool.isRequired,
-
-    fetchDetails: PropTypes.func.isRequired,
   };
 
   render() {
-    const { selectedNode, isFetchingDetails, fetchDetails } = this.props;
+    const { selectedNode } = this.props;
     const members = selectedNode && selectedNode.firstMembers;
     const categories = selectedNode && selectedNode.categories;
     const urls = getUrlsFromMembers(members);
@@ -56,12 +48,7 @@ export class CommunityInfo extends React.PureComponent<CommunityInfoProps> {
                 {url}
               </div>
             )}
-            <DetailsLink
-              isFetchingDetails={isFetchingDetails}
-              mode={DetailsMode.Community}
-              selectedNode={selectedNode}
-              fetchDetails={fetchDetails}
-            />
+            <DetailsLink mode={DetailsMode.Community}/>
           </div>
 
         </div>

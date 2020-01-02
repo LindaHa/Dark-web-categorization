@@ -10,12 +10,11 @@ import { fetchPageDetails } from '../../content/actionCreators/requests/fetchDet
 import { INodeDetailsOptions } from '../components/CommunityDetailsOptions';
 
 const mapStateToProps = (state: IState): IPageInfoDataProps => {
-  const { nodes, selectedNodeId, details: { isFetchingDetails } } = state;
+  const { nodes, selectedNodeId } = state;
   const selectedNode = nodes.get(selectedNodeId)!;
 
   return {
     selectedNode,
-    isFetchingDetails,
   };
 };
 
