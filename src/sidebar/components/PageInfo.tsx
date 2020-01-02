@@ -66,14 +66,16 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
           areLinksNotEmpty &&
           <div className="sidebar__info-group">
             <div className="sidebar__info-group-label-item">Linked pages</div>
-            {pageLinks.map((link: string) =>
-              <div
-                key={link}
-                className="sidebar__info-group-value-item"
-              >
-                {link}
-              </div>
-            )}
+            <div className="sidebar__info-group-value-items">
+              {pageLinks.map((link: string) =>
+                <div
+                  key={link}
+                  className="sidebar__info-group-value-item"
+                >
+                  {link}
+                </div>
+              )}
+            </div>
             <DetailsLink mode={DetailsMode.Page}/>
             <PageDetailsOptions/>
           </div>
