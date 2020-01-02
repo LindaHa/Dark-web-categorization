@@ -5,7 +5,7 @@ import { INodeDetailsOptions } from '../../../sidebar/components/CommunityDetail
 
 export interface IDetailsPayload {
   readonly options: INodeDetailsOptions;
-  readonly nodeUrl: Url;
+  readonly id: Url;
 }
 
 export interface IFetchDetailsFactoryDependencies {
@@ -24,11 +24,11 @@ export const fetchDetailsFactory = (dependencies: IFetchDetailsFactoryDependenci
     dispatch(dependencies.fetchBegin(selectedNodeId));
     const errorId = dependencies.idGenerator();
     const route = dependencies.createRoute(groupBy);
-    const nodeUrl = selectedNodeId.split(' ').slice(-1).toString();
+    const id = selectedNodeId.split(' ').slice(-1).toString();
 
     const payload = {
       options,
-      nodeUrl,
+      id,
     };
 
     return dependencies.fetch(payload, route)
