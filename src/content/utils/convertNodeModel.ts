@@ -47,7 +47,7 @@ export const convertCommunityServerToClientModel = (serverModel: ICommunityServe
       clientMembers = clientMembers.push(clientMember);
     });
   }
-  const clientLinks = Immutable.Set<Url>(links);
+  const clientLinks = Immutable.Set<Url>(links.map((link: ILinkServerModel) => link.link));
 
   return (new Node({
     categories: clientCategories,

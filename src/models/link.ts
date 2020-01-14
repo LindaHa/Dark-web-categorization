@@ -32,14 +32,17 @@ export class Link extends Immutable.Record(recordData) implements ILink {
 export interface ILinkServerModel {
   readonly link: Uuid;
   readonly name: Uuid;
+  readonly occurrences: number;
 }
 
 const linkServerModelData: ILinkServerModel = {
   link: '',
   name: '',
+  occurrences: 0,
 };
 
 export class LinkServerModel extends Immutable.Record(linkServerModelData) implements ILinkServerModel {
   readonly link: Uuid;
   readonly name: Uuid;
+  readonly occurrences: number;
 }

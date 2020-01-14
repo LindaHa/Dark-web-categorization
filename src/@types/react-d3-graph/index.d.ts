@@ -13,11 +13,22 @@ declare module 'react-d3-graph' {
     onMouseOutNode?: Function;
     onMouseOverLink?: Function;
     onMouseOutLink?: Function;
-  }, any> {}
+  }, any> {
+  }
 
   export interface IGraphNode {
     readonly id: Uuid;
     readonly x?: number;
     readonly y?: number;
+  }
+
+  interface IBaseLink {
+    readonly source: Uuid;
+    readonly target: Uuid;
+  }
+
+  export interface IGraphLink extends IBaseLink {
+    readonly renderLabel?: boolean;
+    readonly labelProperty?: string | ((link: IBaseLink) => string);
   }
 }

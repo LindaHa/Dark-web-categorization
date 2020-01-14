@@ -1,5 +1,6 @@
 import * as Immutable from 'immutable';
 import { IPageServerModel } from './page';
+import { ILinkServerModel } from './link';
 
 export interface INodeData {
   readonly categories: Immutable.Map<Uuid, number>;
@@ -44,7 +45,7 @@ export interface IServerCategory {
 export interface ICommunityServerModel {
   readonly categories: IServerCategory[];
   readonly id: string;
-  readonly links: Url[];
+  readonly links: ILinkServerModel[];
   readonly first_members: IPageServerModel[];
   readonly members_count: number;
 }
@@ -60,7 +61,7 @@ const communityServerModelData: ICommunityServerModel = {
 export class CommunityServerModel extends Immutable.Record(communityServerModelData) implements ICommunityServerModel {
   readonly categories: IServerCategory[];
   readonly id: string;
-  readonly links: Url[];
+  readonly links: ILinkServerModel[];
   readonly first_members: IPageServerModel[];
   readonly members_count: number;
 }
