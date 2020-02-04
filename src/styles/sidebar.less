@@ -20,6 +20,10 @@
 .sidebar__info-group-value-items {
   max-height: 350px;
   overflow-y: auto;
+
+  &--small {
+    max-height: 210px;
+  }
 }
 
 .sidebar__info-group-value-item {
@@ -28,6 +32,18 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.sidebar__info-group-value-item {
+  font-size: 13px;
+  padding-left: @grid-unit * 2;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  &--link {
+    padding-left: 0;
+  }
 }
 
 .sidebar__info-group-detail-item {

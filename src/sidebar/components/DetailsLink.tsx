@@ -136,24 +136,20 @@ export class DetailsLink extends React.PureComponent<DetailsLinkProps, IDetailsL
     const modeDependentText = (mode === DetailsMode.Page ? 'Get more details' : 'Get all members');
     return (
       <div>
-        {
-          <div>
-            <div
-              className={getClassNames(isFetchingDetails)}
-              onClick={this._showModal}
-            >
-              {modeDependentText}
-            </div>
-            <OptionsModal
-              currentOptions={details}
-              isModalShown={isModalShown}
-              isFetchingDetails={isFetchingDetails}
-              download={() => this._handleClickDownload(details)}
-              handleToggle={this._handleToggle}
-              onHide={this._hideModal}
-            />
-          </div>
-        }
+        <div
+          className={getClassNames(isFetchingDetails)}
+          onClick={this._showModal}
+        >
+          {modeDependentText}
+        </div>
+        <OptionsModal
+          currentOptions={details}
+          isModalShown={isModalShown}
+          isFetchingDetails={isFetchingDetails}
+          download={() => this._handleClickDownload(details)}
+          handleToggle={this._handleToggle}
+          onHide={this._hideModal}
+        />
       </div>
     );
   }

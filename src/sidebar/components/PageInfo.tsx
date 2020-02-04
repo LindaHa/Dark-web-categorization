@@ -50,13 +50,15 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
         {
           areCategoriesNotEmpty &&
           <div className="sidebar__info-group">
-            <div className="sidebar__info-group-label-item">Categories</div>
-            {categories.map((relevance: number, category: string) =>
+            <div className="sidebar__info-group-label-item">
+              Category
+            </div>
+            {categories.map((_relevance: number, category: string) =>
               <div
                 key={category}
                 className="sidebar__info-group-value-item"
               >
-                {category} : {relevance} pages
+                {category}
               </div>
             ).toSet()}
           </div>
@@ -76,8 +78,10 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
                 </div>
               )}
             </div>
-            <DetailsLink mode={DetailsMode.Page}/>
             <PageDetailsOptions/>
+            <div className="sidebar__info-group-value-item sidebar__info-group-value-item--link">
+              <DetailsLink mode={DetailsMode.Page}/>
+            </div>
           </div>
         }
       </div>
