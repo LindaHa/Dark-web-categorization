@@ -21,7 +21,7 @@ export class Legend extends React.PureComponent<LegendProps, ILegendDataState> {
     super(props);
 
     this.state = {
-      show: true,
+      show: false,
     };
   }
 
@@ -49,7 +49,10 @@ export class Legend extends React.PureComponent<LegendProps, ILegendDataState> {
               <div className="category-color-legend__overlay--relative">
                 {
                   Object.keys(CategoryColours).map((key: string) => (
-                    <div className="category-color-legend__item">
+                    <div
+                      key={key}
+                      className="category-color-legend__item"
+                    >
                       {key}
                       <div
                         className="category-color-legend__tile"
