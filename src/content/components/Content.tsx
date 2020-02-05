@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ContentWithGraph } from '../containers/ContentWithGraph';
 import * as PropTypes from 'prop-types';
 import { ContentPlaceholder } from '../../_shared/components/ContentPlaceholder';
+import { Legend } from './Legend';
 
 export interface IContentCallbackProps {
   getNodes: () => Promise<Action>;
@@ -61,6 +62,7 @@ export class Content extends React.PureComponent<ContentProps, IContentDataState
         className="canvas__content"
         ref={this._getWidth}
       >
+        <Legend/>
         {areNodesReady ? <ContentWithGraph size={this.state.size}/> : <ContentPlaceholder isError={isError}/>}
       </section>
     );
