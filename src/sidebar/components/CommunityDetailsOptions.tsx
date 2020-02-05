@@ -4,10 +4,10 @@ import { Form } from 'react-bootstrap';
 import { DetailsOptions } from './DetailsLink';
 
 export interface INodeDetailsOptions {
-  readonly title: boolean;
-  readonly category: boolean;
-  readonly content: boolean;
-  readonly links: boolean;
+  title: boolean;
+  category: boolean;
+  content: boolean;
+  links: boolean;
   [key: string]: any;
 }
 
@@ -54,6 +54,11 @@ export const CommunityDetailsOptions: React.SFC<ICommunityDetailsOptionsProps> =
 
 CommunityDetailsOptions.displayName = 'CommunityDetailsOptions';
 CommunityDetailsOptions.propTypes = {
-  currentOptions: PropTypes.object.isRequired,
+  currentOptions: PropTypes.shape({
+    title: PropTypes.bool.isRequired,
+    category: PropTypes.bool.isRequired,
+    content: PropTypes.bool.isRequired,
+    links: PropTypes.bool.isRequired,
+  }).isRequired,
   handleToggle: PropTypes.func.isRequired,
 };

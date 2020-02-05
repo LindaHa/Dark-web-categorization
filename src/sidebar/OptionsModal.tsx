@@ -55,7 +55,12 @@ export const OptionsModal: React.SFC<IOptionsModalProps> = (props: IOptionsModal
 
 OptionsModal.displayName = 'OptionsModal';
 OptionsModal.propTypes = {
-  currentOptions: PropTypes.object.isRequired,
+  currentOptions: PropTypes.shape({
+    title: PropTypes.bool.isRequired,
+    category: PropTypes.bool.isRequired,
+    content: PropTypes.bool.isRequired,
+    links: PropTypes.bool.isRequired,
+  }).isRequired,
   isFetchingDetails: PropTypes.bool.isRequired,
   isModalShown: PropTypes.bool.isRequired,
   download: PropTypes.func.isRequired,
