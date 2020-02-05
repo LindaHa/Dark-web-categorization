@@ -1,7 +1,9 @@
 import * as React from 'react';
 
 export const Spinner: React.SFC = () => (
-  <div className="spinner"/>
+  <div className="spinner-container">
+    <div className="spinner"/>
+  </div>
 );
 Spinner.displayName = 'Spinner';
 
