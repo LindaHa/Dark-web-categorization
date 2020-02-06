@@ -37,4 +37,5 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps: IDetailsLinkOwnProps):
   };
 };
 
+// @ts-ignore
 export const DetailsLink = connect(mapStateToProps, mapDispatchToProps)(DetailsLinkComponent);

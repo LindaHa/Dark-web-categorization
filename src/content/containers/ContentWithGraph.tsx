@@ -32,4 +32,5 @@ const mapDispatchToProps = (dispatch: Dispatch): IGraphCallbackProps => ({
   zoomNode: (nodeId: Uuid) => dispatch(fetchNodes(nodeId)),
 });
 
+// @ts-ignore
 export const ContentWithGraph = connect(mapStateToProps, mapDispatchToProps)(ContentWithGraphComponent);

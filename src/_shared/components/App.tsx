@@ -13,6 +13,8 @@ export class App extends React.PureComponent {
           <Header/>
           <div className="app__canvas">
             <div className="canvas">
+              {/*
+                // @ts-ignore */}
               <Content/>
               <Sidebar/>
             </div>
