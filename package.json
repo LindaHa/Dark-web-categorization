@@ -11,7 +11,7 @@
   "dependencies": {
     "d3": "^5.5.0",
     "file-saver": "^2.0.2",
-    "react-d3-graph": "^2.2.0",
+    "react-d3-graph": "^2.3.0",
     "react-minimal-pie-chart": "^5.0.2",
     "seedrandom": "^3.0.5"
   },
