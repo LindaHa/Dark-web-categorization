@@ -80,10 +80,11 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
   render() {
     const { nodes, links, size: { height, width } } = this.props;
     const adjustedNodes = nodes.keySeq().toArray().map((nodeUrl: Uuid) => ({ id: nodeUrl }));
+    const adjustedLinks = links.map((link: ILink) => link.toObject()).toArray();
 
     const data = {
       nodes: this._decorateGraphNodesWithInitialPositioningAndSize(adjustedNodes),
-      links: links.map((link: ILink) => link.toObject()).toArray(),
+      links: adjustedLinks,
     };
 
     const myConfig = JSON.parse(JSON.stringify(graphConfig));
@@ -91,6 +92,9 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
     myConfig.node.viewGenerator = getSVGConfigForNodes(nodes);
     myConfig.height = height;
     myConfig.width = width;
+
+    console.log(data);
+    console.log(myConfig);
 
     return (
       <div>

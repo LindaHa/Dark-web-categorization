@@ -22,18 +22,24 @@ export const graphConfig = {
   staticGraph: false,
 
   node: {
+    fontColor: primaryFontColor,
+    fontSize: 11,
     highlightStrokeColor: primaryNodeColor,
     highlightColor: highlightNodeColor,
     highlightDegree: 0,
-
-    fontColor: primaryFontColor,
     highlightFontSize: 16,
-    fontSize: 11,
   },
 
   link: {
     color: primaryLinkColor,
     highlightColor: highlightLinkColor,
+    mouseCursor: 'default',
+    renderLabel: true,
+    // labelProperty: (a: any) => {
+    //   console.log('called', a);
+    //   return 'label';
+    // },
+    labelProperty: 'label',
     strokeWidth: 1,
   },
 

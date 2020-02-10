@@ -28,7 +28,10 @@ declare module 'react-d3-graph' {
   }
 
   export interface IGraphLink extends IBaseLink {
-    readonly renderLabel?: boolean;
+    readonly fontColor?: string;
+    readonly fontSize?: number;
     readonly labelProperty?: string | ((link: IBaseLink) => string);
+    readonly mouseCursor ?: string;
+    readonly renderLabel?: boolean;
   }
 }
