@@ -21,6 +21,7 @@ type GroupBySelectorProps = IGroupBySelectorCallbackProps & IGroupBySelectorData
 export const GroupBySelector: React.SFC<GroupBySelectorProps> = (props: GroupBySelectorProps) => (
   <InputGroup>
     <FormControl
+      className="sidebar__default-cursor"
       placeholder={props.groupBy}
       aria-label="Group by"
       aria-describedby="group-by-dropdown"

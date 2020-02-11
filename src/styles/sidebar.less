@@ -11,6 +11,7 @@
 .sidebar__info-group {
   color: @font-color-blue-inverted;
   padding-bottom: @grid-unit * 2;
+  cursor: default;
 }
 
 .sidebar__info-group-label-item {
@@ -20,6 +21,7 @@
 .sidebar__info-group-value-items {
   max-height: 350px;
   overflow-y: auto;
+  cursor: default;
 
   &--small {
     max-height: 210px;
@@ -81,4 +83,8 @@
 
 .sidebar__info-group-details-container {
   position: absolute;
+}
+
+.sidebar__default-cursor {
+  cursor: default;
 }

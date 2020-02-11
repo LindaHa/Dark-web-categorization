@@ -19,6 +19,7 @@ type ZoomOutOptionsProps = IZoomOutOptionsCallbackProps & IZoomOutOptionsDataPro
 export const ZoomOutOptions: React.SFC<ZoomOutOptionsProps> = (props: ZoomOutOptionsProps) => (
   <InputGroup className="mb-3">
     <FormControl
+      className="sidebar__default-cursor"
       placeholder={'Level no. ' + props.lvlNumber}
       aria-label="Level number"
       aria-describedby="zoom-out-options"
