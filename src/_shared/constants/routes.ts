@@ -1,17 +1,25 @@
 import { GroupBy } from '../../sidebar/components/Sidebar';
 
 export const RootRoute = 'http://127.0.0.1:8000/api/';
-export const ByLinkRoute = RootRoute + 'pages/bylink/?format=json';
-export const ByCategoryRoute = RootRoute + 'pages/bycategory/?format=json';
+export const GroupByRoute = (mode: GroupByModeRoute) => RootRoute + `pages/${mode}/?format=json`;
 
-export const NodesByLinkRoute = (nodeId?: Uuid) => {
-  const nodeIdPath = nodeId ? '&id=' + nodeId : '';
-  return ByLinkRoute + nodeIdPath;
-};
+export const FilterNodesRoute = (mode: GroupBy, searchPhrase: Url | string) => (
+  RouteAccordingToGroupByMode(mode) + `&url_filter=${searchPhrase}`
+);
 
-export const NodesByCategoryRoute = (nodeId?: Uuid) => {
+export const RouteAccordingToGroupByMode = (mode: GroupBy, nodeId?: Uuid): string => {
   const nodeIdPath = nodeId ? '&id=' + nodeId : '';
-  return ByCategoryRoute + nodeIdPath;
+  switch (mode) {
+    case GroupBy.Category: {
+      return GroupByRoute(GroupByModeRoute.ByCategory) + nodeIdPath;
+    }
+    case GroupBy.Link: {
+      return GroupByRoute(GroupByModeRoute.ByLink) + nodeIdPath;
+    }
+    default: {
+      return '';
+    }
+  }
 };
 
 const DetailsRoute = RootRoute + 'details/';
@@ -23,3 +31,8 @@ export const PageDetailsRoute = (groupBy: GroupBy): string => {
   return PageDetailsRouteBase + DetailsParametersRoute(groupBy);
 };
 export const CommunityDetailsRoute = (groupBy: GroupBy): string => CommunityDetailsRouteBase + DetailsParametersRoute(groupBy);
+
+export enum GroupByModeRoute {
+  ByCategory = 'bycategory',
+  ByLink = 'bylink',
+}

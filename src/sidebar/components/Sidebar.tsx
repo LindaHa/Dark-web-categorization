@@ -42,9 +42,9 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
 
   _updateGroupBy = (value: GroupBy) => () => this.props.onGroupUpdate(value);
 
-  _filterNodes = (searchPhrase: string) => {
-    this.props.onFilterSearch(searchPhrase);
-  };
+  _filterNodes = (searchPhrase: string) => (
+    this.props.onFilterSearch(searchPhrase)
+  );
 
   _renderNodeInfo = () => {
     const { selectedNode } = this.props;

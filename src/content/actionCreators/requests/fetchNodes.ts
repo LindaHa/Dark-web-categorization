@@ -8,11 +8,10 @@ import {
   succeedToFetchNodes,
 } from '../nodesActionCreators';
 import { checkStatus } from '../../../_shared/utils/checkStatus';
-import { GroupBy } from '../../../sidebar/components/Sidebar';
 import { IState } from '../../../_shared/models/IState';
 import {
-  NodesByCategoryRoute,
-  NodesByLinkRoute
+  FilterNodesRoute,
+  RouteAccordingToGroupByMode
 } from '../../../_shared/constants/routes';
 
 const fetchNodesFactoryDependencies = ({
@@ -29,7 +28,7 @@ const fetchNodesFactoryDependencies = ({
   idGenerator: createUuid,
 });
 
-interface IFetchNodesFactoryDependencies {
+export interface IFetchNodesFactoryDependencies {
   readonly nodesSuccess: (json: object) => Action;
   readonly error: (id: string, error: Error) => Action;
   readonly fetch: (route: string) => Promise<Response>;
@@ -37,20 +36,14 @@ interface IFetchNodesFactoryDependencies {
   readonly idGenerator: () => string;
 }
 
-const getRouteAccordingToGroupBy = (groupBy: string) => {
-  if (groupBy === GroupBy.Category) {
-    return (nodeId?: string) => NodesByCategoryRoute(nodeId);
-  } else  {
-    return (nodeId?: string) => NodesByLinkRoute(nodeId);
-  }
-};
-
 export const fetchNodesFactory = (dependencies: IFetchNodesFactoryDependencies) =>
-  (nodeId?: Uuid): any => (dispatch: Dispatch, getState: () => IState): Promise<Action> => {
-    dispatch(dependencies.fetchBegin(nodeId));
+  (relevantPhrase?: Uuid, filter?: boolean): any => (dispatch: Dispatch, getState: () => IState): Promise<Action> => {
+    dispatch(dependencies.fetchBegin(relevantPhrase));
     const errorId = dependencies.idGenerator();
     const groupBy = getState().groupBy;
-    const route = getRouteAccordingToGroupBy(groupBy)(nodeId);
+    const route = filter && relevantPhrase
+      ? FilterNodesRoute(groupBy, relevantPhrase)
+      : RouteAccordingToGroupByMode(groupBy, relevantPhrase);
 
     return dependencies.fetch(route)
       .then(response => response.json())

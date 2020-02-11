@@ -29,14 +29,14 @@ export class SearchBar extends React.PureComponent<ISearchBarProps, ISearchBarSt
   }
 
   _handleChange = (event: any) => {
-    const {value} = event.link;
+    const { value } = event.target;
     if (value) {
-      this.setState(() => ({searchPhrase: value}));
+      this.setState(() => ({ searchPhrase: value }));
     }
   };
 
   _onSearch = () => {
-    const {props: {onSearch}, state: {searchPhrase}} = this;
+    const { props: { onSearch }, state: { searchPhrase } } = this;
     if (searchPhrase) {
       onSearch(searchPhrase);
     }

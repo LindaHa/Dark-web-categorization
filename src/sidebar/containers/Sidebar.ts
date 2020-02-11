@@ -7,9 +7,9 @@ import {
   Sidebar as SidebarComponent
 } from '../components/Sidebar';
 import { IState } from '../../_shared/models/IState';
-import { requestFilteredNodes } from '../../content/actionCreators/nodesActionCreators';
 import { fetchNodes } from '../../content/actionCreators/requests/fetchNodes';
 import { fetchNodesGroupedBy } from '../../_shared/actionCreators/requests/fetchNodesGroupedBy';
+import { filterNodes } from '../../content/actionCreators/requests/fetchFilteredNodes';
 
 const mapStateToProps = (state: IState): ISidebarDataProps => {
   const { currentLevel, groupBy, selectedNodeId, nodes } = state;
@@ -24,7 +24,7 @@ const mapStateToProps = (state: IState): ISidebarDataProps => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): ISidebarCallbackProps => ({
-  onFilterSearch: (searchPhrase: string) => dispatch(requestFilteredNodes(searchPhrase)),
+  onFilterSearch: (searchPhrase: string) => dispatch(filterNodes(searchPhrase)),
   onGroupUpdate: (value: GroupBy) => dispatch(fetchNodesGroupedBy(value)),
   onGroupZoomOut: (groupId: Uuid) => dispatch(fetchNodes(groupId)),
 });

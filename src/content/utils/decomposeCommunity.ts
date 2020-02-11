@@ -3,7 +3,10 @@ import {
   INode,
   Node,
 } from '../../models/node';
-import { MAX_NODES_FOR_DISPLAY } from '../constants/graphConstants';
+import {
+  MAX_COMMUNITIES_FOR_DISPLAY,
+  MAX_NODES_FOR_DISPLAY
+} from '../constants/graphConstants';
 
 const getFirstMEmbersKeys = (nodes: Immutable.Map<Url, INode>): Immutable.Set<Url> => {
   let firstMembersKeys: Immutable.Set<Url> = Immutable.Set<Url>();
@@ -41,7 +44,25 @@ const getDecomposedLinks = (
   return decomposedLinks;
 };
 
-export const decomposeCommunity = (nodes: Immutable.Map<Url, INode>): Immutable.Map<Url, INode> => {
+export const decomposeCommunityIfPossible = (nodes: Immutable.Map<Uuid, INode>) => {
+  if (nodes.size > MAX_COMMUNITIES_FOR_DISPLAY) {
+    return decomposeIfOnlySimplePages(nodes);
+  }
+
+  let memberNodes = Immutable.Map<Uuid, INode>();
+
+  const hasNotMoreThanFirstMembers: boolean = hasMaxNumberOfMembers(nodes, MAX_NODES_FOR_DISPLAY);
+  const areSeparatePages: boolean = hasMaxNumberOfMembers(nodes, 1);
+
+  if (hasNotMoreThanFirstMembers || areSeparatePages) {
+    memberNodes = decomposeCommunity(nodes);
+  }
+
+  return memberNodes.isEmpty() ? nodes : memberNodes;
+};
+
+
+const decomposeCommunity = (nodes: Immutable.Map<Url, INode>): Immutable.Map<Url, INode> => {
   let memberNodes = Immutable.Map<Uuid, INode>();
   const firstMembersKeys = getFirstMEmbersKeys(nodes);
   const commonId = getCommonId(nodes);
@@ -71,13 +92,13 @@ export const decomposeCommunity = (nodes: Immutable.Map<Url, INode>): Immutable.
 };
 
 
-export const hasMaxNumberOfMembers = (nodes: Immutable.Map<Url, INode>, relevantNumber: number): boolean => (
+const hasMaxNumberOfMembers = (nodes: Immutable.Map<Url, INode>, relevantNumber: number): boolean => (
   nodes
     .map((node: INode) => node.membersCount <= relevantNumber)
     .every((item: boolean) => item)
 );
 
-export const decomposeIfOnlySimplePages = (nodes: Immutable.Map<Url, INode>): Immutable.Map<Url, INode> => {
+const decomposeIfOnlySimplePages = (nodes: Immutable.Map<Url, INode>): Immutable.Map<Url, INode> => {
   if (hasMaxNumberOfMembers(nodes, 1)) {
     return decomposeCommunity(nodes);
   }
