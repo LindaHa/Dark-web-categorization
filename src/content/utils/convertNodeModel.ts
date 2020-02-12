@@ -12,14 +12,18 @@ import {
   Link
 } from '../../models/link';
 
-const convertLinksToClientModel = (pageId: Url, links: ILinkServerModel[]): Immutable.Set<ILink> => {
-  const clientLinks = links.map((link: ILinkServerModel) => new Link({
-    source: pageId,
-    target: link.link,
-    occurrences: link.occurrences,
-  }));
+const convertLinksToClientModel = (pageId: Uuid | Url, links: ILinkServerModel[]): Immutable.Map<Uuid | Url, ILink> => {
+  const clientLinks: [Url, ILink][] = links.map((link: ILinkServerModel) => {
+    const clientLink: ILink = new Link({
+      source: pageId,
+      target: link.link,
+      occurrences: link.occurrences,
+    });
 
-  return Immutable.Set<ILink>(clientLinks);
+    return [link.link, clientLink];
+  });
+
+  return Immutable.Map<Uuid | Url, ILink>(clientLinks);
 };
 
 export const convertPageServerToClientModel = (serverModel: IPageServerModel): INode => {

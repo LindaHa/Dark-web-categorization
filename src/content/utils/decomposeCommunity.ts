@@ -44,8 +44,8 @@ const getDecomposedLinks = (
   member: INode,
   commonId: Uuid,
   memberKeys: Immutable.Set<Url>
-): Immutable.Set<ILink> => {
-  const decomposedLinks: Immutable.Set<ILink> = member.links
+): Immutable.Map<Uuid | Url, ILink> => {
+  const decomposedLinks = member.links
     .filter((link: ILink) => memberKeys.contains(link.target))
     .map((link: ILink) => (new Link({
       source: link.source,
