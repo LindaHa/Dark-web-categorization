@@ -1,10 +1,10 @@
 import * as Immutable from 'immutable';
 import { IPageServerModel } from '../../models/page';
 import {
-  Node,
-  INode,
   ICommunityServerModel,
-  IServerCategory
+  INode,
+  IServerCategory,
+  Node
 } from '../../models/node';
 import { ILinkServerModel } from '../../models/link';
 
@@ -40,22 +40,38 @@ export const convertCommunityServerToClientModel = (serverModel: ICommunityServe
   categories.forEach((serverCat: IServerCategory) => (
     clientCategories = clientCategories.set(serverCat.name, serverCat.occurrence)
   ));
-  let clientMembers = Immutable.List<INode>();
-  if (first_members) {
-    first_members.forEach((member: IPageServerModel) => {
-      const clientMember = convertPageServerToClientModel(member);
-      clientMembers = clientMembers.push(clientMember);
-    });
-  }
+
+  const clientMembers = convertMembersToClientModels(first_members);
+
+  const clientId = getSimpleOrComplexId(id, first_members, members_count);
   const clientLinks = Immutable.Set<Url>(links.map((link: ILinkServerModel) => link.link));
 
   return (new Node({
     categories: clientCategories,
-    id,
+    id: clientId,
     links: clientLinks,
     firstMembers: clientMembers,
     membersCount: members_count,
   }));
+};
+
+const convertMembersToClientModels = (members: IPageServerModel[]): Immutable.List<INode> => {
+  if (members) {
+    const clientMembers = members.map((member: IPageServerModel) => (
+      convertPageServerToClientModel(member)
+    ));
+    return Immutable.List<INode>(clientMembers);
+  }
+  return Immutable.List<INode>();
+};
+
+const getSimpleOrComplexId = (id: Uuid | Url, firstMembers: IPageServerModel[], membersCount: number): string => {
+  if (membersCount === 1) {
+    const flatNode = firstMembers[0];
+    return `${id} ${flatNode!.url}`;
+  } else {
+    return id;
+  }
 };
 
 // export const convertViewToServerPageModel = (clientModel: Partial<IPage>): IPageServerModel => {

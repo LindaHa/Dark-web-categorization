@@ -18,7 +18,7 @@ export const nodesReducer = (prevState: Immutable.Map<Uuid, INode> = Immutable.M
       const clientNodes: Immutable.Map<Url, INode> = Immutable.Map<Url, INode>(
         serverNodes.map((node: ICommunityServerModel) => {
             const clientNode = convertCommunityServerToClientModel(node);
-            return [getNodeIdSimpleFetch(clientNode), clientNode];
+            return [node.id, clientNode];
           }
         )
       );
@@ -39,14 +39,5 @@ export const nodesReducer = (prevState: Immutable.Map<Uuid, INode> = Immutable.M
 
     default:
       return prevState;
-  }
-};
-
-const getNodeIdSimpleFetch = (node: INode): string => {
-  if (node.membersCount === 1) {
-    const flatNode = node.firstMembers.get(0);
-    return `${node.id} ${flatNode!.id}`;
-  } else {
-    return node.id;
   }
 };

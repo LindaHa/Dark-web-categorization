@@ -18,18 +18,22 @@ const getFirstMEmbersKeys = (nodes: Immutable.Map<Url, INode>): Immutable.Set<Ur
   return firstMembersKeys;
 };
 
+const getCommonIdFromOne = (id: Url | Uuid): Uuid | null => {
+  const parentIds = id.split('.');
+  const parentId = parentIds
+    .slice(0, parentIds.length - 1)
+    .join('.');
+
+  return parentId;
+};
+
 const getCommonId = (nodes: Immutable.Map<Url, INode>): Uuid | null => {
   const deputyMember = nodes.first(null);
   if (!deputyMember) {
     return null;
   }
 
-  const parentIds = deputyMember.id.split('.');
-  const parentId = parentIds
-    .slice(0, parentIds.length - 1)
-    .join('.');
-
-  return parentId;
+  return getCommonIdFromOne(deputyMember.id);
 };
 
 const getDecomposedLinks = (

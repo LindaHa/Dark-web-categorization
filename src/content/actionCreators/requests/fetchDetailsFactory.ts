@@ -20,15 +20,17 @@ export interface IFetchDetailsFactoryDependencies {
 
 export const fetchDetailsFactory = (dependencies: IFetchDetailsFactoryDependencies) =>
   (options: INodeDetailsOptions): any => (dispatch: Dispatch, getState: () => IState): Promise<Action> => {
-    const { selectedNodeId, groupBy } = getState();
+    const { selectedNodeId, groupBy, nodes } = getState();
     dispatch(dependencies.fetchBegin(selectedNodeId));
     const errorId = dependencies.idGenerator();
     const route = dependencies.createRoute(groupBy);
-    const id = selectedNodeId.split(' ').slice(-1).toString();
+
+    const relevantNodeId = nodes.get(selectedNodeId)?.id;
+    const id = relevantNodeId && relevantNodeId.split(' ').slice(-1).toString();
 
     const payload = {
       options,
-      id,
+      id: id || '',
     };
 
     return dependencies.fetch(payload, route)
