@@ -100,9 +100,6 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
     myConfig.height = height;
     myConfig.width = width;
 
-    console.log(data);
-    console.log(myConfig);
-
     return (
       <div>
         <Graph

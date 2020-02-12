@@ -65,13 +65,15 @@ export const getLabelConfigForNodes = (nodes: Immutable.Map<string, INode>) => (
 
 export const getLabelConfigForLinks = (nodes: Immutable.Map<string, INode>) => (link: IGraphLink): string => {
   const sourceNode = nodes.get(link.source);
-  const targetNode = nodes.get(link.target);
-  if (!sourceNode || !targetNode) {
+  if (!sourceNode) {
     return '';
   }
-  const numberOfLinks: number = sourceNode.links.size;
 
-  return `${numberOfLinks} links`;
+  const sourceNodeLinks = sourceNode.links;
+  const numberOfLinks: number = sourceNodeLinks.size;
+  const numberOfTargetLinks: number = (sourceNodeLinks.get(link.target) && sourceNodeLinks.get(link.target)!.occurrences) || 0;
+
+  return `${numberOfTargetLinks}/${numberOfLinks}`;
 };
 
 export const getDimensionsOfNode = (numberOfNodes: number): number => {

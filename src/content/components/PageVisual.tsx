@@ -36,13 +36,11 @@ export class PageVisualSVG extends React.PureComponent<IPageVisualSVGProps, IPag
   private _onMouseOut = (_event: React.MouseEvent) => {
     const { category } = this.props;
     const originalColour = CategoryColours[category];
-    console.log('out');
 
     this.setState(() => ({ colour: originalColour }));
   };
 
   private _onMouseOver = (_event: React.MouseEvent) => {
-    console.log('over');
     this.setState(() => ({ colour: graphHighlightSector }));
   };
 
