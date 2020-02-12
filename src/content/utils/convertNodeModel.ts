@@ -6,20 +6,25 @@ import {
   IServerCategory,
   Node
 } from '../../models/node';
-import { ILinkServerModel } from '../../models/link';
+import {
+  ILink,
+  ILinkServerModel,
+  Link
+} from '../../models/link';
 
-const getRawLinks = (links: ILinkServerModel[]): Immutable.Set<Url> => {
-  let clientLinks = Immutable.Set<Url>();
-  if (links) {
-    links.map((link: ILinkServerModel) => clientLinks = clientLinks.add(link.link));
-  }
+const convertLinksToClientModel = (pageId: Url, links: ILinkServerModel[]): Immutable.Set<ILink> => {
+  const clientLinks = links.map((link: ILinkServerModel) => new Link({
+    source: pageId,
+    target: link.link,
+    occurrences: link.occurrences,
+  }));
 
-  return clientLinks;
+  return Immutable.Set<ILink>(clientLinks);
 };
 
 export const convertPageServerToClientModel = (serverModel: IPageServerModel): INode => {
   const { url, categories, links } = serverModel;
-  const clientLinks = getRawLinks(links);
+  const clientLinks = convertLinksToClientModel(url, links);
   let clientCategories = Immutable.Map<string, number>();
   categories.forEach((serverCat: IServerCategory) => (
     clientCategories = clientCategories.set(serverCat.name, serverCat.occurrence)
@@ -44,7 +49,7 @@ export const convertCommunityServerToClientModel = (serverModel: ICommunityServe
   const clientMembers = convertMembersToClientModels(first_members);
 
   const clientId = getSimpleOrComplexId(id, first_members, members_count);
-  const clientLinks = Immutable.Set<Url>(links.map((link: ILinkServerModel) => link.link));
+  const clientLinks = convertLinksToClientModel(id, links);
 
   return (new Node({
     categories: clientCategories,

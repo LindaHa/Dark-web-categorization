@@ -4,6 +4,7 @@ import { INode } from '../../models/node';
 import { DetailsMode } from './DetailsLink';
 import { PageDetailsOptions } from './PageDetailsOptions';
 import { DetailsLink } from '../containers/DetailsLink';
+import { ILink } from '../../models/link';
 
 export interface IPageInfoDataProps {
   readonly selectedNode: INode;
@@ -69,12 +70,12 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
           <div className="sidebar__info-group">
             <div className="sidebar__info-group-label-item">Linked pages</div>
             <div className="sidebar__info-group-value-items">
-              {pageLinks.map((link: string) =>
+              {pageLinks.map((link: ILink) =>
                 <div
-                  key={link}
+                  key={link.target}
                   className="sidebar__info-group-value-item"
                 >
-                  {link}
+                  {link.target}
                 </div>
               )}
             </div>

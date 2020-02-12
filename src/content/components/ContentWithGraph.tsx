@@ -4,11 +4,13 @@ import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import {
   Graph,
+  IBaseLink,
   IGraphNode
 } from 'react-d3-graph';
 import { ILink } from '../../models/link';
 import {
   getDimensionsOfNode,
+  getLabelConfigForLinks,
   getLabelConfigForNodes,
   getSVGConfigForNodes,
   graphConfig
@@ -79,8 +81,12 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
 
   render() {
     const { nodes, links, size: { height, width } } = this.props;
-    const adjustedNodes = nodes.keySeq().toArray().map((nodeUrl: Uuid) => ({ id: nodeUrl }));
-    const adjustedLinks = links.map((link: ILink) => link.toObject()).toArray();
+    const adjustedNodes: IGraphNode[] = nodes.keySeq().toArray().map((nodeUrl: Uuid) => ({ id: nodeUrl }));
+    const adjustedLinks: IBaseLink[] = links.map((link: ILink) => (
+      {
+        source: link.source,
+        target: link.target,
+      })).toArray();
 
     const data = {
       nodes: this._decorateGraphNodesWithInitialPositioningAndSize(adjustedNodes),
@@ -89,6 +95,7 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
 
     const myConfig = JSON.parse(JSON.stringify(graphConfig));
     myConfig.node.labelProperty = getLabelConfigForNodes(nodes);
+    myConfig.link.labelProperty = getLabelConfigForLinks(nodes);
     myConfig.node.viewGenerator = getSVGConfigForNodes(nodes);
     myConfig.height = height;
     myConfig.width = width;

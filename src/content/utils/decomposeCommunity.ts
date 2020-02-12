@@ -7,6 +7,10 @@ import {
   MAX_COMMUNITIES_FOR_DISPLAY,
   MAX_NODES_FOR_DISPLAY
 } from '../constants/graphConstants';
+import {
+  ILink,
+  Link
+} from '../../models/link';
 
 const getFirstMEmbersKeys = (nodes: Immutable.Map<Url, INode>): Immutable.Set<Url> => {
   let firstMembersKeys: Immutable.Set<Url> = Immutable.Set<Url>();
@@ -40,10 +44,14 @@ const getDecomposedLinks = (
   member: INode,
   commonId: Uuid,
   memberKeys: Immutable.Set<Url>
-): Immutable.Set<Url> => {
-  const decomposedLinks: Immutable.Set<Url> = member.links
-    .filter((link: Url) => memberKeys.contains(link))
-    .map((link: Url) => (`${commonId} ${link}`));
+): Immutable.Set<ILink> => {
+  const decomposedLinks: Immutable.Set<ILink> = member.links
+    .filter((link: ILink) => memberKeys.contains(link.target))
+    .map((link: ILink) => (new Link({
+      source: link.source,
+      target: `${commonId} ${link.target}`,
+      occurrences: link.occurrences,
+    })));
 
   return decomposedLinks;
 };

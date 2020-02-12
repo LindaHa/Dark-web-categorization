@@ -28,10 +28,10 @@ export const getLinksForNodes = (nodes: Immutable.Map<Uuid, INode>): Immutable.S
   let links = Immutable.Set<ILink>();
   nodes.forEach((node: INode, id: Uuid) => {
     let linksOfNode = Immutable.Set<Url>();
-    node.links.forEach((link: Url) => {
-      const doesLinkExist = nodes.get(link);
+    node.links.forEach((link: ILink) => {
+      const doesLinkExist = nodes.get(link.target);
       if (doesLinkExist) {
-        linksOfNode = linksOfNode.add(link);
+        linksOfNode = linksOfNode.add(link.target);
       }
     });
 

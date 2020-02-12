@@ -7,7 +7,10 @@ import {
   primaryLinkColor,
   primaryNodeColor
 } from '../../_shared/constants/styles';
-import { IGraphNode } from 'react-d3-graph';
+import {
+  IGraphLink,
+  IGraphNode
+} from 'react-d3-graph';
 import { INode } from '../../models/node';
 import { PieChartData } from 'react-minimal-pie-chart';
 import { PieChartSVG } from '../components/PiechartSVG';
@@ -35,11 +38,6 @@ export const graphConfig = {
     highlightColor: highlightLinkColor,
     mouseCursor: 'default',
     renderLabel: true,
-    // labelProperty: (a: any) => {
-    //   console.log('called', a);
-    //   return 'label';
-    // },
-    labelProperty: 'label',
     strokeWidth: 1,
   },
 
@@ -63,6 +61,17 @@ export const getLabelConfigForNodes = (nodes: Immutable.Map<string, INode>) => (
   }
 
   return '' && numberOfMembers.toString() + ' onions';
+};
+
+export const getLabelConfigForLinks = (nodes: Immutable.Map<string, INode>) => (link: IGraphLink): string => {
+  const sourceNode = nodes.get(link.source);
+  const targetNode = nodes.get(link.target);
+  if (!sourceNode || !targetNode) {
+    return '';
+  }
+  const numberOfLinks: number = sourceNode.links.size;
+
+  return `${numberOfLinks} links`;
 };
 
 export const getDimensionsOfNode = (numberOfNodes: number): number => {

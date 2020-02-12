@@ -1,11 +1,14 @@
 import * as Immutable from 'immutable';
 import { IPageServerModel } from './page';
-import { ILinkServerModel } from './link';
+import {
+  ILink,
+  ILinkServerModel
+} from './link';
 
 export interface INodeData {
   readonly categories: Immutable.Map<Uuid, number>;
   readonly id: string;
-  readonly links: Immutable.Set<Url>;
+  readonly links: Immutable.Set<ILink>;
   readonly firstMembers: Immutable.List<INode>;
   readonly membersCount: number;
 }
@@ -16,7 +19,7 @@ export interface INode extends INodeData, IRecordFunctions<INodeData, INode> {
 const recordData: INodeData = {
   categories: Immutable.Map<Uuid, number>(),
   id: '',
-  links: Immutable.Set<Url>(),
+  links: Immutable.Set<ILink>(),
   firstMembers: Immutable.List<INode>(),
   membersCount: 0,
 };
@@ -24,7 +27,7 @@ const recordData: INodeData = {
 export class Node extends Immutable.Record(recordData) implements INode {
   readonly categories: Immutable.Map<Uuid, number>;
   readonly id: string;
-  readonly links: Immutable.Set<Url>;
+  readonly links: Immutable.Set<ILink>;
   readonly firstMembers: Immutable.List<INode>;
   readonly membersCount: number;
 
