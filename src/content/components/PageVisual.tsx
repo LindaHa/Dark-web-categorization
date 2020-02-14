@@ -4,7 +4,7 @@ import {
   CategoryColours,
   graphHighlightSector
 } from '../../_shared/constants/styles';
-import { SINGLE_PAGE_SIZE } from '../constants/graphConstants';
+import { MINIMUM_NODE_SIZE } from '../constants/graphConstants';
 
 interface IPageVisualSVGProps {
   readonly category: string;
@@ -47,7 +47,7 @@ export class PageVisualSVG extends React.PureComponent<IPageVisualSVGProps, IPag
   render() {
     return (
         <i
-          style={{ color: this.state.colour, fontSize: SINGLE_PAGE_SIZE }}
+          style={{ color: this.state.colour, fontSize: MINIMUM_NODE_SIZE }}
           className="fas fa-square"
           onMouseEnter={this._onMouseOver}
           onMouseLeave={this._onMouseOut}

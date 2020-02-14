@@ -15,7 +15,10 @@ import { INode } from '../../models/node';
 import { PieChartData } from 'react-minimal-pie-chart';
 import { PieChartSVG } from '../components/PiechartSVG';
 import { PageVisualSVG } from '../components/PageVisual';
-import { SINGLE_PAGE_SIZE } from '../constants/graphConstants';
+import {
+  MAXIMUM_NODE_SIZE,
+  MINIMUM_NODE_SIZE
+} from '../constants/graphConstants';
 
 
 export const graphConfig = {
@@ -76,22 +79,25 @@ export const getLabelConfigForLinks = (nodes: Immutable.Map<string, INode>) => (
   return `${numberOfTargetLinks}/${numberOfLinks}`;
 };
 
-export const getDimensionsOfNode = (numberOfNodes: number): number => {
-  if (numberOfNodes === 1) {
-    return SINGLE_PAGE_SIZE;
-  }
-  const percent = Math.floor(numberOfNodes / 100);
-  if (percent === 0) {
-    return SINGLE_PAGE_SIZE;
-  } else if (percent < 10) {
-    return SINGLE_PAGE_SIZE + percent;
-  } else if (percent < 85) {
-    return Math.floor(percent / 4) + 30;
-  } else if (percent < 500) {
-    return Math.floor(percent / 13) + 50;
-  } else {
-    return 85;
-  }
+export const getDimensionsOfNodes = (nodes: Immutable.Map<Uuid, INode>): Immutable.Map<Uuid, number> => {
+  const maximum = nodes.reduce((result: number, node: INode) => result = Math.max(node.membersCount, result), 0);
+  const minimum = nodes.reduce((result: number, node: INode) => result = Math.min(node.membersCount, result), maximum);
+  const sizeDispersal = MAXIMUM_NODE_SIZE - MINIMUM_NODE_SIZE;
+  const membersDispersal = maximum - minimum;
+  const slope = sizeDispersal / membersDispersal;
+  const intercept = MINIMUM_NODE_SIZE - (slope * minimum);
+
+  const dimensions = nodes.map((node: INode) => {
+    return slope * node.membersCount + intercept;
+  });
+
+  return dimensions;
+};
+
+export const getNodesFromGraphNodes = (nodes: Immutable.Map<Uuid, INode>, graphNodes: IGraphNode[]): Immutable.Map<Uuid, INode> => {
+  const relevantNodes = graphNodes.map((node: IGraphNode) => [node.id, nodes.get(node.id)]);
+
+  return Immutable.Map<Uuid, INode>(relevantNodes);
 };
 
 export const getSVGConfigForNodes = (nodes: Immutable.Map<string, INode>) => (node: IGraphNode): React.ReactElement<PieChartData> => {
@@ -99,7 +105,8 @@ export const getSVGConfigForNodes = (nodes: Immutable.Map<string, INode>) => (no
   if (!clientNode) {
     return (<div/>);
   }
-  const dimension = getDimensionsOfNode(clientNode.membersCount) + 'px';
+  const dimensions = getDimensionsOfNodes(nodes);
+  const dimension = dimensions.get(clientNode.id) + 'px';
   const nodeCategory = clientNode.categories.keySeq().first('Other');
 
   return (

@@ -9,9 +9,10 @@ import {
 } from 'react-d3-graph';
 import { ILink } from '../../models/link';
 import {
-  getDimensionsOfNode,
+  getDimensionsOfNodes,
   getLabelConfigForLinks,
   getLabelConfigForNodes,
+  getNodesFromGraphNodes,
   getSVGConfigForNodes,
   graphConfig
 } from '../utils/graphConfig';
@@ -69,12 +70,14 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
    */
   _decorateGraphNodesWithInitialPositioningAndSize = (graphNodes: IGraphNode[]) => {
     const { nodes, size: { width, height } } = this.props;
+    const dimensions = getDimensionsOfNodes(getNodesFromGraphNodes(nodes, graphNodes));
     return graphNodes.map((graphNode: IGraphNode) => {
       const node = nodes.get(graphNode.id);
       return (Object.assign({}, graphNode, {
         x: graphNode.x || Math.floor(seedRandom('x' + graphNode.id) * (width - 20) + 10),
         y: graphNode.y || Math.floor(seedRandom('y' + graphNode.id) * (height - 30) + 10),
-        size: node ? getDimensionsOfNode(node.membersCount) * 10 : 200
+        // @ts-ignore
+        size: node && dimensions.has(node.id) ? dimensions.get(node.id) * 10 : 200
       }));
     });
   };
