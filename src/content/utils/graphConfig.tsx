@@ -82,7 +82,9 @@ export const getLabelConfigForLinks = (nodes: Immutable.Map<string, INode>) => (
 export const getDimensionsOfNodes = (nodes: Immutable.Map<Uuid, INode>): Immutable.Map<Uuid, number> => {
   const maximum = nodes.reduce((result: number, node: INode) => result = Math.max(node.membersCount, result), 0);
   const minimum = nodes.reduce((result: number, node: INode) => result = Math.min(node.membersCount, result), maximum);
-  const sizeDispersal = MAXIMUM_NODE_SIZE - MINIMUM_NODE_SIZE;
+  const maxMinRelationship = maximum / minimum;
+  const maxNodeSize = maxMinRelationship > MAXIMUM_NODE_SIZE / MINIMUM_NODE_SIZE ? MAXIMUM_NODE_SIZE : maxMinRelationship * MINIMUM_NODE_SIZE;
+  const sizeDispersal = maxNodeSize - MINIMUM_NODE_SIZE;
   const membersDispersal = maximum - minimum;
   const slope = sizeDispersal / membersDispersal;
   const intercept = MINIMUM_NODE_SIZE - (slope * minimum);
@@ -95,7 +97,12 @@ export const getDimensionsOfNodes = (nodes: Immutable.Map<Uuid, INode>): Immutab
 };
 
 export const getNodesFromGraphNodes = (nodes: Immutable.Map<Uuid, INode>, graphNodes: IGraphNode[]): Immutable.Map<Uuid, INode> => {
-  const relevantNodes = graphNodes.map((node: IGraphNode) => [node.id, nodes.get(node.id)]);
+  // @ts-ignore
+  const relevantNodes: [Url, INode][]  = graphNodes.map((gNode: IGraphNode) =>  {
+    const node = nodes.get(gNode.id);
+    return node ? [gNode.id, node] : null;
+  })
+    .filter((pair: [string, INode] | null) => !!pair);
 
   return Immutable.Map<Uuid, INode>(relevantNodes);
 };
