@@ -76,7 +76,7 @@ export const getLabelConfigForLinks = (nodes: Immutable.Map<string, INode>) => (
   const numberOfLinks: number = sourceNodeLinks.size;
   const numberOfTargetLinks: number = (sourceNodeLinks.get(link.target) && sourceNodeLinks.get(link.target)!.occurrences) || 0;
 
-  return `${numberOfTargetLinks}/${numberOfLinks}`;
+  return `> ${numberOfTargetLinks}/${numberOfLinks} >`;
 };
 
 export const getDimensionsOfNodes = (nodes: Immutable.Map<Uuid, INode>): Immutable.Map<Uuid, number> => {
@@ -98,7 +98,7 @@ export const getDimensionsOfNodes = (nodes: Immutable.Map<Uuid, INode>): Immutab
 
 export const getNodesFromGraphNodes = (nodes: Immutable.Map<Uuid, INode>, graphNodes: IGraphNode[]): Immutable.Map<Uuid, INode> => {
   // @ts-ignore
-  const relevantNodes: [Url, INode][]  = graphNodes.map((gNode: IGraphNode) =>  {
+  const relevantNodes: [Url, INode][] = graphNodes.map((gNode: IGraphNode) => {
     const node = nodes.get(gNode.id);
     return node ? [gNode.id, node] : null;
   })
@@ -120,7 +120,7 @@ export const getSVGConfigForNodes = (nodes: Immutable.Map<string, INode>) => (no
     <div style={{ position: 'relative', width: dimension, height: dimension }}>
       {
         clientNode.membersCount === 1
-          ? <PageVisualSVG category={nodeCategory}/>
+          ? <PageVisualSVG category={nodeCategory || 'Other'}/>
           : <PieChartSVG node={clientNode}/>
       }
     </div>
