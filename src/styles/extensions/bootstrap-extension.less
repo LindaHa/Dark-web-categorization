@@ -1,6 +1,7 @@
 @border-radius: @border-radius-450;
 @border-color: @teal-700;
 @action-background-color: @teal-600;
+@action-background-color-disabled: @teal-300;
 @action-background-color-hover: @teal-500;
 
 .form-control {
@@ -48,6 +49,12 @@
 .dropdown-toggle:hover {
   background-color: @action-background-color-hover;
   border-color: @action-background-color-hover
+}
+
+.btn-primary:disabled {
+  background-color: @action-background-color-disabled;
+  border-color: @border-color;
+  cursor: not-allowed;
 }
 
 .input-group-append {

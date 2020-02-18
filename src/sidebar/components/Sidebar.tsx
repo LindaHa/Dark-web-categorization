@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import { SearchBar } from './SearchBar';
 import { GroupBySelector } from './GroupBySelector';
 import { CommunityInfo } from '../containers/CommunityInfo';
 import { PageInfo } from '../containers/PageInfo';
 import { ZoomOutOptions } from './ZoomOutOptions';
 import { INode } from '../../models/node';
+import { SearchBar } from '../containers/SearchBar';
 
 export interface ISidebarDataProps {
   readonly currentLevel: number;
@@ -15,7 +15,6 @@ export interface ISidebarDataProps {
 }
 
 export interface ISidebarCallbackProps {
-  readonly onFilterSearch: (searchPhrase: string) => void;
   readonly onGroupUpdate: (value: GroupBy) => void;
   readonly onGroupZoomOut: (groupId: Uuid) => void;
 }
@@ -35,16 +34,11 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
     selectedNode: PropTypes.object,
     selectedNodeId: PropTypes.string,
 
-    onFilterSearch: PropTypes.func.isRequired,
     onGroupUpdate: PropTypes.func.isRequired,
     onGroupZoomOut: PropTypes.func.isRequired,
   };
 
   _updateGroupBy = (value: GroupBy) => () => this.props.onGroupUpdate(value);
-
-  _filterNodes = (searchPhrase: string) => (
-    this.props.onFilterSearch(searchPhrase)
-  );
 
   _renderNodeInfo = () => {
     const { selectedNode } = this.props;
@@ -90,8 +84,9 @@ export class Sidebar extends React.PureComponent<SidebarProps> {
             <GroupBySelector
               groupBy={groupBy}
               onGroupByUpdate={this._updateGroupBy}
-            />
-            <SearchBar onSearch={this._filterNodes}/>
+            />{/*
+                // @ts-ignore */}
+            <SearchBar/>
             <ZoomOutOptions
               lvlNumber={currentLevel}
               onZoomOut={this._zoomOutGroup}
