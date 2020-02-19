@@ -68,16 +68,18 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
         {
           areLinksNotEmpty &&
           <div className="sidebar__info-group">
-            <div className="sidebar__info-group-label-item">Linked pages</div>
+            <div className="sidebar__info-group-label-item">
+              Linked pages
+            </div>
             <div className="sidebar__info-group-value-items">
-              {pageLinks.map((link: ILink) =>
+              {pageLinks.map((_link: ILink, linkTarget: Uuid) =>
                 <div
-                  key={link.target}
+                  key={linkTarget}
                   className="sidebar__info-group-value-item"
                 >
-                  {link.target}
+                  {linkTarget}
                 </div>
-              )}
+              ).toSet()}
             </div>
             <PageDetailsOptions/>
             <div className="sidebar__info-group-value-item sidebar__info-group-value-item--link">
