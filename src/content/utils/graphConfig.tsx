@@ -19,6 +19,7 @@ import {
   MAXIMUM_NODE_SIZE,
   MINIMUM_NODE_SIZE
 } from '../constants/graphConstants';
+import { ILink } from '../../models/link';
 
 
 export const graphConfig = {
@@ -66,17 +67,17 @@ export const getLabelConfigForNodes = (nodes: Immutable.Map<string, INode>) => (
   return '' && numberOfMembers.toString() + ' onions';
 };
 
-export const getLabelConfigForLinks = (nodes: Immutable.Map<string, INode>) => (link: IGraphLink): string => {
-  const sourceNode = nodes.get(link.source);
+export const getLabelConfigForLinks = (nodes: Immutable.Map<string, INode>) => (gLink: IGraphLink): string => {
+  const sourceNode = nodes.get(gLink.source);
   if (!sourceNode) {
     return '';
   }
 
   const sourceNodeLinks = sourceNode.links;
-  const numberOfLinks: number = sourceNodeLinks.size;
-  const numberOfTargetLinks: number = (sourceNodeLinks.get(link.target) && sourceNodeLinks.get(link.target)!.occurrences) || 0;
+  const numberOfTargetLinks: number = (sourceNodeLinks.get(gLink.target) && sourceNodeLinks.get(gLink.target)!.occurrences) || 0;
+  const linkSum: number = sourceNode.links.reduce((sum: number, link: ILink) => sum + link.occurrences, 0);
 
-  return `> ${numberOfTargetLinks}/${numberOfLinks} >`;
+  return `> ${numberOfTargetLinks}/${linkSum} >`;
 };
 
 export const getDimensionsOfNodes = (nodes: Immutable.Map<Uuid, INode>): Immutable.Map<Uuid, number> => {
