@@ -43,8 +43,8 @@ export const GroupBySelector: React.SFC<GroupBySelectorProps> = (props: GroupByS
 );
 
 GroupBySelector.displayName = 'GroupBySelector';
-// @ts-ignore
+
 GroupBySelector.propTypes = {
-  groupBy: PropTypes.string.isRequired,
+  groupBy: PropTypes.any.isRequired,
   onGroupByUpdate: PropTypes.func.isRequired,
 };
