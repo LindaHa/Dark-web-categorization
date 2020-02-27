@@ -56,5 +56,4 @@ export const CategoryColours: { [category: string]: string; } = {
   'Encyclopedia and Knowledge': green700,
   Gambling: green900,
   Guns: purple400,
-  'Financial Fraud': '#875788',
 };
