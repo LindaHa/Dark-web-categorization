@@ -73,8 +73,11 @@ export const getLabelConfigForLinks = (nodes: Immutable.Map<string, INode>) => (
     return '';
   }
 
-  const sourceNodeLinks = sourceNode.links;
-  const numberOfTargetLinks: number = (sourceNodeLinks.get(gLink.target) && sourceNodeLinks.get(gLink.target)!.occurrences) || 0;
+  let numberOfTargetLinks = 1;
+  if (sourceNode.membersCount > 1) {
+    const sourceNodeLinks = sourceNode.links;
+    numberOfTargetLinks = (sourceNodeLinks.get(gLink.target) && sourceNodeLinks.get(gLink.target)!.occurrences) || 0;
+  }
   const linkSum: number = sourceNode.links.reduce((sum: number, link: ILink) => sum + link.occurrences, 0);
 
   return `> ${numberOfTargetLinks}/${linkSum} >`;
