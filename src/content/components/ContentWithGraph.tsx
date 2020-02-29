@@ -77,7 +77,7 @@ export class ContentWithGraph extends React.PureComponent<GraphProps> {
         x: graphNode.x || Math.floor(seedRandom('x' + graphNode.id) * (width - 20) + 10),
         y: graphNode.y || Math.floor(seedRandom('y' + graphNode.id) * (height - 30) + 10),
         // @ts-ignore
-        size: node && dimensions.has(node.id) ? dimensions.get(node.id) * 10 : 200
+        size: node && dimensions.has(graphNode.id) ? dimensions.get(graphNode.id) * 10 : 200
       }));
     });
   };
