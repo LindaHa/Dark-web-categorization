@@ -1,9 +1,10 @@
 // const blue50 = '#e2e4eb';
 // const blue100 = '#b6bbce';
 // const blue200 = '#8790ac';
-const blue300 = '#5b668c';
-// const blue400 = '#3b4977';
-const blue500 = '#172e64';
+const blue200 = '#8790ac';
+// const blue300 = '#5b668c';
+const brightBlue = '#2323ff';
+// const blue500 = '#172e64';
 // const blue600 = '#11285c';
 // const blue700 = '#082052';
 const blue800 = '#011847';
@@ -17,19 +18,24 @@ const teal300 = '#3d9c9e';
 // const teal500 = '#007574';
 const teal600 = '#006968';
 // const teal700 = '#005b59';
-const teal800 = '#004b49';
+// const teal800 = '#004b49';
 const teal900 = '#00312e';
 
 const brown300 = '#9b554a';
-const brown600 = '#763129';
-const brown800 = '#57191a';
+const brown800 = '#7d2627';
 
 const green400 = '#4ca368';
-const green700 = '#1b753c';
-const green900 = '#0a4621';
+const green700 = '#5cd254';
+const green900 = '#33691e';
 
-const purple400 = '#6340a6';
-const yellow = '#a1a600';
+const red900 = '#d20000';
+const orange = '#de8500';
+const mustardYellow = '#a1a600';
+
+const pink = '#ff80e9';
+const hotPink = '#dc2cbe';
+const deepPurple500 = '#9200ff';
+
 
 export const primaryNodeColor = teal600;
 export const highlightNodeColor = teal200;
@@ -39,21 +45,21 @@ export const highlightLinkColor = teal200;
 
 export const primaryFontColor = teal900;
 
-export const graphHighlightSector = yellow;
+export const graphHighlightSector = mustardYellow;
 
 export const CategoryColours: { [category: string]: string; } = {
-  Other: teal300,
-  'Finance and Fraud': teal600,
-  Porn: teal800,
-  Drugs: teal900,
-  'Hosting and Programming and Hacking': blue300,
-  Social: blue500,
-  Deviancy: blue800,
-  'Web Catalogue': brown300,
-  Art: brown600,
-  'Online Marketplace': brown800,
-  'Fake Identity and Hitmen': green400,
+  Art: blue200,
+  Deviancy: teal300,
+  Drugs: green400,
   'Encyclopedia and Knowledge': green700,
-  Gambling: green900,
-  Guns: purple400,
+  'Fake Identity and Hitmen': green900,
+  'Finance and Fraud': blue800,
+  Gambling: brightBlue,
+  Guns: deepPurple500,
+  'Hosting and Programming and Hacking': pink,
+  'Online Marketplace': hotPink,
+  Other: red900,
+  Porn: brown800,
+  Social: brown300,
+  'Web Catalogue': orange,
 };
