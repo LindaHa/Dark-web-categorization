@@ -11,6 +11,7 @@ export interface INodeData {
   readonly links: Immutable.Map<Url | Uuid, ILink>;
   readonly firstMembers: Immutable.List<INode>;
   readonly membersCount: number;
+  readonly domainsCount: number;
 }
 
 export interface INode extends INodeData, IRecordFunctions<INodeData, INode> {
@@ -22,6 +23,7 @@ const recordData: INodeData = {
   links: Immutable.Map<Url | Uuid, ILink>(),
   firstMembers: Immutable.List<INode>(),
   membersCount: 0,
+  domainsCount: 0,
 };
 
 export class Node extends Immutable.Record(recordData) implements INode {
@@ -30,6 +32,7 @@ export class Node extends Immutable.Record(recordData) implements INode {
   readonly links: Immutable.Map<Url | Uuid, ILink>;
   readonly firstMembers: Immutable.List<INode>;
   readonly membersCount: number;
+  readonly domainsCount: number;
 
   toObject(): INodeData {
     return super.toObject() as INodeData;
@@ -51,6 +54,7 @@ export interface ICommunityServerModel {
   readonly links: ILinkServerModel[];
   readonly first_members: IPageServerModel[];
   readonly members_count: number;
+  readonly domains_count: number;
 }
 
 const communityServerModelData: ICommunityServerModel = {
@@ -59,6 +63,7 @@ const communityServerModelData: ICommunityServerModel = {
   links: [],
   first_members: [],
   members_count: 0,
+  domains_count: 0,
 };
 
 export class CommunityServerModel extends Immutable.Record(communityServerModelData) implements ICommunityServerModel {
@@ -67,4 +72,5 @@ export class CommunityServerModel extends Immutable.Record(communityServerModelD
   readonly links: ILinkServerModel[];
   readonly first_members: IPageServerModel[];
   readonly members_count: number;
+  readonly domains_count: number;
 }

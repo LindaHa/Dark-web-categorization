@@ -40,11 +40,12 @@ export const convertPageServerToClientModel = (serverModel: IPageServerModel): I
     links: clientLinks,
     firstMembers: Immutable.List<INode>(),
     membersCount: 1,
+    domainsCount: 1,
   }));
 };
 
 export const convertCommunityServerToClientModel = (serverModel: ICommunityServerModel): INode => {
-  const { categories, id, links, first_members, members_count } = serverModel;
+  const { categories, id, links, first_members, members_count, domains_count } = serverModel;
   let clientCategories = Immutable.Map<string, number>();
   categories.forEach((serverCat: IServerCategory) => (
     clientCategories = clientCategories.set(serverCat.name, serverCat.occurrence)
@@ -61,6 +62,7 @@ export const convertCommunityServerToClientModel = (serverModel: ICommunityServe
     links: clientLinks,
     firstMembers: clientMembers,
     membersCount: members_count,
+    domainsCount: domains_count,
   }));
 };
 
