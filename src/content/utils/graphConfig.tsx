@@ -67,7 +67,15 @@ export const getLabelConfigForNodes = (nodes: Immutable.Map<string, INode>) => (
   return '' && numberOfMembers.toString() + ' onions';
 };
 
+const getCorrectLinkSum = (node: INode, nodeLinkId: string): number => {
+  const linkSum: number = node.links.reduce((sum: number, link: ILink) => sum + link.occurrences, 0);
+  const linksToItself = node.links.get(nodeLinkId);
+
+  return linksToItself ? linkSum - 1 : linkSum;
+};
+
 export const getLabelConfigForLinks = (nodes: Immutable.Map<string, INode>) => (gLink: IGraphLink): string => {
+  const nodeLinkId = gLink.source;
   const sourceNode = nodes.get(gLink.source);
   if (!sourceNode) {
     return '';
@@ -78,7 +86,7 @@ export const getLabelConfigForLinks = (nodes: Immutable.Map<string, INode>) => (
     const sourceNodeLinks = sourceNode.links;
     numberOfTargetLinks = (sourceNodeLinks.get(gLink.target) && sourceNodeLinks.get(gLink.target)!.occurrences) || 0;
   }
-  const linkSum: number = sourceNode.links.reduce((sum: number, link: ILink) => sum + link.occurrences, 0);
+  const linkSum = getCorrectLinkSum(sourceNode, nodeLinkId);
 
   return `> ${numberOfTargetLinks}/${linkSum} >`;
 };
