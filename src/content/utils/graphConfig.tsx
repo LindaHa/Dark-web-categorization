@@ -16,6 +16,8 @@ import { PieChartData } from 'react-minimal-pie-chart';
 import { PieChartSVG } from '../components/PiechartSVG';
 import { PageVisualSVG } from '../components/PageVisual';
 import {
+  LOGARITHMIC_CONTEXT_MAX,
+  LOGARITHMIC_CONTEXT_MIN,
   MAXIMUM_NODE_SIZE,
   MINIMUM_NODE_SIZE
 } from '../constants/graphConstants';
@@ -96,13 +98,16 @@ export const getDimensionsOfNodes = (nodes: Immutable.Map<Uuid, INode>): Immutab
   const minimum = nodes.reduce((result: number, node: INode) => result = Math.min(node.membersCount, result), maximum);
   const maxMinRelationship = maximum / minimum;
   const maxNodeSize = maxMinRelationship > MAXIMUM_NODE_SIZE / MINIMUM_NODE_SIZE ? MAXIMUM_NODE_SIZE : maxMinRelationship * MINIMUM_NODE_SIZE;
+
   const sizeDispersal = maxNodeSize - MINIMUM_NODE_SIZE;
   const membersDispersal = maximum - minimum;
-  const slope = sizeDispersal / membersDispersal;
-  const intercept = MINIMUM_NODE_SIZE - (slope * minimum);
+  const logarithmicDispersal = LOGARITHMIC_CONTEXT_MAX - LOGARITHMIC_CONTEXT_MIN;
+
+  const xValueTransformation = (membersCount: number) => ((membersCount - minimum) * logarithmicDispersal / membersDispersal + 1);
+  const axisTransformation = sizeDispersal / Math.log2(LOGARITHMIC_CONTEXT_MAX);
 
   const dimensions = nodes.map((node: INode) => {
-    return slope * node.membersCount + intercept;
+    return Math.log2(xValueTransformation(node.membersCount)) * axisTransformation + MINIMUM_NODE_SIZE;
   });
 
   return dimensions;

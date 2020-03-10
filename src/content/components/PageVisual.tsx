@@ -46,12 +46,12 @@ export class PageVisualSVG extends React.PureComponent<IPageVisualSVGProps, IPag
 
   render() {
     return (
-        <i
-          style={{ color: this.state.colour, fontSize: MINIMUM_NODE_SIZE }}
-          className="fas fa-square"
-          onMouseEnter={this._onMouseOver}
-          onMouseLeave={this._onMouseOut}
-        />
+      <i
+        style={{ color: this.state.colour, fontSize: MINIMUM_NODE_SIZE }}
+        className="fas fa-square"
+        onMouseEnter={this._onMouseOver}
+        onMouseLeave={this._onMouseOut}
+      />
     );
   }
 }
