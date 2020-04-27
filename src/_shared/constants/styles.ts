@@ -13,7 +13,7 @@ const blue800 = '#011847';
 // const teal50 = '#ddedee';
 // const teal100 = '#abd3d5';
 const teal200 = '#74b7ba';
-const teal300 = '#3d9c9e';
+// const teal300 = '#3d9c9e';
 // const teal400 = '#0e8889';
 // const teal500 = '#007574';
 const teal600 = '#006968';
@@ -22,19 +22,19 @@ const teal600 = '#006968';
 const teal900 = '#00312e';
 
 const brown300 = '#9b554a';
-const brown800 = '#7d2627';
+// const brown800 = '#7d2627';
 
 const green400 = '#4ca368';
-const green700 = '#5cd254';
+// const green700 = '#5cd254';
 const green900 = '#33691e';
 
-const red900 = '#d20000';
+// const red900 = '#d20000';
 const orange = '#de8500';
 const mustardYellow = '#a1a600';
 
 const pink = '#ff80e9';
 const hotPink = '#dc2cbe';
-const deepPurple500 = '#9200ff';
+// const deepPurple500 = '#9200ff';
 
 
 export const primaryNodeColor = teal600;
@@ -48,18 +48,14 @@ export const primaryFontColor = teal900;
 export const graphHighlightSector = mustardYellow;
 
 export const CategoryColours: { [category: string]: string; } = {
-  Art: blue200,
-  Deviancy: teal300,
-  Drugs: green400,
-  'Encyclopedia and Knowledge': green700,
-  'Fake Identity and Hitmen': green900,
+  'Sexual Content': blue200,
+  'Illegal services and goods': green400,
   'Finance and Fraud': blue800,
   Gambling: brightBlue,
-  Guns: deepPurple500,
   'Hosting and Programming and Hacking': pink,
   'Online Marketplace': hotPink,
-  Other: red900,
-  Porn: brown800,
+  Other: green900,
+  // Porn: brown800,
   Social: brown300,
   'Web Catalogue': orange,
 };

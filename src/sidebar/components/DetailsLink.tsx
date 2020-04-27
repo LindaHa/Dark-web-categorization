@@ -112,7 +112,7 @@ export class DetailsLink extends React.PureComponent<DetailsLinkProps, IDetailsL
 
     fetchDetails(options).then((action: Action) => {
       const filePrefix = mode === DetailsMode.Page ? 'page' : 'community';
-      const filename = `${filePrefix}_details_for_node-${selectedNode.id}.txt`;
+      const filename = `${filePrefix}_details_for_node-${selectedNode.id}.json`;
       const responseDetails = action.payload.details && action.payload.details.toJS();
       const resultWithoutNulls = mode === DetailsMode.Community
         ? removeEmptyPropertiesFromManyDetails(responseDetails)
