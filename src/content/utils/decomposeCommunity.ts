@@ -5,7 +5,8 @@ import {
 } from '../../models/node';
 import {
   MAX_COMMUNITIES_FOR_DISPLAY,
-  MAX_NODES_FOR_DISPLAY
+  MAX_NODES_FOR_DISPLAY,
+  MAX_NODES_FOR_ONE_COMMUNITY_DISPLAY
 } from '../constants/graphConstants';
 import {
   ILink,
@@ -63,18 +64,19 @@ export const decomposeCommunityIfPossible = (nodes: Immutable.Map<Uuid, INode>) 
 
   let memberNodes = Immutable.Map<Uuid, INode>();
 
-  const hasNotMoreThanFirstMembers: boolean = hasMaxNumberOfMembers(nodes, MAX_NODES_FOR_DISPLAY);
+  const hasNotMoreThanFirstXMembers: boolean = hasMaxNumberOfMembers(nodes, MAX_NODES_FOR_DISPLAY);
   const areSeparatePages: boolean = hasMaxNumberOfMembers(nodes, 1);
 
-  if (hasNotMoreThanFirstMembers || areSeparatePages) {
-    memberNodes = decomposeCommunity(nodes);
+  const isLonelyDisplayable = nodes.size === 1 && hasMaxNumberOfMembers(nodes, MAX_NODES_FOR_ONE_COMMUNITY_DISPLAY);
+  if (hasNotMoreThanFirstXMembers || areSeparatePages || isLonelyDisplayable) {
+    memberNodes = decomposeCommunity(nodes, isLonelyDisplayable);
   }
 
   return memberNodes.isEmpty() ? nodes : memberNodes;
 };
 
 
-const decomposeCommunity = (nodes: Immutable.Map<Url, INode>): Immutable.Map<Url, INode> => {
+const decomposeCommunity = (nodes: Immutable.Map<Url, INode>, isLonely: boolean): Immutable.Map<Url, INode> => {
   let memberNodes = Immutable.Map<Uuid, INode>();
   const firstMembersKeys = getFirstMEmbersKeys(nodes);
   const commonId = getCommonId(nodes);
@@ -84,7 +86,7 @@ const decomposeCommunity = (nodes: Immutable.Map<Url, INode>): Immutable.Map<Url
   }
 
   nodes.valueSeq().forEach((node: INode) => {
-    if (node.firstMembers.count() <= MAX_NODES_FOR_DISPLAY) {
+    if (node.firstMembers.count() <= MAX_NODES_FOR_DISPLAY || isLonely) {
       node.firstMembers.forEach((member: INode) => {
         const decomposedLinks = getDecomposedLinks(member, commonId, firstMembersKeys);
 
@@ -112,7 +114,7 @@ const hasMaxNumberOfMembers = (nodes: Immutable.Map<Url, INode>, relevantNumber:
 
 const decomposeIfOnlySimplePages = (nodes: Immutable.Map<Url, INode>): Immutable.Map<Url, INode> => {
   if (hasMaxNumberOfMembers(nodes, 1)) {
-    return decomposeCommunity(nodes);
+    return decomposeCommunity(nodes, false);
   }
 
   return nodes;
