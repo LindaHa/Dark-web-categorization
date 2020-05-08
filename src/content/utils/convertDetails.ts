@@ -1,10 +1,10 @@
 import * as Immutable from 'immutable';
 import {
-  PageDetails,
-  PageDetailsServerModel
+  IPageDetailsServerModel,
+  PageDetails
 } from '../../models/pageDetails';
 
-export const convertServerPageDetailsToClientPageDetails = (serverModel: PageDetailsServerModel) => {
+export const convertServerPageDetailsToClientPageDetails = (serverModel: IPageDetailsServerModel) => {
   const pageDetails = new PageDetails({
     url: serverModel.url,
     title: serverModel.title,
@@ -16,9 +16,9 @@ export const convertServerPageDetailsToClientPageDetails = (serverModel: PageDet
   return pageDetails;
 };
 
-export const convertServerCommunityDetailsToClientCommunityDetails = (serverModel: PageDetailsServerModel[]) => {
+export const convertServerCommunityDetailsToClientCommunityDetails = (serverModel: IPageDetailsServerModel[]) => {
   const details = serverModel
-    .map((pageDetails: PageDetailsServerModel) => (convertServerPageDetailsToClientPageDetails(pageDetails)));
+    .map((pageDetails: IPageDetailsServerModel) => (convertServerPageDetailsToClientPageDetails(pageDetails)));
 
   return Immutable.List(details);
 };

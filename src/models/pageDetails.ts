@@ -43,7 +43,7 @@ export interface IPageDetailsServerModel {
   readonly links: Url[];
 }
 
-const linkServerModelData: IPageDetailsServerModel = {
+const pageDetailsServerModelData: IPageDetailsServerModel = {
   url: '',
   title: '',
   category: '',
@@ -51,7 +51,7 @@ const linkServerModelData: IPageDetailsServerModel = {
   links: [],
 };
 
-export class PageDetailsServerModel extends Immutable.Record(linkServerModelData) implements IPageDetailsServerModel {
+export class PageDetailsServerModel extends Immutable.Record(pageDetailsServerModelData) implements IPageDetailsServerModel {
   readonly url: string;
   readonly title: string;
   readonly category: string;
