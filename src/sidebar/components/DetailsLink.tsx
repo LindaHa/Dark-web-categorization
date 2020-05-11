@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { INodeDetailsOptions } from './CommunityDetailsOptions';
-import { OptionsModal } from '../OptionsModal';
+import { OptionsModal } from './OptionsModal';
 import { INode } from '../../models/node';
 import {
   removeEmptyPropertiesFromDetails,

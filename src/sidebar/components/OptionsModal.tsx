@@ -7,9 +7,9 @@ import {
 import {
   CommunityDetailsOptions,
   INodeDetailsOptions
-} from './components/CommunityDetailsOptions';
-import { DetailsOptions } from './components/DetailsLink';
-import { IconSpinner } from '../_shared/components/Spinner';
+} from './CommunityDetailsOptions';
+import { DetailsOptions } from './DetailsLink';
+import { IconSpinner } from '../../_shared/components/Spinner';
 
 interface IOptionsModalProps {
   readonly isModalShown: boolean;
