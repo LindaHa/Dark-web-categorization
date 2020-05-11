@@ -6,7 +6,7 @@ import {
   Graph,
   IBaseLink,
   IGraphNode
-} from 'react-d3-graph';
+} from 'customized-react-d3-graph';
 import { ILink } from '../../models/link';
 import {
   getDimensionsOfNodes,

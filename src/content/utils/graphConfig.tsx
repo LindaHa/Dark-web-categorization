@@ -10,7 +10,7 @@ import {
 import {
   IGraphLink,
   IGraphNode
-} from 'react-d3-graph';
+} from 'customized-react-d3-graph';
 import { INode } from '../../models/node';
 import { PieChartData } from 'react-minimal-pie-chart';
 import { PieChartSVG } from '../components/PiechartSVG';

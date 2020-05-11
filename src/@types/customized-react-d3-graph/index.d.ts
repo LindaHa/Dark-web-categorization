@@ -1,4 +1,4 @@
-declare module 'react-d3-graph' {
+declare module 'customized-react-d3-graph' {
   class Graph extends React.Component<{
     readonly id: string; // name is mandatory, if no name is defined rd3g will throw an error
     data: any;

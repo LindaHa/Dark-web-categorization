@@ -1,4 +1,4 @@
-import * as Immutable from 'immutable'
+import * as Immutable from 'immutable';
 import {
   getLabelConfigForLinks,
   getLabelConfigForNodes,
@@ -12,7 +12,7 @@ import { INode } from '../../../src/models/node';
 import {
   IGraphLink,
   IGraphNode
-} from '../../../src/_customized_react-d3-graph/types';
+} from '../../helpers/types';
 
 describe('graphConfig manages graph configurations correctly', () => {
   describe('getLabelConfigForNodes return the correct label', () => {
