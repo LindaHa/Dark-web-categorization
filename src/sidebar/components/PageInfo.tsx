@@ -5,12 +5,14 @@ import { DetailsMode } from './DetailsLink';
 import { PageDetailsOptions } from './PageDetailsOptions';
 import { DetailsLink } from '../containers/DetailsLink';
 import { ILink } from '../../models/link';
+import { INodeDetailsOptions } from './CommunityDetailsOptions';
 
 export interface IPageInfoDataProps {
   readonly selectedNode: INode;
 }
 
 export interface IPageInfoCallbackProps {
+  readonly fetchDetails: (options: INodeDetailsOptions) => Promise<Action>;
 }
 
 type PageInfoProps = IPageInfoCallbackProps & IPageInfoDataProps;
@@ -19,6 +21,8 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
   static displayName = 'PageInfo';
   static propTypes: PropTypesShape<PageInfoProps> = {
     selectedNode: PropTypes.object.isRequired,
+
+    fetchDetails: PropTypes.func.isRequired,
   };
 
   render() {

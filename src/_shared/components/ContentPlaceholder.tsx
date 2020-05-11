@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { Spinner } from './Spinner';
+import { ErrorDisplay } from '../containers/ErrorDisplay';
 
 
 interface IContentPlaceholder {
@@ -9,7 +10,7 @@ interface IContentPlaceholder {
 
 export const ContentPlaceholder: React.SFC<IContentPlaceholder> = (props: IContentPlaceholder) => (
   props.isError ?
-    <div> Something went wrong :(</div> :
+    <ErrorDisplay/> :
     <Spinner />
 );
 
