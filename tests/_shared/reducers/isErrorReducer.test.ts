@@ -1,4 +1,4 @@
-import { isErrorReducer } from '../../../src/_shared/reducers/isErrorReducer';
+import { errorMessageReducer } from '../../../src/_shared/reducers/isErrorReducer';
 import {
   DetailsOfCommunity_Get_Failure,
   DetailsOfCommunity_Get_Request,
@@ -19,124 +19,128 @@ import {
 } from '../../../src/content/actionTypes/nodesActionTypes';
 
 
-describe('isErrorReducer correctly changes the error status', () => {
-  it('changes the error status to true if requesting community details fails', () => {
-    const requestAction = { type: DetailsOfCommunity_Get_Failure };
+describe('errorMessageReducer correctly sets the error message', () => {
+  it('sets the error message if requesting community details fails', () => {
+    const errorMessage = 'Something went wrong.';
+    const requestAction = { type: DetailsOfCommunity_Get_Failure, payload: {errorMessage} };
 
-    const tested = isErrorReducer(undefined, requestAction);
+    const tested = errorMessageReducer(undefined, requestAction);
 
-    expect(tested).toEqual(true);
+    expect(tested).toEqual(errorMessage);
   });
 
-  it('changes the error status  to true if requesting page details fails', () => {
-    const requestAction = { type: DetailsOfPage_Get_Failure };
+  it('sets the error message if requesting page details fails', () => {
+    const errorMessage = 'Something went wrong.';
+    const requestAction = { type: DetailsOfPage_Get_Failure, payload: {errorMessage} };
 
-    const tested = isErrorReducer(undefined, requestAction);
+    const tested = errorMessageReducer(undefined, requestAction);
 
-    expect(tested).toEqual(true);
+    expect(tested).toEqual(errorMessage);
   });
 
-  it('changes the error status  to true if requesting filtered nodes fails', () => {
-    const requestAction = { type: Nodes_GetFiltered_Failure };
+  it('sets the error message if requesting filtered nodes fails', () => {
+    const errorMessage = 'Something went wrong.';
+    const requestAction = { type: Nodes_GetFiltered_Failure, payload: {errorMessage} };
 
-    const tested = isErrorReducer(undefined, requestAction);
+    const tested = errorMessageReducer(undefined, requestAction);
 
-    expect(tested).toEqual(true);
+    expect(tested).toEqual(errorMessage);
   });
 
-  it('changes the error status  to true if requesting all nodes fails', () => {
-    const requestAction = { type: Nodes_GetAll_Failure };
+  it('sets the error message if requesting all nodes fails', () => {
+    const errorMessage = 'Something went wrong.';
+    const requestAction = { type: Nodes_GetAll_Failure, payload: {errorMessage} };
 
-    const tested = isErrorReducer(undefined, requestAction);
+    const tested = errorMessageReducer(undefined, requestAction);
 
-    expect(tested).toEqual(true);
+    expect(tested).toEqual(errorMessage);
   });
 
-  it('changes the error status  to false if community details are requested', () => {
+  it('sets the error message to "" if community details are requested', () => {
     const requestAction = { type: DetailsOfCommunity_Get_Request };
 
-    const tested = isErrorReducer(true, requestAction);
+    const tested = errorMessageReducer(undefined, requestAction);
 
-    expect(tested).toEqual(false);
+    expect(tested).toEqual('');
   });
 
-  it('changes the error status to false if community details are received', () => {
+  it('sets the error message to "" if community details are received', () => {
     const requestAction = { type: DetailsOfCommunity_Get_Success };
 
-    const tested = isErrorReducer(true, requestAction);
+    const tested = errorMessageReducer(undefined, requestAction);
 
-    expect(tested).toEqual(false);
+    expect(tested).toEqual('');
   });
 
-  it('changes the error status to false if page details are requested', () => {
+  it('sets the error message to "" if page details are requested', () => {
     const requestAction = { type: DetailsOfPage_Get_Request };
 
-    const tested = isErrorReducer(true, requestAction);
+    const tested = errorMessageReducer(undefined, requestAction);
 
-    expect(tested).toEqual(false);
+    expect(tested).toEqual('');
   });
 
-  it('changes the error status to false if page details are received', () => {
+  it('sets the error message to "" if page details are received', () => {
     const requestAction = { type: DetailsOfPage_Get_Success };
 
-    const tested = isErrorReducer(true, requestAction);
+    const tested = errorMessageReducer(undefined, requestAction);
 
-    expect(tested).toEqual(false);
+    expect(tested).toEqual('');
   });
 
-  it('changes the error status to false if all nodes are requested', () => {
+  it('sets the error message to "" if all nodes are requested', () => {
     const requestAction = { type: Nodes_GetAll_Request };
 
-    const tested = isErrorReducer(true, requestAction);
+    const tested = errorMessageReducer(undefined, requestAction);
 
-    expect(tested).toEqual(false);
+    expect(tested).toEqual('');
   });
 
-  it('changes the error status to false if all nodes are received', () => {
+  it('sets the error message to "" if all nodes are received', () => {
     const requestAction = { type: Nodes_GetAll_Success };
 
-    const tested = isErrorReducer(true, requestAction);
+    const tested = errorMessageReducer(undefined, requestAction);
 
-    expect(tested).toEqual(false);
+    expect(tested).toEqual('');
   });
 
-  it('changes the error status to false if filtered nodes are requested', () => {
+  it('sets the error message to "" if filtered nodes are requested', () => {
     const requestAction = { type: Nodes_GetFiltered_Request };
 
-    const tested = isErrorReducer(true, requestAction);
+    const tested = errorMessageReducer(undefined, requestAction);
 
-    expect(tested).toEqual(false);
+    expect(tested).toEqual('');
   });
 
-  it('changes the error status to false if filtered nodes are received', () => {
+  it('sets the error message to "" if filtered nodes are received', () => {
     const requestAction = { type: Nodes_GetFiltered_Success };
 
-    const tested = isErrorReducer(true, requestAction);
+    const tested = errorMessageReducer(undefined, requestAction);
 
-    expect(tested).toEqual(false);
+    expect(tested).toEqual('');
   });
 
-  it('changes the error status to false if sub-communities are requested', () => {
+  it('sets the error message to "" if sub-communities are requested', () => {
     const requestAction = { type: Nodes_GetSubNodes_Request };
 
-    const tested = isErrorReducer(true, requestAction);
+    const tested = errorMessageReducer(undefined, requestAction);
 
-    expect(tested).toEqual(false);
+    expect(tested).toEqual('');
   });
 
-  it('changes the error status to false if sub-communities are received', () => {
+  it('sets the error message to "" if sub-communities are received', () => {
     const requestAction = { type: Nodes_GetNodes_Success };
 
-    const tested = isErrorReducer(true, requestAction);
+    const tested = errorMessageReducer(undefined, requestAction);
 
-    expect(tested).toEqual(false);
+    expect(tested).toEqual('');
   });
 
   it('returns the given state for an unknown action', () => {
     const requestAction = { type: 'UNKNOWN_ACTION' };
 
-    const tested = isErrorReducer(true, requestAction);
+    const tested = errorMessageReducer('', requestAction);
 
-    expect(tested).toEqual(true);
+    expect(tested).toEqual('');
   });
 });

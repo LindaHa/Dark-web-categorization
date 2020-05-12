@@ -17,13 +17,13 @@ import {
   DetailsOfPage_Get_Success
 } from '../../content/actionTypes/detailsActionTypes';
 
-export const isErrorReducer = (prevState: boolean = false, action: Action): boolean => {
+export const errorMessageReducer = (prevState: string = '', action: Action): string => {
   switch (action.type) {
     case DetailsOfCommunity_Get_Failure:
     case DetailsOfPage_Get_Failure:
     case Nodes_GetFiltered_Failure:
     case Nodes_GetAll_Failure: {
-      return true;
+      return action.payload.errorMessage;
     }
 
     case DetailsOfCommunity_Get_Request:
@@ -36,7 +36,7 @@ export const isErrorReducer = (prevState: boolean = false, action: Action): bool
     case Nodes_GetFiltered_Success:
     case Nodes_GetSubNodes_Request:
     case Nodes_GetNodes_Success: {
-      return false;
+      return '';
     }
 
     default:

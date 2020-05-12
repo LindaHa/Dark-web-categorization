@@ -6,7 +6,7 @@ import { IDetails } from './IDetails';
 export interface IState {
   readonly details: IDetails;
   readonly groupBy: GroupBy;
-  readonly isError: boolean;
+  readonly errorMessage: string;
   readonly isFetchingNodes: boolean;
   readonly currentLevel: number;
   readonly nodes: Immutable.Map<Uuid, INode>;

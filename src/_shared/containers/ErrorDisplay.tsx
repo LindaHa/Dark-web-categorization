@@ -9,7 +9,7 @@ import { IState } from '../models/IState';
 import { ErrorDisplay as ErrorDisplayComponent } from '../components/ErrorDisplay';
 
 const mapStateToProps = (state: IState): IErrorDisplayDataProps => ({
-  isError: state.isError
+  errorMessage: state.errorMessage
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): IErrorDisplayCallbackProps => ({

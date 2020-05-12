@@ -9,11 +9,11 @@ import {
 import { IState } from '../../_shared/models/IState';
 
 const mapStateToProps = (state: IState): IContentDataProps => {
-  const { isError, isFetchingNodes } = state;
+  const { errorMessage, isFetchingNodes } = state;
 
   return {
     isFetchingNodes,
-    isError,
+    isError: !!errorMessage,
   };
 };
 

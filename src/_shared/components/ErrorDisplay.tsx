@@ -7,7 +7,7 @@ import {
 
 
 export interface IErrorDisplayDataProps {
-  readonly isError: boolean;
+  readonly errorMessage: string;
 }
 
 export interface IErrorDisplayCallbackProps {
@@ -18,7 +18,7 @@ type ErrorProps = IErrorDisplayDataProps & IErrorDisplayCallbackProps;
 
 export const ErrorDisplay: React.SFC<ErrorProps> = (props: ErrorProps) => ((
   <Modal
-    show={props.isError}
+    show={!!props.errorMessage}
     size="lg"
     aria-labelledby="contained-modal-title-vcenter"
     centered
@@ -29,7 +29,7 @@ export const ErrorDisplay: React.SFC<ErrorProps> = (props: ErrorProps) => ((
       </Modal.Title>
     </Modal.Header>
     <Modal.Body>
-      Try reloading.
+      {props.errorMessage + ' Please reload.'}
     </Modal.Body>
     <Modal.Footer>
       <Button
@@ -45,6 +45,6 @@ export const ErrorDisplay: React.SFC<ErrorProps> = (props: ErrorProps) => ((
 
 ErrorDisplay.displayName = 'ErrorDisplay';
 ErrorDisplay.propTypes = {
-  isError: PropTypes.bool.isRequired,
+  errorMessage: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
 };
