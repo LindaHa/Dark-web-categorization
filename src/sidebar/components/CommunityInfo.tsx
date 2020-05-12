@@ -59,6 +59,8 @@ export class CommunityInfo extends React.PureComponent<CommunityInfoProps> {
               </div>
             )}
           </div>
+        </div>
+        <div className="sidebar__info-group">
           <div className="sidebar__info-group-value-item sidebar__info-group-value-item--link">
             <DetailsLink mode={DetailsMode.Community}/>
           </div>
@@ -66,19 +68,19 @@ export class CommunityInfo extends React.PureComponent<CommunityInfoProps> {
         {
           areCategoriesNotEmpty &&
           <div className="sidebar__info-group">
-              <div className="sidebar__info-group-label-item">
-                Categories
-              </div>
-              <div className="sidebar__info-group-value-items sidebar__info-group-value-items--small">
-                {categories!.map((relevance: number, category: string) =>
-                  <div
-                    key={category}
-                    className="sidebar__info-group-value-item"
-                  >
-                    {category} : {relevance} pages
-                  </div>
-                ).toSet()}
-              </div>
+            <div className="sidebar__info-group-label-item">
+              Categories
+            </div>
+            <div className="sidebar__info-group-value-items sidebar__info-group-value-items--small">
+              {categories!.map((relevance: number, category: string) =>
+                <div
+                  key={category}
+                  className="sidebar__info-group-value-item"
+                >
+                  {category} : {relevance} pages
+                </div>
+              ).toSet()}
+            </div>
           </div>
         }
       </div>

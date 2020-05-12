@@ -86,11 +86,13 @@ export class PageInfo extends React.PureComponent<PageInfoProps> {
               ).toSet()}
             </div>
             <PageDetailsOptions/>
-            <div className="sidebar__info-group-value-item sidebar__info-group-value-item--link">
-              <DetailsLink mode={DetailsMode.Page}/>
-            </div>
           </div>
         }
+        <div className="sidebar__info-group">
+          <div className="sidebar__info-group-value-item sidebar__info-group-value-item--link">
+            <DetailsLink mode={DetailsMode.Page}/>
+          </div>
+        </div>
       </div>
     );
   }
