@@ -32,7 +32,7 @@ describe('graphConfig manages graph configurations correctly', () => {
 
       const actual = getLabelConfigForNodes(nodes)({id: communityId} as IGraphNode);
 
-      expect(actual).toEqual('3 onions');
+      expect(actual).toEqual('');
     });
   });
 
