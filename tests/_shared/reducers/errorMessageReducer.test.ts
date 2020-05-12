@@ -1,4 +1,4 @@
-import { errorMessageReducer } from '../../../src/_shared/reducers/isErrorReducer';
+import { errorMessageReducer } from '../../../src/_shared/reducers/errorMessageReducer';
 import {
   DetailsOfCommunity_Get_Failure,
   DetailsOfCommunity_Get_Request,

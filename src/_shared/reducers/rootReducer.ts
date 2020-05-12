@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { groupByReducer } from './groupByReducer';
 import { IState } from '../models/IState';
 import { isFetchingNodesReducer } from '../../content/reducers/isFetchingNodesReducer';
-import { errorMessageReducer } from './isErrorReducer';
+import { errorMessageReducer } from './errorMessageReducer';
 import { selectedNodeReducer } from './selectedNodeReducer';
 import { nodesReducer } from '../../content/reducers/nodesReducer';
 import { levelReducer } from './levelReducer';
