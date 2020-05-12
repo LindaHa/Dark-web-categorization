@@ -1,6 +1,9 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import { Form } from 'react-bootstrap';
+import {
+  Alert,
+  Form
+} from 'react-bootstrap';
 import { DetailsOptions } from './DetailsLink';
 
 export interface INodeDetailsOptions {
@@ -8,6 +11,7 @@ export interface INodeDetailsOptions {
   category: boolean;
   content: boolean;
   links: boolean;
+
   [key: string]: any;
 }
 
@@ -47,6 +51,14 @@ export const CommunityDetailsOptions: React.SFC<ICommunityDetailsOptionsProps> =
           checked={links}
           onChange={() => handleToggle(DetailsOptions.Links)}
         />
+        {content ?
+            <Alert
+              id="content-warning"
+              variant="danger"
+            >
+              This might take a while.
+            </Alert> :
+          ''}
       </Form>
     </div>
   );
