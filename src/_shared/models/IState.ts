@@ -1,13 +1,12 @@
 import { GroupBy } from '../../sidebar/components/Sidebar';
 import * as Immutable from 'immutable';
 import { INode } from '../../models/node';
-import { IDetails } from './IDetails';
 
 export interface IState {
-  readonly details: IDetails;
   readonly groupBy: GroupBy;
   readonly errorMessage: string;
   readonly isFetchingNodes: boolean;
+  readonly isFetchingDetails: boolean;
   readonly currentLevel: number;
   readonly nodes: Immutable.Map<Uuid, INode>;
   readonly selectedNodeId: Uuid;

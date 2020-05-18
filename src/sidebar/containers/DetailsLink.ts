@@ -17,7 +17,7 @@ interface IDetailsLinkOwnProps {
   readonly mode: DetailsMode;
 }
 const mapStateToProps = (state: IState, ownProps: IDetailsLinkOwnProps): IDetailsLinkDataProps => {
-  const { details: { isFetchingDetails }, nodes, selectedNodeId } = state;
+  const { isFetchingDetails, nodes, selectedNodeId } = state;
   const selectedNode = nodes.get(selectedNodeId)!;
 
   return {
