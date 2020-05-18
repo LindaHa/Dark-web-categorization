@@ -13,17 +13,10 @@ import { RouteAccordingToGroupByMode } from '../../../_shared/constants/routes';
 import { GroupBy } from '../../../sidebar/components/Sidebar';
 import { IFilterOptions } from '../../../sidebar/components/SearchBar';
 
-// const testRoute = 'http://127.0.0.1:8000/api/pages/bylink/?content-type=json&id=3.28';
-// const testRoute = 'http://127.0.0.1:8000/api/pages/bylink/?content-type=json&id=2.21.0.0.0'; // only single pages - a lot
-// const testRoute = 'http://127.0.0.1:8000/api/pages/bylink/?content-type=json&id=3.0.0.0'; // only communities, only one further zoom in the big one
-// const testRoute = 'http://127.0.0.1:8000/api/pages/bylink/?content-type=json&id=1.1.0.24'; // only single pages, one sided links, weird labels
-// const testRoute = 'http://127.0.0.1:8000/api/pages/bylink/?content-type=json&id=1.0';
-// const testRoute = 'http://127.0.0.1:8000/api/pages/bylink/?content-type=json&id=2.2.3.1';
-// const testRoute = 'http://127.0.0.1:8000/api/pages/bylink/?content-type=json&id=0.2';
 const fetchNodesFactoryDependencies = ({
   nodesSuccess: succeedToFetchNodes,
   error: failToFetchNodes,
-  fetch: (_route: string) => isoFetch(_route, {
+  fetch: (route: string) => isoFetch(route, {
     method: 'GET',
     headers: {
       accept: 'application/json',

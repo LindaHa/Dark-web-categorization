@@ -13,6 +13,7 @@ import {
   PageDetails
 } from '../../models/pageDetails';
 
+// This reducer manages page details
 export const pageDetailsReducer = (prevState: IPageDetails = new PageDetails(), action: Action)
   : IPageDetails => {
   switch (action.type) {

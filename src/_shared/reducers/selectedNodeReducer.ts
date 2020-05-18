@@ -6,6 +6,7 @@ import {
 import { SelectedNode_Id_Updated } from '../../content/actionTypes/selectedNodeActionTypes';
 import { ICommunityServerModel } from '../../models/node';
 
+// This reducer manages the id of the selected node
 export const selectedNodeReducer = (prevState: Uuid = '', action: Action): Uuid => {
   switch (action.type) {
     case SelectedNode_Id_Updated: {

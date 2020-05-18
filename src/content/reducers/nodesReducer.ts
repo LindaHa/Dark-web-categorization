@@ -10,6 +10,7 @@ import {
 } from '../../models/node';
 import { decomposeCommunityIfPossible } from '../utils/decomposeCommunity';
 
+// This reducer manages nodes
 export const nodesReducer = (prevState: Immutable.Map<Uuid, INode> = Immutable.Map<Url, INode>(), action: Action)
   : Immutable.Map<Uuid, INode> => {
   switch (action.type) {

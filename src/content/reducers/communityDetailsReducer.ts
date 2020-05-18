@@ -12,6 +12,8 @@ import {
 import { IPageDetails } from '../../models/pageDetails';
 
 const initState = Immutable.List<IPageDetails>();
+
+// This reducer manages community details
 export const communityDetailsReducer = (prevState: Immutable.List<IPageDetails> = initState, action: Action)
   : Immutable.List<IPageDetails> => {
   switch (action.type) {

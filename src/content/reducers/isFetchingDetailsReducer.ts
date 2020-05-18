@@ -12,6 +12,7 @@ import {
   Nodes_GetSubNodes_Request
 } from '../actionTypes/nodesActionTypes';
 
+// This reducer informs whether the client is fetching details or not
 export const isFetchingDetailsReducer = (prevState: boolean = false, action: Action): boolean => {
   switch (action.type) {
     case DetailsOfCommunity_Get_Request:

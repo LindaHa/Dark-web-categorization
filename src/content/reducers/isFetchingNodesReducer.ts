@@ -9,6 +9,7 @@ import {
   Nodes_GetFiltered_Request
 } from '../actionTypes/nodesActionTypes';
 
+// This reducer informs whether the client is fetching nodes or not
 export const isFetchingNodesReducer = (prevState: boolean = true, action: Action): boolean => {
   switch (action.type) {
     case Nodes_GetAll_Request:

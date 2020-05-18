@@ -17,6 +17,7 @@ import {
   DetailsOfPage_Get_Success
 } from '../../content/actionTypes/detailsActionTypes';
 
+// This reducer manages the error messages returned from the server
 export const errorMessageReducer = (prevState: string = '', action: Action): string => {
   switch (action.type) {
     case DetailsOfCommunity_Get_Failure:
