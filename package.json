@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "customized-react-d3-graph": "github:LindaHa/customized-react-d3-graph#master",
-    "d3": "^5.5.0",
+    "d3": "^7.6.1",
     "file-saver": "^2.0.2",
     "react-minimal-pie-chart": "^5.0.2",
     "seedrandom": "^3.0.5"
